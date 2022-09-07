@@ -50,9 +50,9 @@ class NoteApiController extends ApiController {
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function create(string $title, string $content): DataResponse {
+	public function create(string $title, string $content, string $physical, string $namelt, string $idfile): DataResponse {
 		return new DataResponse($this->service->create($title, $content,
-			$this->userId));
+			$this->userId, $physical, $namelt, $idfile));
 	}
 
 	/**
@@ -61,9 +61,9 @@ class NoteApiController extends ApiController {
 	 * @NoAdminRequired
 	 */
 	public function update(int $id, string $title,
-						   string $content): DataResponse {
-		return $this->handleNotFound(function () use ($id, $title, $content) {
-			return $this->service->update($id, $title, $content, $this->userId);
+						   string $content, string $physical,  string $namelt, string $idfile): DataResponse {
+		return $this->handleNotFound(function () use ($id, $title, $content, $physical, $namelt, $idfile) {
+			return $this->service->update($id, $title, $content, $this->userId, $physical, $namelt, $idfile);
 		});
 	}
 

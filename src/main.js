@@ -19,17 +19,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import { generateFilePath } from '@nextcloud/router'
+import { generateFilePath } from "@nextcloud/router";
 
-import Vue from 'vue'
-import App from './App'
+import Vue from "vue";
+import App from "./App";
+import SmartTable from "vuejs-smart-table";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import "bootstrap/dist/js/bootstrap.js";
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+
+Vue.use(SmartTable);
 
 // eslint-disable-next-line
-__webpack_public_path__ = generateFilePath(appName, '', 'js/')
+__webpack_public_path__ = generateFilePath(appName, "", "js/");
 
-Vue.mixin({ methods: { t, n } })
+Vue.mixin({ methods: { t, n } });
 
 export default new Vue({
-	el: '#content',
-	render: h => h(App),
-})
+  el: "#content",
+  render: (h) => h(App),
+});

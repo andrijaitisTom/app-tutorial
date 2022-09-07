@@ -39,10 +39,57 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'notnull' => true,
 				'default' => ''
 			]);
-
+			$table->addColumn('physical', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('namelt', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('idfile', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['user_id'], 'notestutorial_user_id_index');
 		}
+		if (!$schema->hasTable('agreements')) {
+			$table = $schema->createTable('agreements');
+			$table->addColumn('id', 'integer', [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('title', 'string', [
+				'notnull' => true,
+				'length' => 200
+			]);
+			$table->addColumn('user_id', 'string', [
+				'notnull' => true,
+				'length' => 200,
+			]);
+			$table->addColumn('content', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('physical', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('namelt', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('idfile', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			
+			$table->setPrimaryKey(['id']);
+			$table->addIndex(['user_id'], 'agreements_user_id_index');
+		}
+
 		return $schema;
 	}
 }
