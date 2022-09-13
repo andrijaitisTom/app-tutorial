@@ -7,12 +7,12 @@
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Agreements','agreements')" />
-			<!-- <AppNavigationNew v-if="!loading"
+			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Ceo Resolutions')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Ceo Resolutions','ceoresolutions')" /> -->
+				@click="loadNewFolder('Ceoresolutions','ceoresolutions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Mb decisions')"
 				:disabled="false"
@@ -316,6 +316,7 @@ export default {
 				const nodesResponse = await axios.get(generateUrl(`/apps/notestutorial/nodelist/${folderName}`))
 				this.nodes = nodesResponse.data
 
+				console.log(response)
 				this.currentEndpoint = endpointName
 				this.currentTableInfo = tableInfo[folderName]
 
@@ -377,7 +378,7 @@ export default {
 						dateOfTheDocument: 'N/A 030',
 						orderType: 'N/A 031',
 						registrationNumberCdro: 'N/A 032',
-
+						registrationNumberCdrsbd: 'N/A 033',
 					}, endpointName)
 				}
 

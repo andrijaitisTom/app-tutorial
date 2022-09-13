@@ -64,7 +64,7 @@ class MbdecisionService {
 		$mbdecision->setIdfile($idfile);
 		$mbdecision->setTitle($title);
 		$mbdecision->setPhysicalLocation($physicalLocation);
-		$mbdecision->setDateOfTheDocument($dateOfTheDocument);
+		$mbdecision->setdateOfTheDocument($dateOfTheDocument);
 		$mbdecision->setValidity($validity);
 		$mbdecision->setForm($form);
 		$mbdecision->setDocumentStatus($documentStatus);
@@ -95,7 +95,7 @@ class MbdecisionService {
 			$mbdecision->setIdfile($idfile);
 			$mbdecision->setTitle($title);
 			$mbdecision->setPhysicalLocation($physicalLocation);
-			$mbdecision->setDateOfTheDocument($dateOfTheDocument);
+			$mbdecision->setdateOfTheDocument($dateOfTheDocument);
 			$mbdecision->setValidity($validity);
 			$mbdecision->setForm($form);
 			$mbdecision->setDocumentStatus($documentStatus);

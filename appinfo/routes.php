@@ -12,6 +12,10 @@ return [
 
 		'mbdecision' => ['url' => '/mbdecisions'],
 		'mbdecision_api' => ['url' => '/api/0.1/mbdecisions'],
+
+		'ceoresolution' => ['url' => '/ceoresolutions'],
+		'ceoresolution_api' => ['url' => '/api/0.1/ceoresolutions'],
+
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
@@ -22,6 +26,8 @@ return [
 		['name' => 'contract_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'mbdecision_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
+		['name' => 'ceoresolution_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],

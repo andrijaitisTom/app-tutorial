@@ -65,14 +65,14 @@
 
 
 
-  "Ceo resolutions": [
+  "Ceoresolutions": [
      { "header": "name" , "key" : "name"},
      { "header": "Title" , "key" : "title"},
      { "header": "Date (date of the document)" , "key" : "dateOfTheDocument"},
      { "header": "Physical location" , "key" : "physicalLocation"},
      { "header": "Validity" , "key" : "validity"},
-     { "header": "Form" , "key" : "  form"},
-     { "header": "Document Status" , "key" : "documentStatus"},
+     { "header": "Form" , "key" : "form"},
+     { "header": "Document Status" , "key" : "documentStatus" },
      { "header": "Registration Number (CDR-O)" , "key" : "registrationNumberCdro"},
      { "header": "Participants" , "key" : "participants"},
      { "header": "Order Type" , "key" : "orderType"},
@@ -81,20 +81,23 @@
       ]
   ,
 
-  "Sb decisions": [
-        { "header": "name" },
-        { "header": "Title" },
-        { "header": "Date (date of the document)" },
-        { "header": "Physical location" },
-        { "header": "Validity" },
-        { "header": "Form" },
-        { "header": "Document Status" },
-        { "header": "Participants" },
-        { "header": "Registration Number (CDR-SBD)" },
-        { "header": "Decision Type" },
-        { "header": "Relation" },
-        { "header": "Name (LT)" }
+
+
+  "Sbdecisions": [
+        { "header": "name" , "key":"name"},
+        { "header": "Title" , "key":"title"},
+        { "header": "Date (date of the document)" , "key":"dateOfTheDocument"},
+        { "header": "Physical location" , "key":"physicalLocation"},
+        { "header": "Validity" , "key":"validity"},
+        { "header": "Form" , "key":"form"},
+        { "header": "Document Status" , "key":"documentStatus"},
+        { "header": "Participants" , "key":"participants"},
+        { "header": "Registration Number (CDR-SBD)" , "key":"registrationNumberCdrsbd"},
+        { "header": "Decision Type" , "key":"decisionType"},
+        { "header": "Relation" , "key":"relation"},
+        { "header": "Name (LT)", "key":"namelt" }
       ]
+
   ,
 
   "Outsourcing agreements": [
