@@ -1,87 +1,58 @@
 <template>
 	<div id="content" class="app-notestutorial">
 		<AppNavigation>
-			<!-- <AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'New note')"
-				:disabled="false"
-				button-id="new-notestutorial-button"
-				button-class="icon-add"
-				@click="newNote" /> -->
-
-			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Templates')"
-				:disabled="false"
-				button-id="new-notestutorial-button"
-				button-class="icon-folder"
-				@click="loadNewFolder('Templates','notes')" />
-
-			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Documents')"
-				:disabled="false"
-				button-id="new-notestutorial-button"
-				button-class="icon-folder"
-				@click="loadNewFolder('Documents','notes')" />
-
-			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Photos')"
-				:disabled="false"
-				button-id="new-notestutorial-button"
-				button-class="icon-folder"
-				@click="loadNewFolder('Photos','notes')" />
-
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Agreements')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Agreements','agreements')" />
-			<!-- <ul>
-				<AppNavigationItem v-for="note in notes"
-					:key="note.id"
-					:title="note.title ? note.title : t('notestutorial', 'New note')"
-					:class="{ active: currentNoteId === note.id }"
-					@click="openNote(note)">
-					<template slot="actions">
-						<ActionButton v-if="note.id === -1" icon="icon-close" @click="cancelNewNote(note)">
-							{{ t('notestutorial', 'Cancel note creation') }}
-						</ActionButton>
-						<ActionButton v-else icon="icon-delete" @click="deleteNote(note)">
-							{{ t('notestutorial', 'Delete note') }}
-						</ActionButton>
-					</template>
-				</AppNavigationItem>
-			</ul> -->
+			<!-- <AppNavigationNew v-if="!loading"
+				:text="t('notestutorial', 'Ceo Resolutions')"
+				:disabled="false"
+				button-id="new-notestutorial-button"
+				button-class="icon-folder"
+				@click="loadNewFolder('Ceo Resolutions','ceoresolutions')" />
+			<AppNavigationNew v-if="!loading"
+				:text="t('notestutorial', 'Mbdecisions')"
+				:disabled="false"
+				button-id="new-notestutorial-button"
+				button-class="icon-folder"
+				@click="loadNewFolder('Mbdecisions','mbdecisions')" />
+			<AppNavigationNew v-if="!loading"
+				:text="t('notestutorial', 'Contracts')"
+				:disabled="false"
+				button-id="new-notestutorial-button"
+				button-class="icon-folder"
+				@click="loadNewFolder('Contracts','contracts')" /> -->
 		</AppNavigation>
 		<AppContent>
-			<div v-if="currentNote" class="editPanel">
-				<input ref="title"
-					v-model="currentNote.title"
-					type="text"
-					:disabled="updating"
-					placeholder="title">
-				<textarea ref="content"
-					v-model="currentNote.content"
-					:disabled="updating"
-					placeholder="content" />
-				<textarea ref="physical"
-					v-model="currentNote.physical"
-					:disabled="updating"
-					placeholder="physical" />
-				<textarea ref="namelt"
-					v-model="currentNote.namelt"
-					:disabled="updating"
-					placeholder="namelt" />
+			<div>
+				<b-modal id="modal-1"
+					ref="info-modal"
+					hide-footer
+					title="Edit file information">
+					<div v-if="currentNote" class="editPanel">
+						<div v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
+							<label>{{ `${tableInfo.header} :` }}</label>
+							<input ref="title"
+								v-model="currentNote[tableInfo.key]"
+								type="text"
+								:disabled="updating"
+								:placeholder="currentNote[tableInfo.key]">
+						</div>
+						<input type="button"
+							class="primary"
+							:value="t('notestutorial', 'Save')"
+							:disabled="updating || !savePossible"
+							@click="saveNote">
 
-				<input type="button"
-					class="primary"
-					:value="t('notestutorial', 'Save')"
-					:disabled="updating || !savePossible"
-					@click="saveNote">
-
-				<input type="button"
-					class="primary"
-					:value="t('notestutorial', 'Cancel')"
-					@click="cancelNewNote(currentNote)">
+						<input type="button"
+							class="primary"
+							:value="t('notestutorial', 'Cancel')"
+							@click="cancelNewNote(currentNote)">
+					</div>
+				</b-modal>
 			</div>
 			<!-- <div v-else id="emptycontent">
 				<div class="icon-file" />
@@ -124,10 +95,10 @@
 						selected-class="table-info"
 						@selectionChanged="selectedRows = $event">
 						<thead slot="head">
-							<v-th sort-key="idfile">
-								<b>File ID</b>
+							<v-th v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
+								<b>{{ tableInfo.header }}</b>
 							</v-th>
-							<v-th sort-key="nodeName" default-sort="asc">
+							<!-- <v-th sort-key="nodeName" default-sort="asc">
 								<b>File Name</b>
 							</v-th>
 							<v-th sort-key="content">
@@ -141,15 +112,17 @@
 							</v-th>
 							<v-th sort-key="mtime">
 								<b>Created</b>
-							</v-th>
+							</v-th> -->
 						</thead>
 						<tbody slot="body" slot-scope="{displayData}">
 							<v-tr v-for="row in displayData" :key="row.id" :row="row">
-								<td>{{ row.idfile }}</td>
-								<td>{{ row.nodeName }}</td>
+								<td v-for="rowInfo in currentTableInfo">
+									<span>{{ row[rowInfo.key] }}</span>
+								</td>
+								<!-- <td>{{ row.nodeName }}</td>
 								<td>{{ row.content }}</td>
 								<td>{{ row.physical }}</td>
-								<td>{{ row.namelt }}</td>
+								<td>{{ row.namelt }}</td> -->
 								<td>
 									{{ new Date(row.mtime * 1000).toLocaleString('en-GB', { dateStyle: 'short' }) }}
 								</td>
@@ -197,6 +170,8 @@ import { showError, showSuccess } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
 import users from './users.json'
 
+import tableInfo from './table/tableInfo.json'
+
 export default {
 	name: 'App',
 	components: {
@@ -219,10 +194,13 @@ export default {
 		users,
 		currentEndpoint: '',
 
+		tableInfo,
+		currentTableInfo: '',
+
 		filters: {
 			title: { value: '', keys: ['title'] },
-			location: { value: '', keys: ['physical'] },
-			all: { value: '', keys: ['title', 'idfile', 'physical', 'title', 'content'] },
+			location: { value: '', keys: ['physicalLocation'] },
+			all: { value: '', keys: ['title', 'idfile', 'physicalLocation', 'title', 'content'] },
 
 		},
 
@@ -306,6 +284,7 @@ export default {
 					physical: 'N/A',
 					namelt: 'N/A',
 					idfile: JSON.stringify(currentObject.id),
+					description: 'N/A',
 				})
 			}
 
@@ -324,7 +303,12 @@ export default {
 	 * Fetch list of nodes when the component is loaded
 	 */
 	methods: {
-
+		showModal() {
+			this.$refs['info-modal'].show()
+		},
+		hideModal() {
+			this.$refs['info-modal'].hide()
+		},
 		async loadNewFolder(folderName, endpointName) {
 			try {
 				const response = await axios.get(generateUrl(`/apps/notestutorial/${endpointName}`))
@@ -333,6 +317,8 @@ export default {
 				this.nodes = nodesResponse.data
 
 				this.currentEndpoint = endpointName
+				this.currentTableInfo = tableInfo[folderName]
+
 				const notesIds = []
 				const nodesIds = []
 
@@ -346,6 +332,10 @@ export default {
 					notesIds.push(element.idfile)
 
 				}
+
+				console.log(nodesIds)
+				console.log(notesIds)
+
 				const matches = nodesIds.filter(id => !notesIds.includes(JSON.stringify(id)))
 
 				for (let index = 0; index < matches.length; index++) {
@@ -353,11 +343,41 @@ export default {
 					const currentObject = this.nodes.find(node => node.id === currentID)
 					this.createNote({
 						id: -1,
-						title: JSON.stringify(currentObject.nodeName),
-						content: 'N/A',
-						physical: 'N/A',
-						namelt: 'N/A',
+						name: JSON.stringify(currentObject.nodeName),
+						title: 'N/A 001',
 						idfile: JSON.stringify(currentObject.id),
+						content: 'N/A 002',
+						physical: 'N/A 003',
+						namelt: 'N/A 004',
+						description: 'N/A 005',
+						comments: 'N/A 006',
+						outsourcing: 'N/A 007',
+						it: 'N/A 008',
+						validSince: 'N/A 009',
+						validUntil: 'N/A 010',
+						form: 'N/A 011',
+						firstParty: 'N/A 012',
+						secondParty: 'N/A 013',
+						physicalLocation: 'N/A 014',
+						materiality: 'N/A 015',
+						lastRiskAssessmentDate: 'N/A 016',
+						relation: 'N/A 017',
+						date: 'N/A 018',
+						registrationNumberContract: 'N/A 019',
+						inForceUntil: 'N/A 020',
+						counterparties: 'N/A 021',
+						corporateOwner: 'N/A 022',
+						personalOwner: 'N/A 023',
+						documentType: 'N/A 024',
+						registrationNumberCdrmbd: 'N/A 025',
+						decisionType: 'N/A 026',
+						participants: 'N/A 027',
+						documentStatus: 'N/A 028',
+						validity: 'N/A 029',
+						dateOfTheDocument: 'N/A 030',
+						orderType: 'N/A 031',
+						registrationNumberCdro: 'N/A 032',
+
 					}, endpointName)
 				}
 
@@ -391,6 +411,7 @@ export default {
 			this.$nextTick(() => {
 				this.$refs.content.focus()
 			})
+			this.showModal()
 		},
 		/**
 		 * Create a new note and focus the note content field automatically
@@ -411,7 +432,7 @@ export default {
 		 * create a new note or save
 		 */
 		saveNote() {
-
+			this.hideModal()
 			if (this.currentNoteId === -1) {
 				this.createNote(this.currentNote)
 			} else {
@@ -433,6 +454,7 @@ export default {
 					physical: '',
 					namelt: '',
 					idfile: '',
+					description: '',
 				})
 				this.$nextTick(() => {
 					this.$refs.title.focus()
@@ -443,6 +465,7 @@ export default {
 		 * Abort creating a new note
 		 */
 		cancelNewNote() {
+			this.hideModal()
 			this.notes.splice(this.notes.findIndex((note) => note.id === -1), 1)
 			this.currentNoteId = null
 		},
@@ -489,6 +512,7 @@ export default {
 		 * Delete a note, remove it from the frontend and show a hint
 		 *
 		 * if you wish to use it, edit this function to accept endpointName to the axios request instead of current /notes/
+		 *
 		 * @param {object} note Note object
 		 */
 		async deleteNote(note) {
@@ -563,9 +587,10 @@ textarea {
 }
 
 .editPanel{
-	padding-top: 100px;
+	padding-top: 10px;
 }
 .filterInput{
 	width: 100%;
 }
+
 </style>

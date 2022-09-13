@@ -50,9 +50,38 @@ class AgreementApiController extends ApiController {
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function create(string $title, string $content, string $physical, string $namelt, string $idfile): DataResponse {
+	public function create(string $title, string $content, string $physical, string $namelt, string $idfile, string $description,
+	string $date,
+	string $comments,
+	string $outsourcing,
+	string $it,
+	string $validSince,
+	string $validUntil,
+	string $form,
+	string $firstParty,
+	string $secondParty,
+	string $physicalLocation,
+	string $materiality,
+	string $lastRiskAssessmentDate,
+	string $relation,
+	): DataResponse {
 		return new DataResponse($this->service->create($title, $content,
-			$this->userId, $physical, $namelt, $idfile));
+			$this->userId, $physical, $namelt, $idfile	, $description,	
+			 $date,
+
+			$comments,
+			$outsourcing,
+			$it,
+			$validSince,
+			$validUntil,
+			$form,
+			$firstParty,
+			$secondParty,
+			$physicalLocation,
+			$materiality,
+			$lastRiskAssessmentDate,
+			$relation,
+		));
 	}
 
 	/**
@@ -61,9 +90,52 @@ class AgreementApiController extends ApiController {
 	 * @NoAdminRequired
 	 */
 	public function update(int $id, string $title,
-						   string $content, string $physical,  string $namelt, string $idfile): DataResponse {
-		return $this->handleNotFound(function () use ($id, $title, $content, $physical, $namelt, $idfile) {
-			return $this->service->update($id, $title, $content, $this->userId, $physical, $namelt, $idfile);
+						   string $content, string $physical,  string $namelt, string $idfile,  $description,
+						   	string $date,
+
+						   string $comments,
+						   string $outsourcing,
+						   string $it,
+						   string $validSince,
+						   string $validUntil,
+						   string $form,
+						   string $firstParty,
+						   string $secondParty,
+						   string $physicalLocation,
+						   string $materiality,
+						   string $lastRiskAssessmentDate,
+						   string $relation,
+						   ): DataResponse {
+		return $this->handleNotFound(function () use ($id, $title, $content, $physical, $namelt, $idfile, $description,
+		$comments,
+			$outsourcing,
+			$it,
+			$validSince,
+			$validUntil,
+			$form,
+			$firstParty,
+			$secondParty,
+			$physicalLocation,
+			$materiality,
+			$lastRiskAssessmentDate,
+			$relation,
+			$date,
+		) {
+			return $this->service->update($id, $title, $content, $this->userId, $physical, $namelt, $idfile, $description,
+			$comments,
+			$outsourcing,
+			$it,
+			$validSince,
+			$validUntil,
+			$form,
+			$firstParty,
+			$secondParty,
+			$physicalLocation,
+			$materiality,
+			$lastRiskAssessmentDate,
+			$relation,
+			$date,
+		);
 		});
 	}
 

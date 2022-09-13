@@ -1,0 +1,175 @@
+{
+  "Agreements": [
+    { "header": "Title" , "key" : "title"},
+    { "header": "Date" , "key" : "date"},
+    { "header": "Description" , "key" : "description"},
+    { "header": "Comments" , "key" : "comments"},
+    { "header": "Outsourcing" , "key" : "outsourcing"},
+    { "header": "IT" , "key" : "it"},
+    { "header": "Valid Since" , "key" : "validSince"},
+    { "header": "Valid Until" , "key" : "validUntil"},
+    { "header": "Form" , "key" : "form"},
+    { "header": "First Party" , "key" : "firstParty"},
+    { "header": "Second Party" , "key" : "secondParty"},
+    { "header": "Physical location" , "key" : "physicalLocation"},
+    { "header": "Materiality" , "key" : "materiality"},
+    { "header": "Last risk assessment date" , "key" : "lastRiskAssessmentDate"},
+    { "header": "Relation" , "key" : "relation"},
+    { "header": "Name (LT)" , "key" : "namelt"}      
+
+  ],
+
+
+  "Contracts": [
+       { "header": "name", "key" :        "name"  },
+       { "header": "Title", "key" :        "title"  },
+       { "header": "Registration Number (Contract)", "key" :        "registrationNumberContract"  },
+       { "header": "Description", "key" :        "description"  },
+       { "header": "Date", "key" :        "date"  },
+       { "header": "In force until (date)", "key" :        "inForceUntil"  },
+       { "header": "Counterparties", "key" :        "counterparties"  },
+       { "header": "Corporate Owner", "key" :        "corporateOwner"  },
+       { "header": "Personal owner", "key" :        "personalOwner"  },
+       { "header": "IT", "key" :        "it"  },
+       { "header": "Outsourcing", "key" :        "outsourcing"  },
+       { "header": "Materiality", "key" :        "materiality"  },
+       { "header": "Last risk assessment date", "key" :        "lastRiskAssessmentDate"  },
+       { "header": "Document Type", "key" :        "documentType"  },
+       { "header": "Physical location", "key" :        "physicalLocation"  },
+       { "header": "Comments", "key" :        "comments"  },
+       { "header": "Relation", "key" :        "relation"  },
+       { "header": "Name (LT)", "key" :        "namelt" }
+
+
+]
+  ,
+
+  "Mbdecisions": [
+      { "header": "Title" , "key" :       "title" },
+      { "header": "Physical location" , "key" :       "physicalLocation" },
+      { "header": "Date (date of the document)" , "key" :       "dateOfTheDocument)" },
+      { "header": "Validity" , "key" :       "validity" },
+      { "header": "Form" , "key" :       "form" },
+      { "header": "Document Status" , "key" :       "documentStatus" },
+      { "header": "Participants" , "key" :       "participants" },
+      { "header": "Decision Type" , "key" :       "decisionType" },
+      { "header": "Registration Number (CDR-MBD)" , "key" :       "registrationNumberCdrmbd" },
+      { "header": "Relation" , "key" :       "relation" },
+      { "header": "Name (LT)", "key" :       "namelt" }
+      ]
+  ,
+
+
+
+
+
+
+
+
+  "Ceo resolutions": [
+     { "header": "name" , "key" : "name"},
+     { "header": "Title" , "key" : "title"},
+     { "header": "Date (date of the document)" , "key" : "dateOfTheDocument"},
+     { "header": "Physical location" , "key" : "physicalLocation"},
+     { "header": "Validity" , "key" : "validity"},
+     { "header": "Form" , "key" : "  form"},
+     { "header": "Document Status" , "key" : "documentStatus"},
+     { "header": "Registration Number (CDR-O)" , "key" : "registrationNumberCdro"},
+     { "header": "Participants" , "key" : "participants"},
+     { "header": "Order Type" , "key" : "orderType"},
+     { "header": "Relation" , "key" : "relation"},
+     { "header": "Name (LT)", "key" : "namelt" }
+      ]
+  ,
+
+  "Sb decisions": [
+        { "header": "name" },
+        { "header": "Title" },
+        { "header": "Date (date of the document)" },
+        { "header": "Physical location" },
+        { "header": "Validity" },
+        { "header": "Form" },
+        { "header": "Document Status" },
+        { "header": "Participants" },
+        { "header": "Registration Number (CDR-SBD)" },
+        { "header": "Decision Type" },
+        { "header": "Relation" },
+        { "header": "Name (LT)" }
+      ]
+  ,
+
+  "Outsourcing agreements": [
+    { "header": "name"},
+    { "header": "Title"},
+    { "header": "Date"},
+    { "header": "Description"},
+    { "header": "Comments"},
+    { "header": "Outsourcing"},
+    { "header": "Outsourcing function audit date"},
+    { "header": "Parties related to the Company who also use this service"},
+    { "header": "Valid Since"},
+    { "header": "Valid Until"},
+    { "header": "Form"},
+    { "header": "Physical location"},
+    { "header": "Materiality"},
+    { "header": "Nature of Function"},
+    { "header": "Last risk assessment date"},
+    { "header": "Last Risk Assessment Result"},
+    { "header": "Name (LT)"},
+    { "header": "Basis for Materiality"},
+    { "header": "Location of Data"},
+    { "header": "Location of Services"},
+    { "header": "Transfer of Data"},
+    { "header": "Bank of Lithuania Approval Date"},
+    { "header": "Bank of Lithuania Notification Date"},
+    { "header": "Is the Service Provider Related to UAB 'Pervesk'"},
+    { "header": "Agreement Approved By"},
+    { "header": "Governing Law of the Agreement"},
+    { "header": "Subcontractors"},
+    { "header": "Service Provider Address"},
+    { "header": "Service Provider Legal Entity Code"},
+    { "header": "Service Provider Name"},
+    { "header": "Service Provider Parent Company"},
+    { "header": "Service Provider Substitutability Assessment Result"},
+    { "header": "Alternative Service Providers"},
+    { "header": "Does this (critical or material) function support business operations that are time-critical"},
+    { "header": "Price of Agreement"},
+    { "header": "Events when outsourced function was not provided at agreed and/or commonly accepted level"}
+     ]
+  ,
+
+  "Policies and instructions": [
+   { "header" : "name"},
+   { "header" : "Title"},
+   { "header" : "Type (PI)"},
+   { "header" : "Approval Date"},
+   { "header" : "Responsible Unit"},
+   { "header" : "Validity"},
+   { "header" : "Owner"},
+   { "header" : "Relation"},
+   { "header" : "Name (LT)"},
+   { "header" : "Area"}
+      ]
+  ,
+
+  "Sent or received documents": [
+ { "header" : "name"},
+ { "header" : "Title"},
+ { "header" : "Date (receipt date)"},
+ { "header" : "Sender"},
+ { "header" : "Recipient"},
+ { "header" : "Recipient Employee"},
+ { "header" : "Document Form"},
+ { "header" : "Document Type"},
+ { "header" : "Delivery Method"},
+ { "header" : "Date (date of the document)"},
+ { "header" : "Physical location"},
+ { "header" : "Registration Number (TD)"},
+ { "header" : "Document Organizer"},
+ { "header" : "Direction"},
+ { "header" : "Relation"},
+ { "header" : "Name (LT)"}
+      ]
+
+  
+}

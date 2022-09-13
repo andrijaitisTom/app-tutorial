@@ -6,6 +6,9 @@ return [
 		'note_api' => ['url' => '/api/0.1/notes'],
 		'agreement' => ['url' => '/agreements'],
 		'agreement_api' => ['url' => '/api/0.1/agreements'],
+
+		'contract' => ['url' => '/contracts'],
+		'contract_api' => ['url' => '/api/0.1/contracts'],
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
@@ -13,8 +16,9 @@ return [
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'agreement_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
+		['name' => 'contract_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
-			
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],
 			['name' => 'page#index', 'url' => '/filters', 'verb' => 'GET', 'postfix' => 'filters'],
 			['name' => 'file#index', 'url' => '/nodelist', 'verb' => 'GET'],

@@ -44,18 +44,86 @@ class AgreementController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $title, string $content, string $physical, string $namelt, string $idfile): DataResponse {
+	public function create(string $title, string $content, string $physical, string $namelt, string $idfile, string $description,
+	string $comments,
+	string $outsourcing,
+	string $it,
+	string $validSince,
+	string $validUntil,
+	string $form,
+	string $firstParty,
+	string $secondParty,
+	string $physicalLocation,
+	string $materiality,
+	string $lastRiskAssessmentDate,
+	string $relation,
+	string $date
+	): DataResponse {
 		return new DataResponse($this->service->create($title, $content,
-			$this->userId, $physical, $namelt, $idfile));
+			$this->userId, $physical, $namelt, $idfile, $description,
+			$comments,
+			$outsourcing,
+			$it,
+			$validSince,
+			$validUntil,
+			$form,
+			$firstParty,
+			$secondParty,
+			$physicalLocation,
+			$materiality,
+			$lastRiskAssessmentDate,
+			$relation,
+			$date
+		));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
 	public function update(int $id, string $title,
-						   string $content, string $physical, string $namelt, string $idfile): DataResponse {
-		return $this->handleNotFound(function () use ($id, $title, $content, $physical, $namelt, $idfile) {
-			return $this->service->update($id, $title, $content, $this->userId, $physical, $namelt, $idfile);
+						   string $content, string $physical, string $namelt, string $idfile, string $description,
+						   string $comments,
+						   string $outsourcing,
+						   string $it,
+						   string $validSince,
+						   string $validUntil,
+						   string $form,
+						   string $firstParty,
+						   string $secondParty,
+						   string $physicalLocation,
+						   string $materiality,
+						   string $lastRiskAssessmentDate,
+						   string $relation,
+						   string $date
+						   ): DataResponse {
+		return $this->handleNotFound(function () use ($id, $title, $content, $physical, $namelt, $idfile,$description,		$comments,
+		$outsourcing,
+		$it,
+		$validSince,
+		$validUntil,
+		$form,
+		$firstParty,
+		$secondParty,
+		$physicalLocation,
+		$materiality,
+		$lastRiskAssessmentDate,
+		$relation,$date,
+		) {
+			return $this->service->update($id, $title, $content, $this->userId, $physical, $namelt, $idfile,$description,
+			$comments,
+			$outsourcing,
+			$it,
+			$validSince,
+			$validUntil,
+			$form,
+			$firstParty,
+			$secondParty,
+			$physicalLocation,
+			$materiality,
+			$lastRiskAssessmentDate,
+			$relation,
+			$date
+		);
 		});
 	}
 

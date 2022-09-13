@@ -14,6 +14,20 @@ class Agreement extends Entity implements JsonSerializable {
 	protected $physical;
 	protected $namelt;
 	protected $idfile;
+	protected $description;
+	protected $comments;
+	protected $outsourcing;
+	protected $it;
+	protected $validSince;
+	protected $validUntil;
+	protected $form;
+	protected $firstParty;
+	protected $secondParty;
+	protected $physicalLocation;
+	protected $materiality;
+	protected $lastRiskAssessmentDate;
+	protected $relation;
+	protected $date;
 
 	public function jsonSerialize(): array {
 		return [
@@ -22,7 +36,22 @@ class Agreement extends Entity implements JsonSerializable {
 			'content' => $this->content,
 			'physical' => $this->physical,
 			'namelt' => $this->namelt,
-			'idfile' => $this->idfile
+			'idfile' => $this->idfile,
+
+			'description' => $this->	description,
+			'comments' => $this->	comments,
+			'outsourcing' => $this->	outsourcing,
+			'it' => $this->	it,
+			'validSince' => $this->	validSince,
+			'validUntil' => $this->	validUntil,
+			'form' => $this->	form,
+			'firstParty' => $this->	firstParty,
+			'secondParty' => $this->	secondParty,
+			'physicalLocation' => $this->	physicalLocation,
+			'materiality' => $this->	materiality,
+			'lastRiskAssessmentDate' => $this->	lastRiskAssessmentDate,
+			'relation' => $this->	relation,
+			'date' => $this->	date,
 		];
 	}
 }

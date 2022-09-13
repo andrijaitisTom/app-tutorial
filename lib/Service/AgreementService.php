@@ -45,18 +45,63 @@ class AgreementService {
 		}
 	}
 
-	public function create($title, $content, $userId, $physical, $namelt, $idfile) {
+
+	public function create($title, $content, $userId, $physical, $namelt, $idfile,$description,
+	$comments,
+	$outsourcing,
+	$it,
+	$validSince,
+	$validUntil,
+	$form,
+	$firstParty,
+	$secondParty,
+	$physicalLocation,
+	$materiality,
+	$lastRiskAssessmentDate,
+	$relation,
+	$date,
+	) {
 		$agreement = new Agreement();
 		$agreement->setTitle($title);
 		$agreement->setContent($content);
 		$agreement->setUserId($userId);
+		$agreement->setIdfile($idfile);
 		$agreement->setPhysical($physical);
 		$agreement->setNamelt($namelt);
-		$agreement->setIdfile($idfile);
+		$agreement->setDescription($description);
+	$agreement-> setComments(	$comments);
+	$agreement-> setOutsourcing(	$outsourcing);
+	$agreement-> setIt(	$it);
+	$agreement-> setValidSince(	$validSince);
+	$agreement-> setValidUntil(	$validUntil);
+	$agreement-> setForm(	$form);
+	$agreement-> setFirstParty(	$firstParty);
+	$agreement-> setSecondParty(	$secondParty);
+	$agreement-> setPhysicalLocation(	$physicalLocation);
+	$agreement-> setMateriality(	$materiality);
+	$agreement-> setLastRiskAssessmentDate(	$lastRiskAssessmentDate);
+	$agreement-> setRelation(	$relation);
+	$agreement-> setDate(	$date);
+
+
 		return $this->mapper->insert($agreement);
 	}
 
-	public function update($id, $title, $content, $userId, $physical, $namelt, $idfile) {
+	public function update($id, $title, $content, $userId, $physical, $namelt, $idfile, $description,
+	$comments,
+	$outsourcing,
+	$it,
+	$validSince,
+	$validUntil,
+	$form,
+	$firstParty,
+	$secondParty,
+	$physicalLocation,
+	$materiality,
+	$lastRiskAssessmentDate,
+	$relation,
+	$date,
+	) {
 		try {
 			$agreement = $this->mapper->find($id, $userId);
 			$agreement->setTitle($title);
@@ -64,6 +109,21 @@ class AgreementService {
 			$agreement->setPhysical($physical);
 			$agreement->setNamelt($namelt);
 			$agreement->setIdfile($idfile);
+			$agreement->setDescription($description);
+			$agreement-> setDate(	$date);
+	
+	$agreement-> setComments(	$comments);
+	$agreement-> setOutsourcing(	$outsourcing);
+	$agreement-> setIt(	$it);
+	$agreement-> setValidSince(	$validSince);
+	$agreement-> setValidUntil(	$validUntil);
+	$agreement-> setForm(	$form);
+	$agreement-> setFirstParty(	$firstParty);
+	$agreement-> setSecondParty(	$secondParty);
+	$agreement-> setPhysicalLocation(	$physicalLocation);
+	$agreement-> setMateriality(	$materiality);
+	$agreement-> setLastRiskAssessmentDate(	$lastRiskAssessmentDate);
+	$agreement-> setRelation(	$relation);
 			return $this->mapper->update($agreement);
 		} catch (Exception $e) {
 			$this->handleException($e);
