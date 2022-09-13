@@ -31,6 +31,12 @@
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Sbdecisions','sbdecisions')" />
+			<AppNavigationNew v-if="!loading"
+				:text="t('notestutorial', 'Outsourcing Agreements')"
+				:disabled="false"
+				button-id="new-notestutorial-button"
+				button-class="icon-folder"
+				@click="loadNewFolder('OutsourcingAgreements','outsourcingagreements')" />
 		</AppNavigation>
 		<AppContent>
 			<div>
@@ -385,6 +391,43 @@ export default {
 						orderType: 'N/A 031',
 						registrationNumberCdro: 'N/A 032',
 						registrationNumberCdrsbd: 'N/A 033',
+						outsourcingFunctionAuditDate: 'N/A 034',
+						partiesRelatedToTheCompanyWhoAlsoUseThisService: 'N/A035',
+						natureOfFunction: 'N/A036',
+						lastRiskAssessmentResult: 'N/A037',
+						basisForMateriality: 'N/A038',
+						locationOfData: 'N/A039',
+						locationOfServices: 'N/A040',
+						transferOfData: 'N/A041',
+						bankOfLithuaniaApprovalDate: 'N/A042',
+						bankOfLithuaniaNotificationDate: 'N/A043',
+						isTheServiceProviderRelatedToUabPervesk: 'N/A044',
+						agreementApprovedBy: 'N/A045',
+						governingLawOfTheAgreement: 'N/A046',
+						subcontractors: 'N/A047',
+						serviceProviderAddress: 'N/A048',
+						serviceProviderLegalEntityCode: 'N/A049',
+						serviceProviderName: 'N/A050',
+						serviceProviderParentCompany: 'N/A051',
+						serviceProviderSubstitutabilityAssessmentResult: 'N/A052',
+						alternativeServiceProviders: 'N/A053',
+						doesThisFunctionSupportBusinessOperationsCritical: 'N/A054',
+						priceOfAgreement: 'N/A055',
+						eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel: 'N/A056',
+						typePi: 'N/A057',
+						approvalDate: 'N/A058',
+						responsibleUnit: 'N/A059',
+						owner: 'N/A060',
+						area: 'N/A061',
+						dateReceiptDate: 'N/A062',
+						sender: 'N/A063',
+						recipient: 'N/A064',
+						recipientEmployee: 'N/A065',
+						documentForm: 'N/A066',
+						deliveryMethod: 'N/A067',
+						registrationNumberTd: 'N/A068',
+						documentOrganizer: 'N/A069',
+						direction: 'N/A070',
 					}, endpointName)
 				}
 

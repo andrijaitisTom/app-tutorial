@@ -1,126 +1,219 @@
-Array of unique fields
+		'Title'
+		'Date'
+		'Description'
+		'Comments'
+		'Outsourcing'
+		'IT'
+		'Valid Since'
+		'Valid Until'
+		'Form'
+		'First Party'
+		'Second Party'
+		'Physical location'
+		'Materiality'
+		'Last risk assessment date'
+		'Relation'
+		'Name (LT)'
+		'name'
+		'Registration Number (Contract)'
+		'In force until (date)'
+		'Counterparties'
+		'Corporate Owner'
+		'Personal owner'
+		'Document Type'
+		'Date (date of the document)'
+		'Validity'
+		'Document Status'
+		'Participants'
+		'Decision Type'
+		'Registration Number (CDR-MBD)'
+		'Registration Number (CDR-O)'
+		'Order Type'
+		'Registration Number (CDR-SBD)'
+		
 
-['Title', 'Date',  'Description',  'Comments',   'Outsourcing',    'IT',     'Valid Since', 'Valid Until', 'Form', 
-'First Party', 'Second Party', 'Physical location', 'Materiality', 'Last risk assessment date', 'Relation', 'Name (LT)', 
+		'Outsourcing function audit date'
+		'Parties related to the Company who also use this service'
+		'Nature of Function'
+		'Last Risk Assessment Result'
+		'Basis for Materiality'
+		'Location of Data'
+		'Location of Services'
+		'Transfer of Data'
+		'Bank of Lithuania Approval Date'
+		'Bank of Lithuania Notification Date'
+		'Is the Service Provider Related to UAB Pervesk'
+		'Agreement Approved By'
+		'Governing Law of the Agreement'
+		'Subcontractors'
+		'Service Provider Address'
+		'Service Provider Legal Entity Code'
+		'Service Provider Name'
+		'Service Provider Parent Company'
+		'Service Provider Substitutability Assessment Result'
+		'Alternative Service Providers'
+		'Does this (critical or material) function support business operations that are time-critical'
+		'Price of Agreement'
+		'Events when outsourced function was not provided at agreed and/or commonly accepted level'
+		'Type (PI)'
+		'Approval Date'
+		'Responsible Unit'
+		'Owner'
+		'Area'
+		'Date (receipt date)'
+		'Sender'
+		'Recipient'
+		'Recipient Employee'
+		'Document Form'
+		'Delivery Method'
+		'Registration Number (TD)'
+		'Document Organizer'
+		'Direction'
+
+    --- camelCase ---
+    title
+date
+description
+comments
+outsourcing
+it
+validSince
+validUntil
+form
+firstParty
+secondParty
+physicalLocation
+materiality
+lastRiskAssessmentDate
+relation
+nameLt
+name
+registrationNumberContract
+inForceUntilDate
+counterparties
+corporateOwner
+personalOwner
+documentType
+dateDateOfTheDocument
+validity
+documentStatus
+participants
+decisionType
+registrationNumberCdrMbd
+registrationNumberCdrO
+orderType
+registrationNumberCdrSbd
 
 
-
-'Name', 
-'Registration Number (Contract)', 
-'In force until (date)',
- 'Counterparties',
-  'Corporate Owner',
- 'Personal owner', 
- 'Document Type', 
- 'Date (date of the document)',
-  'Validity',
-   'Document Status', 
-   'Participants',
-  'Decision Type',
-   'Registration Number (CDR-MBD)', 
-   'Registration Number (CDR-O)',
-    'Order Type', 
-    'Registration Number (CDR-SBD)',
-   'Outsourcing function audit date', 
-   'Parties related to the Company who also use this service', 
-   'Nature of Function',
-    'Last Risk Assessment Result', 
-    'Basis for Materiality', 
-    'Location of Data', 
-    'Location of Services', 
-    'Transfer of Data',
-     'Bank of Lithuania Approval Date',
-      'Bank of Lithuania Notification Date',
-       'Is the Service Provider Related to UAB Pervesk', 
-     'Agreement Approved By', 
-     'Governing Law of the Agreement', 
-     'Subcontractors',
-      'Service Provider Address', 
-     'Service Provider Legal Entity Code',
-      'Service Provider Name', 
-      'Service Provider Parent Company', 
-      'Service Provider Substitutability Assessment Result',
-      'Alternative Service Providers', 
-      'Does this (critical or material) function support business operations that are time-critical', 
-      'Price of Agreement',
-       'Events when outsourced function was not provided at agreed and/or commonly accepted level', 
-       'Type (PI)',
-       'Approval Date', 
-       'Responsible Unit', 
-       'Owner', 
-       'Area', 
-       'Date (receipt date)', 
-       'Sender', 
-       'Recipient',
-        'Recipient Employee', 
-        'Document Form',
-        'Delivery Method',
-         'Registration Number (TD)', 
-         'Document Organizer', 
-         'Direction']
-
-'Name', 
+outsourcingFunctionAuditDate
+partiesRelatedToTheCompanyWhoAlsoUseThisService
+natureOfFunction
+lastRiskAssessmentResult
+basisForMateriality
+locationOfData
+locationOfServices
+transferOfData
+bankOfLithuaniaApprovalDate
+bankOfLithuaniaNotificationDate
+isTheServiceProviderRelatedToUabPervesk
+agreementApprovedBy
+governingLawOfTheAgreement
+subcontractors
+serviceProviderAddress
+serviceProviderLegalEntityCode
+serviceProviderName
+serviceProviderParentCompany
+serviceProviderSubstitutabilityAssessmentResult
+alternativeServiceProviders
+doesThisFunctionSupportBusinessOperationsCritical
+priceOfAgreement
+eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel
+typePi
+approvalDate
+responsibleUnit
+owner
+area
+dateReceiptDate
+sender
+recipient
+recipientEmployee
+documentForm
+deliveryMethod
+registrationNumberTd
+documentOrganizer
+direction
 
 
+-- snake_case ---
+title
+date
+description
+comments
+outsourcing
+it
+valid_since
+valid_until
+form
+first_party
+second_party
+physical_location
+materiality
+last_risk_assessment_date
+relation
+name_lt
+name
+registration_number_contract
+in_force_until_date
+counterparties
+corporate_owner
+personal_owner
+document_type
+date_date_of_the_document
+validity
+document_status
+participants
+decision_type
+registration_number_cdr_mbd
+registration_number_cdr_o
+order_type
+registration_number_cdr_sbd
 
 
+outsourcing_function_audit_date
+parties_related_to_the_company_who_also_use_this_service
+nature_of_function
+last_risk_assessment_result
+basis_for_materiality
+location_of_data
+location_of_services
+transfer_of_data
+bank_of_lithuania_approval_date
+bank_of_lithuania_notification_date
+is_the_service_provider_related_to_uab_pervesk
+agreement_approved_by
+governing_law_of_the_agreement
+subcontractors
+service_provider_address
+service_provider_legal_entity_code
+service_provider_name
+service_provider_parent_company
+service_provider_substitutability_assessment_result
+alternative_service_providers
+does_this_critical_or_material_function_support_business_operations_that_are_time_critical
+price_of_agreement
+events_when_outsourced_function_was_not_provided_at_agreed_and_or_commonly_accepted_level
+type_pi
+approval_date
+responsible_unit
+owner
+area
+date_receipt_date
+sender
+recipient
+recipient_employee
+document_form
+delivery_method
+registration_number_td
+document_organizer
+direction
 
-
-
-
----------------------------------
-
-
-
-'Registration Number (Contract)', 
-'In force until (date)',
-'Counterparties',
-'Corporate Owner',
-'Personal owner', 
-'Document Type', 
-'Date (date of the document)',
-'Validity',
-'Document Status', 
-'Participants',
-'Decision Type',
-'Registration Number (CDR-MBD)', 
-'Registration Number (CDR-O)',
-'Order Type', 
-'Registration Number (CDR-SBD)',
-'Outsourcing function audit date', 
-'Parties related to the Company who also use this service', 
-'Nature of Function',
-'Last Risk Assessment Result', 
-'Basis for Materiality', 
-'Location of Data', 
-'Location of Services', 
-'Transfer of Data',
-'Bank of Lithuania Approval Date',
-'Bank of Lithuania Notification Date',
-'Is the Service Provider Related to UAB Pervesk', 
-'Agreement Approved By', 
-'Governing Law of the Agreement', 
-'Subcontractors',
-'Service Provider Address', 
-'Service Provider Legal Entity Code',
-'Service Provider Name', 
-'Service Provider Parent Company', 
-'Service Provider Substitutability Assessment Result',
-'Alternative Service Providers', 
-'Does this (critical or material) function support business operations that are time-critical', 
-'Price of Agreement',
-'Events when outsourced function was not provided at agreed and/or commonly accepted level', 
-'Type (PI)',
-'Approval Date', 
-'Responsible Unit', 
-'Owner', 
-'Area', 
-'Date (receipt date)', 
-'Sender', 
-'Recipient',
-'Recipient Employee', 
-'Document Form',
-'Delivery Method',
-'Registration Number (TD)', 
-'Document Organizer', 
-'Direction']

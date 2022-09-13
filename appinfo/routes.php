@@ -19,6 +19,10 @@ return [
 		'sbdecision' => ['url' => '/sbdecisions'],
 		'sbdecision_api' => ['url' => '/api/0.1/sbdecisions'],
 
+		'outsourcingagreement' => ['url' => '/outsourcingagreements'],
+		'outsourcingagreement_api' => ['url' => '/api/0.1/outsourcingagreements'],
+
+		
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
@@ -33,6 +37,8 @@ return [
 		['name' => 'ceoresolution_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'sbdecision_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
+		['name' => 'outsourcingagreement_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],
