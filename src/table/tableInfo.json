@@ -16,29 +16,27 @@
     { "header": "Last risk assessment date" , "key" : "lastRiskAssessmentDate"},
     { "header": "Relation" , "key" : "relation"},
     { "header": "Name (LT)" , "key" : "namelt"}      
-
   ],
 
-
   "Contracts": [
-       { "header": "name", "key" :        "name"  },
-       { "header": "Title", "key" :        "title"  },
-       { "header": "Registration Number (Contract)", "key" :        "registrationNumberContract"  },
+       { "header": "name", "key" :  "name"  },
+       { "header": "Title", "key" :  "title"  },
+       { "header": "Registration Number (Contract)", "key" : "registrationNumberContract"  },
        { "header": "Description", "key" :        "description"  },
        { "header": "Date", "key" :        "date"  },
-       { "header": "In force until (date)", "key" :        "inForceUntil"  },
-       { "header": "Counterparties", "key" :        "counterparties"  },
-       { "header": "Corporate Owner", "key" :        "corporateOwner"  },
-       { "header": "Personal owner", "key" :        "personalOwner"  },
+       { "header": "In force until (date)", "key" : "inForceUntil"  },
+       { "header": "Counterparties", "key" : "counterparties"  },
+       { "header": "Corporate Owner", "key" : "corporateOwner"  },
+       { "header": "Personal owner", "key" :  "personalOwner"  },
        { "header": "IT", "key" :        "it"  },
-       { "header": "Outsourcing", "key" :        "outsourcing"  },
-       { "header": "Materiality", "key" :        "materiality"  },
-       { "header": "Last risk assessment date", "key" :        "lastRiskAssessmentDate"  },
-       { "header": "Document Type", "key" :        "documentType"  },
-       { "header": "Physical location", "key" :        "physicalLocation"  },
-       { "header": "Comments", "key" :        "comments"  },
-       { "header": "Relation", "key" :        "relation"  },
-       { "header": "Name (LT)", "key" :        "namelt" }
+       { "header": "Outsourcing", "key" :  "outsourcing"  },
+       { "header": "Materiality", "key" :  "materiality"  },
+       { "header": "Last risk assessment date", "key" : "lastRiskAssessmentDate"  },
+       { "header": "Document Type", "key" : "documentType"  },
+       { "header": "Physical location", "key" : "physicalLocation"  },
+       { "header": "Comments", "key" :  "comments"  },
+       { "header": "Relation", "key" :  "relation"  },
+       { "header": "Name (LT)", "key" :  "namelt" }
 
 
 ]
