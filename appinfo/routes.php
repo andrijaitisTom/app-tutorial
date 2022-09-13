@@ -16,6 +16,9 @@ return [
 		'ceoresolution' => ['url' => '/ceoresolutions'],
 		'ceoresolution_api' => ['url' => '/api/0.1/ceoresolutions'],
 
+		'sbdecision' => ['url' => '/sbdecisions'],
+		'sbdecision_api' => ['url' => '/api/0.1/sbdecisions'],
+
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
@@ -28,6 +31,8 @@ return [
 		['name' => 'mbdecision_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'ceoresolution_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
+		['name' => 'sbdecision_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],

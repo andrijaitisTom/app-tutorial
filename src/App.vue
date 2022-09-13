@@ -25,6 +25,12 @@
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Contracts','contracts')" />
+			<AppNavigationNew v-if="!loading"
+				:text="t('notestutorial', 'Sb decisions')"
+				:disabled="false"
+				button-id="new-notestutorial-button"
+				button-class="icon-folder"
+				@click="loadNewFolder('Sbdecisions','sbdecisions')" />
 		</AppNavigation>
 		<AppContent>
 			<div>
