@@ -19,7 +19,7 @@
   ],
 
   "Contracts": [
-       { "header": "name", "key" :  "name"  },
+       { "header": "name", "key" :   "name"  },
        { "header": "Title", "key" :  "title"  },
        { "header": "Registration Number (Contract)", "key" : "registrationNumberContract"  },
        { "header": "Description", "key" :        "description"  },
@@ -40,12 +40,13 @@
 
 
 ]
+
   ,
 
   "Mbdecisions": [
       { "header": "Title" , "key" :       "title" },
       { "header": "Physical location" , "key" :       "physicalLocation" },
-      { "header": "Date (date of the document)" , "key" :       "dateOfTheDocument)" },
+      { "header": "Date (date of the document)" , "key" :       "dateOfTheDocument" },
       { "header": "Validity" , "key" :       "validity" },
       { "header": "Form" , "key" :       "form" },
       { "header": "Document Status" , "key" :       "documentStatus" },

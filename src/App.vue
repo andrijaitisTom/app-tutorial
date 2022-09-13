@@ -12,13 +12,13 @@
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Ceo Resolutions','ceoresolutions')" />
+				@click="loadNewFolder('Ceo Resolutions','ceoresolutions')" /> -->
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Mbdecisions')"
+				:text="t('notestutorial', 'Mb decisions')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Mbdecisions','mbdecisions')" /> -->
+				@click="loadNewFolder('Mbdecisions','mbdecisions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Contracts')"
 				:disabled="false"

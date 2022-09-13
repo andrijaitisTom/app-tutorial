@@ -9,6 +9,9 @@ return [
 
 		'contract' => ['url' => '/contracts'],
 		'contract_api' => ['url' => '/api/0.1/contracts'],
+
+		'mbdecision' => ['url' => '/mbdecisions'],
+		'mbdecision_api' => ['url' => '/api/0.1/mbdecisions'],
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
@@ -17,6 +20,8 @@ return [
 		['name' => 'agreement_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'contract_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
+		['name' => 'mbdecision_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],
