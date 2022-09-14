@@ -43,6 +43,12 @@
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('PoliciesAndInstructions','policiesandinstructions')" />
+			<AppNavigationNew v-if="!loading"
+				:text="t('notestutorial', 'Sent Or Received Documents')"
+				:disabled="false"
+				button-id="new-notestutorial-button"
+				button-class="icon-folder"
+				@click="loadNewFolder('SentOrReceivedDocuments','sentorreceiveddocuments')" />
 		</AppNavigation>
 		<AppContent>
 			<div>

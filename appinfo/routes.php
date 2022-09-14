@@ -25,6 +25,9 @@ return [
 		'policiesandinstructions' => ['url' => '/policiesandinstructions'],
 		'policiesandinstructions_api' => ['url' => '/api/0.1/policiesandinstructions'],
 
+		'sentorreceiveddocument' => ['url' => '/sentorreceiveddocuments'],
+		'sentorreceiveddocument_api' => ['url' => '/api/0.1/sentorreceiveddocuments'],
+
 		
 	],
 	'routes' => [
@@ -45,7 +48,8 @@ return [
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'policiesandinstructions_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
-
+		['name' => 'sentorreceiveddocument_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],
 			['name' => 'page#index', 'url' => '/filters', 'verb' => 'GET', 'postfix' => 'filters'],
 			['name' => 'file#index', 'url' => '/nodelist', 'verb' => 'GET'],

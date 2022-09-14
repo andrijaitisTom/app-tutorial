@@ -158,24 +158,25 @@
 
 
 
-  "Sent or received documents": [
- { "header" : "name"},
- { "header" : "Title"},
- { "header" : "Date (receipt date)"},
- { "header" : "Sender"},
- { "header" : "Recipient"},
- { "header" : "Recipient Employee"},
- { "header" : "Document Form"},
- { "header" : "Document Type"},
- { "header" : "Delivery Method"},
- { "header" : "Date (date of the document)"},
- { "header" : "Physical location"},
- { "header" : "Registration Number (TD)"},
- { "header" : "Document Organizer"},
- { "header" : "Direction"},
- { "header" : "Relation"},
- { "header" : "Name (LT)"}
+  "SentOrReceivedDocuments": [
+ { "header" : "name", "key" : "name"},
+ { "header" : "Title", "key" : "title"},
+ { "header" : "Date (receipt date)", "key" : "dateReceiptDate"},
+ { "header" : "Sender", "key" : "sender"},
+ { "header" : "Recipient", "key" : "recipient"},
+ { "header" : "Recipient Employee", "key" : "recipientEmployee"},
+ { "header" : "Document Form", "key" : "documentForm"},
+ { "header" : "Document Type", "key" : "documentType"},
+ { "header" : "Delivery Method", "key" : "deliveryMethod"},
+ { "header" : "Date (date of the document)", "key" : "dateOfTheDocument "},
+ { "header" : "Physical location", "key" : "physicalLocation"},
+ { "header" : "Registration Number (TD)", "key" : "registrationNumberTd"},
+ { "header" : "Document Organizer", "key" : "documentOrganizer"},
+ { "header" : "Direction", "key" : "direction"},
+ { "header" : "Relation", "key" : "relation"},
+ { "header" : "Name (LT)", "key" : "namelt"}
       ]
 
   
 }
+
