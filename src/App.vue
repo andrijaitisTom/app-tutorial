@@ -1,6 +1,6 @@
 <template>
-	<div id="content" class="app-notestutorial">
-		<AppNavigation>
+	<div id="content" class="app-notestutorial"  @click="handleNavigationToggle()">
+		<AppNavigation >
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Agreements')"
 				:disabled="false"
@@ -59,11 +59,24 @@
 					<div v-if="currentNote" class="editPanel">
 						<div v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
 							<label>{{ `${tableInfo.header} :` }}</label>
-							<input ref="title"
+							<input v-if="tableInfo.fieldType !== 'date' && tableInfo.fieldType !== 'boolean' && tableInfo.fieldType !== 'number'"
+								ref="title"
 								v-model="currentNote[tableInfo.key]"
 								type="text"
 								:disabled="updating"
 								:placeholder="currentNote[tableInfo.key]">
+							<div v-if="tableInfo.fieldType === 'date'">
+								<datetime v-model="currentNote[tableInfo.key]" type="datetime" placeholder="Click to enter date"/>
+							</div>
+							<div v-if="tableInfo.fieldType === 'boolean'" class="radioContainer">
+								<input type="radio" id="yes" value="Yes" v-model="currentNote[tableInfo.key]" />
+								<label for="yes" class="radioLabel">Yes</label>
+								<input type="radio" id="no" value="No" v-model="currentNote[tableInfo.key]" />
+								<label for="no" class="radioLabel">No</label>					
+						</div>
+						<div v-if="tableInfo.fieldType === 'number'">
+								<input type="number" v-model="currentNote[tableInfo.key]" />
+							</div>
 						</div>
 						<input type="button"
 							class="primary"
@@ -117,39 +130,20 @@
 						class="my-2 table table-striped"
 						selection-mode="single"
 						selected-class="table-info"
-						@selectionChanged="selectedRows = $event">
+						@selectionChanged="selectedRows = $event"
+						v-bind:class="{'navigationOpen': isNavigationOpen, 'navigationClosed': !isNavigationOpen}">
 						<thead slot="head">
 							<v-th v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
 								<b>{{ tableInfo.header }}</b>
 							</v-th>
-							<!-- <v-th sort-key="nodeName" default-sort="asc">
-								<b>File Name</b>
-							</v-th>
-							<v-th sort-key="content">
-								<b>Content</b>
-							</v-th>
-							<v-th sort-key="physical">
-								<b>Physical Location</b>
-							</v-th>
-							<v-th sort-key="namelt">
-								<b>Name LT</b>
-							</v-th>
-							<v-th sort-key="mtime">
-								<b>Created</b>
-							</v-th> -->
 						</thead>
-						<tbody slot="body" slot-scope="{displayData}">
+						<tbody slot="body" slot-scope="{displayData}" >
 							<v-tr v-for="row in displayData" :key="row.id" :row="row">
 								<td v-for="rowInfo in currentTableInfo">
-									<span>{{ row[rowInfo.key] }}</span>
+									<span v-if="rowInfo.fieldType !== 'date'">{{ row[rowInfo.key] }}</span>
+									<span v-if="rowInfo.fieldType === 'date'">{{ new Date(row[rowInfo.key]).toLocaleString('lt-LT') }}</span>
 								</td>
-								<!-- <td>{{ row.nodeName }}</td>
-								<td>{{ row.content }}</td>
-								<td>{{ row.physical }}</td>
-								<td>{{ row.namelt }}</td> -->
-								<td>
-									{{ new Date(row.mtime * 1000).toLocaleString('en-GB', { dateStyle: 'short' }) }}
-								</td>
+
 								<td>
 									<input type="button"
 										class="primary"
@@ -187,7 +181,7 @@ import AppContent from '@nextcloud/vue/dist/Components/AppContent'
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
 import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
-
+import { Datetime } from 'vue-datetime'
 import '@nextcloud/dialogs/styles/toast.scss'
 import { generateUrl } from '@nextcloud/router'
 import { showError, showSuccess } from '@nextcloud/dialogs'
@@ -204,6 +198,7 @@ export default {
 		AppNavigation,
 		AppNavigationItem,
 		AppNavigationNew,
+		datetime: Datetime,
 	},
 	data: () => ({
 		name: 'Selection',
@@ -217,9 +212,10 @@ export default {
 		loading: true,
 		users,
 		currentEndpoint: '',
-
 		tableInfo,
 		currentTableInfo: '',
+		dateAndTime: '',
+		isNavigationOpen: true,
 
 		filters: {
 			title: { value: '', keys: ['title'] },
@@ -340,7 +336,7 @@ export default {
 				const nodesResponse = await axios.get(generateUrl(`/apps/notestutorial/nodelist/${folderName}`))
 				this.nodes = nodesResponse.data
 
-				console.log(response)
+				// console.log(response)
 				this.currentEndpoint = endpointName
 				this.currentTableInfo = tableInfo[folderName]
 
@@ -358,8 +354,8 @@ export default {
 
 				}
 
-				console.log(nodesIds)
-				console.log(notesIds)
+				// console.log(nodesIds)
+				// console.log(notesIds)
 
 				const matches = nodesIds.filter(id => !notesIds.includes(JSON.stringify(id)))
 
@@ -445,6 +441,7 @@ export default {
 
 				this.nodesAndNotes = this.nodes.map(t1 => ({ ...t1, ...this.notes.find(t2 => Number(t2.idfile) === t1.id) }))
 
+			
 			} catch (e) {
 				console.error(e)
 				showError(t('notestutorial', 'Could not fetch notes'))
@@ -452,6 +449,34 @@ export default {
 			this.loading = false
 		},
 
+		/**
+		 * handle navigation closing and opening
+		 * 
+		 *
+		 */
+		 handleNavigationToggle() {
+			const navigationElement = document.getElementById('app-navigation-vue')
+				if (navigationElement.classList.contains('app-navigation--close')) {
+					this.isNavigationOpen = false
+					console.log(this.isNavigationOpen)
+				} else {
+					this.isNavigationOpen = true
+					console.log(this.isNavigationOpen)
+
+				}
+		},
+		/*
+		 *
+		 * handle time change
+		 *
+		 *
+		 */
+		handleDateChange() {
+			console.log(this.dateAndTime)
+			const timestamp = new Date(this.dateAndTime).valueOf()
+			console.log(timestamp)
+			console.log(new Date(timestamp))
+		},
 		/**
 		 * open the clicked file
 		 *
@@ -652,6 +677,47 @@ textarea {
 	padding-top: 10px;
 }
 .filterInput{
+	width: 100%;
+}
+.container{
+	margin: auto 50px;
+}
+.navigationOpen td:first-child {
+background-color: #d0e3ff;
+position: -webkit-sticky;
+left: 12%;
+position: sticky;
+}
+.navigationOpen th:first-child {
+background-color: #e8f1ff;
+position: -webkit-sticky;
+left: 12%;
+position: sticky;
+}
+
+.navigationClosed td:first-child {
+background-color: #d0e3ff;
+position: -webkit-sticky;
+left: 0;
+position: sticky;
+}
+.navigationClosed th:first-child {
+background-color: #e8f1ff;
+position: -webkit-sticky;
+left: 0;
+position: sticky;
+}
+.radioContainer{
+	display: flex;
+	align-items: center;
+}
+.radioContainer input{
+	cursor: pointer;
+}
+.radioLabel{
+	margin: 0 5px;
+}
+.vdatetime-input{
 	width: 100%;
 }
 

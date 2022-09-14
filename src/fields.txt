@@ -217,3 +217,19 @@ registration_number_td
 document_organizer
 direction
 
+
+
+
+
+
+----------------
+field values:
+
+single line of text
+date and time
+multiple lines of text
+yes/no
+choice
+file
+person or group
+number

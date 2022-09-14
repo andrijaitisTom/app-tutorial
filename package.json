@@ -34,9 +34,12 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.0",
     "bootstrap-vue": "^2.22.0",
+    "luxon": "^1.28.0",
     "vue": "^2.7.0",
+    "vue-datetime": "^1.0.0-beta.14",
     "vuejs-smart-table": "^0.0.8",
-    "vuetify": "^2.6.9"
+    "vuetify": "^2.6.9",
+    "weekstart": "^1.1.0"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
