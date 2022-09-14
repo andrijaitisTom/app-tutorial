@@ -142,19 +142,21 @@
   ,
   
 
-  "Policies and instructions": [
-   { "header" : "name"},
-   { "header" : "Title"},
-   { "header" : "Type (PI)"},
-   { "header" : "Approval Date"},
-   { "header" : "Responsible Unit"},
-   { "header" : "Validity"},
-   { "header" : "Owner"},
-   { "header" : "Relation"},
-   { "header" : "Name (LT)"},
-   { "header" : "Area"}
+  "PoliciesAndInstructions": [
+   { "header" : "name", "key":"name"},
+   { "header" : "Title", "key":"title"},
+   { "header" : "Type (PI)", "key":"typePi"},
+   { "header" : "Approval Date", "key":"approvalDate"},
+   { "header" : "Responsible Unit", "key":"responsibleUnit"},
+   { "header" : "Validity", "key":"validity"},
+   { "header" : "Owner", "key":"owner"},
+   { "header" : "Relation", "key":"relation"},
+   { "header" : "Name (LT)", "key":"namelt"},
+   { "header" : "Area", "key":"area"}
       ]
   ,
+
+
 
   "Sent or received documents": [
  { "header" : "name"},

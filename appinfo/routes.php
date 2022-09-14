@@ -22,6 +22,9 @@ return [
 		'outsourcingagreement' => ['url' => '/outsourcingagreements'],
 		'outsourcingagreement_api' => ['url' => '/api/0.1/outsourcingagreements'],
 
+		'policiesandinstructions' => ['url' => '/policiesandinstructions'],
+		'policiesandinstructions_api' => ['url' => '/api/0.1/policiesandinstructions'],
+
 		
 	],
 	'routes' => [
@@ -39,6 +42,8 @@ return [
 		['name' => 'sbdecision_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'outsourcingagreement_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
+		['name' => 'policiesandinstructions_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],
