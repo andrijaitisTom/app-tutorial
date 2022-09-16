@@ -225,11 +225,33 @@ direction
 ----------------
 field values:
 
-single line of text
-date and time
-multiple lines of text
-yes/no
+	single line of text
+	date and time
+	multiple lines of text
+	yes/no
 choice
 file
-person or group
-number
+	person or group
+	number
+
+
+
+
+
+	title
+	 content
+	 physical
+	  namelt
+	  description
+	  comments
+	   outsourcing
+	   it`, `valid_since
+	   valid_until
+	    form
+		 first_party
+		  second_party
+		  physical_location
+		   materiality
+		    last_risk_assessment_date
+			 relation
+			 date

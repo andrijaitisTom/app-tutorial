@@ -1,54 +1,58 @@
 <template>
-	<div id="content" class="app-notestutorial"  @click="handleNavigationToggle()">
-		<AppNavigation >
+	<div id="content" class="app-notestutorial" @click="handleNavigationToggle()">
+		<AppNavigation class="navigationContainer">
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Agreements')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Agreements','agreements')" />
+				@click="loadNewFolder('Agreements', 'agreements')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Ceo Resolutions')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Ceoresolutions','ceoresolutions')" />
+				@click="loadNewFolder('Ceoresolutions', 'ceoresolutions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Mb decisions')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Mbdecisions','mbdecisions')" />
+				@click="loadNewFolder('Mbdecisions', 'mbdecisions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Contracts')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Contracts','contracts')" />
+				@click="loadNewFolder('Contracts', 'contracts')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Sb decisions')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('Sbdecisions','sbdecisions')" />
+				@click="loadNewFolder('Sbdecisions', 'sbdecisions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Outsourcing Agreements')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('OutsourcingAgreements','outsourcingagreements')" />
+				@click="loadNewFolder('OutsourcingAgreements', 'outsourcingagreements')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Policies And Instructions')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('PoliciesAndInstructions','policiesandinstructions')" />
+				@click="
+					loadNewFolder('PoliciesAndInstructions', 'policiesandinstructions')
+				" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('notestutorial', 'Sent Or Received Documents')"
 				:disabled="false"
 				button-id="new-notestutorial-button"
 				button-class="icon-folder"
-				@click="loadNewFolder('SentOrReceivedDocuments','sentorreceiveddocuments')" />
+				@click="
+					loadNewFolder('SentOrReceivedDocuments', 'sentorreceiveddocuments')
+				" />
 		</AppNavigation>
 		<AppContent>
 			<div>
@@ -57,48 +61,68 @@
 					hide-footer
 					title="Edit file information">
 					<div v-if="currentNote" class="editPanel">
-						<div v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
-							<label>{{ `${tableInfo.header} :` }}</label>
-							<input v-if="tableInfo.fieldType !== 'date' && tableInfo.fieldType !== 'boolean' && tableInfo.fieldType !== 'number'"
-								ref="title"
-								v-model="currentNote[tableInfo.key]"
-								type="text"
-								:disabled="updating"
-								:placeholder="currentNote[tableInfo.key]">
-							<div v-if="tableInfo.fieldType === 'date'">
-								<datetime v-model="currentNote[tableInfo.key]" type="datetime" placeholder="Click to enter date"/>
+						<form>
+							<div v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
+								<label>{{ `${tableInfo.header} :` }}</label>
+								<input v-if="
+										tableInfo.fieldType !== 'date' &&
+											tableInfo.fieldType !== 'boolean' &&
+											tableInfo.fieldType !== 'choice' &&
+											tableInfo.fieldType !== 'number'
+									"
+									ref="title"
+									v-model="currentNote[tableInfo.key]"
+									:required="tableInfo.required === 'required'"
+									type="text"
+									:disabled="updating"
+									:placeholder="currentNote[tableInfo.key]">
+								<div v-if="tableInfo.fieldType === 'date'">
+									<datetime v-model="currentNote[tableInfo.key]"
+										type="datetime"
+										placeholder="Click to enter date"
+										:required="tableInfo.required === 'required'" />
+								</div>
+								<div v-if="tableInfo.fieldType === 'boolean'" class="radioContainer">
+									<input id="yes"
+										v-model="currentNote[tableInfo.key]"
+										type="radio"
+										value="Yes">
+									<label for="yes" class="radioLabel">Yes</label>
+									<input id="no"
+										v-model="currentNote[tableInfo.key]"
+										type="radio"
+										value="No">
+									<label for="no" class="radioLabel">No</label>
+								</div>
+								<div v-if="tableInfo.fieldType === 'number'">
+									<input v-model="currentNote[tableInfo.key]" type="number">
+								</div>
+								<div v-if="tableInfo.fieldType === 'choice'">
+									<select v-model="currentNote[tableInfo.key]">
+										<option v-for="option in tableInfo.options" :value="option" >
+											{{ option }}
+										</option>
+									</select>
+								</div>
 							</div>
-							<div v-if="tableInfo.fieldType === 'boolean'" class="radioContainer">
-								<input type="radio" id="yes" value="Yes" v-model="currentNote[tableInfo.key]" />
-								<label for="yes" class="radioLabel">Yes</label>
-								<input type="radio" id="no" value="No" v-model="currentNote[tableInfo.key]" />
-								<label for="no" class="radioLabel">No</label>					
-						</div>
-						<div v-if="tableInfo.fieldType === 'number'">
-								<input type="number" v-model="currentNote[tableInfo.key]" />
-							</div>
-						</div>
-						<input type="button"
-							class="primary"
-							:value="t('notestutorial', 'Save')"
-							:disabled="updating || !savePossible"
-							@click="saveNote">
+							<input type="submit"
+								class="primary"
+								:value="t('notestutorial', 'Save')"
+								:disabled="updating || savePossible"
+								@click="saveNote">
 
-						<input type="button"
-							class="primary"
-							:value="t('notestutorial', 'Cancel')"
-							@click="cancelNewNote(currentNote)">
+							<input type="button"
+								class="primary"
+								:value="t('notestutorial', 'Cancel')"
+								@click="cancelNewNote(currentNote)">
+						</form>
 					</div>
 				</b-modal>
 			</div>
-			<!-- <div v-else id="emptycontent">
-				<div class="icon-file" />
-				<h2>{{  t('notestutorial', '...')  }}</h2>
-			</div> -->
 
 			<template>
 				<div class="container">
-					<div class="filtersContainer">
+					<div v-if="currentFolderName !== ''" class="filtersContainer">
 						<div class="form-group">
 							<div class="col-auto">
 								<label class="form-label text-large mr-2 pr-2">Filter by Name:</label>
@@ -130,18 +154,25 @@
 						class="my-2 table table-striped"
 						selection-mode="single"
 						selected-class="table-info"
-						@selectionChanged="selectedRows = $event"
-						v-bind:class="{'navigationOpen': isNavigationOpen, 'navigationClosed': !isNavigationOpen}">
+						:class="{
+							navigationOpen: isNavigationOpen,
+							navigationClosed: !isNavigationOpen,
+						}"
+						@selectionChanged="selectedRows = $event">
 						<thead slot="head">
 							<v-th v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
 								<b>{{ tableInfo.header }}</b>
 							</v-th>
 						</thead>
-						<tbody slot="body" slot-scope="{displayData}" >
+						<tbody slot="body" slot-scope="{ displayData }">
 							<v-tr v-for="row in displayData" :key="row.id" :row="row">
 								<td v-for="rowInfo in currentTableInfo">
-									<span v-if="rowInfo.fieldType !== 'date'">{{ row[rowInfo.key] }}</span>
-									<span v-if="rowInfo.fieldType === 'date'">{{ new Date(row[rowInfo.key]).toLocaleString('lt-LT') }}</span>
+									<span v-if="rowInfo.fieldType !== 'date'">{{
+										row[rowInfo.key]
+									}}</span>
+									<span v-if="rowInfo.fieldType === 'date'">{{
+										new Date(row[rowInfo.key]).toLocaleString("lt-LT")
+									}}</span>
 								</td>
 
 								<td>
@@ -155,13 +186,19 @@
 									<input type="button"
 										class="primary"
 										:value="t('notestutorial', 'Open')"
-										@click="openFile(row.idfile, row.path )">
+										@click="openFile(row.idfile, row.path)">
 								</td>
 							</v-tr>
 						</tbody>
 					</v-table>
 				</div>
-				<strong>Selected:</strong>
+				<div v-if="currentFolderName === ''" id="emptycontent">
+					<div class="icon-file" />
+					<h2>
+						{{ t("notestutorial", "Select folder on left side to start") }}
+					</h2>
+				</div>
+				<!-- <strong>Selected:</strong>
 				<div v-if="selectedRows.length === 0" class="text-muted">
 					No Rows Selected
 				</div>
@@ -169,7 +206,7 @@
 					<li v-for="selected in selectedRows">
 						{{ selected }}
 					</li>
-				</ul>
+				</ul> -->
 			</template>
 		</AppContent>
 	</div>
@@ -216,18 +253,19 @@ export default {
 		currentTableInfo: '',
 		dateAndTime: '',
 		isNavigationOpen: true,
+		currentFolderName: '',
 
 		filters: {
 			title: { value: '', keys: ['title'] },
 			location: { value: '', keys: ['physicalLocation'] },
-			all: { value: '', keys: ['title', 'idfile', 'physicalLocation', 'title', 'content'] },
-
+			all: {
+				value: '',
+				keys: ['title', 'idfile', 'physicalLocation', 'title', 'content'],
+			},
 		},
-
 	}),
 
 	computed: {
-
 		/**
 		 * Return the currently selected note object
 		 *
@@ -242,86 +280,32 @@ export default {
 		},
 
 		/**
-		 * Returns true if a note is selected and its title is not empty
+		 * Returns true if one of the required fields in the current opened modal is empty
 		 *
 		 * @return {boolean}
 		 */
 		savePossible() {
-			return this.currentNote && this.currentNote.title !== ''
+			const allInputs = []
+
+			for (let index = 0; index < this.currentTableInfo.length; index++) {
+
+				const inputValue = this.currentNote[this.currentTableInfo[index].key]
+				const requiredValue = this.currentTableInfo[index].required
+				allInputs.push((inputValue !== '' && requiredValue === 'required') || (requiredValue !== 'required'))
+			}
+			const includesEmptyRequiredInputs = allInputs.includes(false)
+			return includesEmptyRequiredInputs
+
 		},
 	},
 	/**
-	 * Fetch list of notes when the component is loaded
+	 * change loading state after loaded
 	 */
 	async mounted() {
-
-		try {
-
-			const response = await axios.get(generateUrl('/apps/notestutorial/notes'))
-			this.notes = response.data
-			const nodesResponse = await axios.get(generateUrl('/apps/notestutorial/nodelist/Templates'))
-			this.nodes = nodesResponse.data
-
-			const notesIds = []
-			const nodesIds = []
-
-			for (let index = 0; index < this.nodes.length; index++) {
-				const element = this.nodes[index]
-				// console.log(`node ${element.id}`)
-				nodesIds.push(element.id)
-
-			}
-			for (let index = 0; index < this.notes.length; index++) {
-				const element = this.notes[index]
-				// console.log(`note ${element.content}`)
-				notesIds.push(element.idfile)
-
-			}
-
-			// console.log(`notes ids - ${notesIds} ..... nodes ids -${nodesIds}`)
-
-			const matches = nodesIds.filter(id => !notesIds.includes(JSON.stringify(id)))
-			// console.log('matches')
-			// console.log(matches)
-
-			for (let index = 0; index < matches.length; index++) {
-				const currentID = matches[index]
-				const currentObject = this.nodes.find(node => node.id === currentID)
-				// console.log(currentObject)
-				// const currentFileInfo = {
-				// 	id: -1,
-				// 	title: currentObject.nodeName,
-				// 	content: currentObject.id,
-				// 	physical: currentObject.mimetype,
-				// 	namelt: currentObject.mimetype,
-				// }
-				// this.notRegistered.push(currentFileInfo)
-
-				this.createNote({
-					id: -1,
-					title: JSON.stringify(currentObject.nodeName),
-					content: 'N/A',
-					physical: 'N/A',
-					namelt: 'N/A',
-					idfile: JSON.stringify(currentObject.id),
-					description: 'N/A',
-				})
-			}
-
-			this.nodesAndNotes = this.nodes.map(t1 => ({ ...t1, ...this.notes.find(t2 => Number(t2.idfile) === t1.id) }))
-
-			// console.log(this.nodesAndNotes)
-
-		} catch (e) {
-			console.error(e)
-			showError(t('notestutorial', 'Could not fetch notes'))
-		}
 		this.loading = false
 		// console.log(this.notes)
 	},
-	/**
-	 * Fetch list of nodes when the component is loaded
-	 */
+
 	methods: {
 		showModal() {
 			this.$refs['info-modal'].show()
@@ -331,14 +315,19 @@ export default {
 		},
 		async loadNewFolder(folderName, endpointName) {
 			try {
-				const response = await axios.get(generateUrl(`/apps/notestutorial/${endpointName}`))
+				const response = await axios.get(
+					generateUrl(`/apps/notestutorial/${endpointName}`)
+				)
 				this.notes = response.data
-				const nodesResponse = await axios.get(generateUrl(`/apps/notestutorial/nodelist/${folderName}`))
+				const nodesResponse = await axios.get(
+					generateUrl(`/apps/notestutorial/nodelist/${folderName}`)
+				)
 				this.nodes = nodesResponse.data
 
 				// console.log(response)
 				this.currentEndpoint = endpointName
 				this.currentTableInfo = tableInfo[folderName]
+				this.currentFolderName = folderName
 
 				const notesIds = []
 				const nodesIds = []
@@ -346,102 +335,108 @@ export default {
 				for (let index = 0; index < this.nodes.length; index++) {
 					const element = this.nodes[index]
 					nodesIds.push(element.id)
-
 				}
 				for (let index = 0; index < this.notes.length; index++) {
 					const element = this.notes[index]
 					notesIds.push(element.idfile)
-
 				}
 
 				// console.log(nodesIds)
 				// console.log(notesIds)
 
-				const matches = nodesIds.filter(id => !notesIds.includes(JSON.stringify(id)))
+				const matches = nodesIds.filter(
+					(id) => !notesIds.includes(JSON.stringify(id))
+				)
 
 				for (let index = 0; index < matches.length; index++) {
 					const currentID = matches[index]
-					const currentObject = this.nodes.find(node => node.id === currentID)
-					this.createNote({
-						id: -1,
-						name: JSON.stringify(currentObject.nodeName),
-						title: 'N/A 001',
-						idfile: JSON.stringify(currentObject.id),
-						content: 'N/A 002',
-						physical: 'N/A 003',
-						namelt: 'N/A 004',
-						description: 'N/A 005',
-						comments: 'N/A 006',
-						outsourcing: 'N/A 007',
-						it: 'N/A 008',
-						validSince: 'N/A 009',
-						validUntil: 'N/A 010',
-						form: 'N/A 011',
-						firstParty: 'N/A 012',
-						secondParty: 'N/A 013',
-						physicalLocation: 'N/A 014',
-						materiality: 'N/A 015',
-						lastRiskAssessmentDate: 'N/A 016',
-						relation: 'N/A 017',
-						date: 'N/A 018',
-						registrationNumberContract: 'N/A 019',
-						inForceUntil: 'N/A 020',
-						counterparties: 'N/A 021',
-						corporateOwner: 'N/A 022',
-						personalOwner: 'N/A 023',
-						documentType: 'N/A 024',
-						registrationNumberCdrmbd: 'N/A 025',
-						decisionType: 'N/A 026',
-						participants: 'N/A 027',
-						documentStatus: 'N/A 028',
-						validity: 'N/A 029',
-						dateOfTheDocument: 'N/A 030',
-						orderType: 'N/A 031',
-						registrationNumberCdro: 'N/A 032',
-						registrationNumberCdrsbd: 'N/A 033',
-						outsourcingFunctionAuditDate: 'N/A 034',
-						partiesRelatedToTheCompanyWhoAlsoUseThisService: 'N/A035',
-						natureOfFunction: 'N/A036',
-						lastRiskAssessmentResult: 'N/A037',
-						basisForMateriality: 'N/A038',
-						locationOfData: 'N/A039',
-						locationOfServices: 'N/A040',
-						transferOfData: 'N/A041',
-						bankOfLithuaniaApprovalDate: 'N/A042',
-						bankOfLithuaniaNotificationDate: 'N/A043',
-						isTheServiceProviderRelatedToUabPervesk: 'N/A044',
-						agreementApprovedBy: 'N/A045',
-						governingLawOfTheAgreement: 'N/A046',
-						subcontractors: 'N/A047',
-						serviceProviderAddress: 'N/A048',
-						serviceProviderLegalEntityCode: 'N/A049',
-						serviceProviderName: 'N/A050',
-						serviceProviderParentCompany: 'N/A051',
-						serviceProviderSubstitutabilityAssessmentResult: 'N/A052',
-						alternativeServiceProviders: 'N/A053',
-						doesThisFunctionSupportBusinessOperationsCritical: 'N/A054',
-						priceOfAgreement: 'N/A055',
-						eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel: 'N/A056',
-						typePi: 'N/A057',
-						approvalDate: 'N/A058',
-						responsibleUnit: 'N/A059',
-						owner: 'N/A060',
-						area: 'N/A061',
-						dateReceiptDate: 'N/A062',
-						sender: 'N/A063',
-						recipient: 'N/A064',
-						recipientEmployee: 'N/A065',
-						documentForm: 'N/A066',
-						deliveryMethod: 'N/A067',
-						registrationNumberTd: 'N/A068',
-						documentOrganizer: 'N/A069',
-						direction: 'N/A070',
-					}, endpointName)
+					const currentObject = this.nodes.find(
+						(node) => node.id === currentID
+					)
+					this.createNote(
+						{
+							id: -1,
+							name: JSON.stringify(currentObject.nodeName),
+							title: 'N/A',
+							idfile: JSON.stringify(currentObject.id),
+							content: 'N/A',
+							physical: 'N/A',
+							namelt: 'N/A',
+							description: 'N/A',
+							comments: 'N/A',
+							outsourcing: 'N/A',
+							it: 'N/A',
+							validSince: 'N/A',
+							validUntil: 'N/A',
+							form: 'N/A',
+							firstParty: 'N/A',
+							secondParty: 'N/A',
+							physicalLocation: 'N/A',
+							materiality: 'N/A',
+							lastRiskAssessmentDate: 'N/A',
+							relation: 'N/A',
+							date: 'N/A',
+							registrationNumberContract: 'N/A',
+							inForceUntil: 'N/A',
+							counterparties: 'N/A',
+							corporateOwner: 'N/A',
+							personalOwner: 'N/A',
+							documentType: 'N/A',
+							registrationNumberCdrmbd: 'N/A',
+							decisionType: 'N/A',
+							participants: 'N/A',
+							documentStatus: 'N/A',
+							validity: 'N/A',
+							dateOfTheDocument: 'N/A',
+							orderType: 'N/A',
+							registrationNumberCdro: 'N/A',
+							registrationNumberCdrsbd: 'N/A',
+							outsourcingFunctionAuditDate: 'N/A',
+							partiesRelatedToTheCompanyWhoAlsoUseThisService: 'N/A',
+							natureOfFunction: 'N/A',
+							lastRiskAssessmentResult: 'N/A',
+							basisForMateriality: 'N/A',
+							locationOfData: 'N/A',
+							locationOfServices: 'N/A',
+							transferOfData: 'N/A',
+							bankOfLithuaniaApprovalDate: 'N/A',
+							bankOfLithuaniaNotificationDate: 'N/A',
+							isTheServiceProviderRelatedToUabPervesk: 'N/A',
+							agreementApprovedBy: 'N/A',
+							governingLawOfTheAgreement: 'N/A',
+							subcontractors: 'N/A',
+							serviceProviderAddress: 'N/A',
+							serviceProviderLegalEntityCode: 'N/A',
+							serviceProviderName: 'N/A',
+							serviceProviderParentCompany: 'N/A',
+							serviceProviderSubstitutabilityAssessmentResult: 'N/A',
+							alternativeServiceProviders: 'N/A',
+							doesThisFunctionSupportBusinessOperationsCritical: 'N/A',
+							priceOfAgreement: 'N/A',
+							eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel: 'N/A',
+							typePi: 'N/A',
+							approvalDate: 'N/A',
+							responsibleUnit: 'N/A',
+							owner: 'N/A',
+							area: 'N/A',
+							dateReceiptDate: 'N/A',
+							sender: 'N/A',
+							recipient: 'N/A',
+							recipientEmployee: 'N/A',
+							documentForm: 'N/A',
+							deliveryMethod: 'N/A',
+							registrationNumberTd: 'N/A',
+							documentOrganizer: 'N/A',
+							direction: 'N/A',
+						},
+						endpointName
+					)
 				}
 
-				this.nodesAndNotes = this.nodes.map(t1 => ({ ...t1, ...this.notes.find(t2 => Number(t2.idfile) === t1.id) }))
-
-			
+				this.nodesAndNotes = this.nodes.map((t1) => ({
+					...t1,
+					...this.notes.find((t2) => Number(t2.idfile) === t1.id),
+				}))
 			} catch (e) {
 				console.error(e)
 				showError(t('notestutorial', 'Could not fetch notes'))
@@ -451,19 +446,18 @@ export default {
 
 		/**
 		 * handle navigation closing and opening
-		 * 
+		 *
 		 *
 		 */
-		 handleNavigationToggle() {
+		handleNavigationToggle() {
 			const navigationElement = document.getElementById('app-navigation-vue')
-				if (navigationElement.classList.contains('app-navigation--close')) {
-					this.isNavigationOpen = false
-					console.log(this.isNavigationOpen)
-				} else {
-					this.isNavigationOpen = true
-					console.log(this.isNavigationOpen)
-
-				}
+			if (navigationElement.classList.contains('app-navigation--close')) {
+				this.isNavigationOpen = false
+				console.log(this.isNavigationOpen)
+			} else {
+				this.isNavigationOpen = true
+				console.log(this.isNavigationOpen)
+			}
 		},
 		/*
 		 *
@@ -483,17 +477,19 @@ export default {
 		 *@param {string} fileId ID of file you wish to open
 		 *
 		 */
-		 openFile(fileId) {
+		openFile(fileId) {
 			const host = new URL(window.location.href).origin
-			 const redirectTo = `${host}/nextcloud24.0.3/nextcloud/index.php/f/${fileId}`
-			 window.open(redirectTo)
+			const redirectTo = `${host}/nextcloud24.0.3/nextcloud/index.php/f/${fileId}`
+			window.open(redirectTo)
 		},
 		/**
 		 * open Editing menu for a row
 		 *
 		 * @param {object} row Note object
 		 */
-		 openEdit(row) {
+		openEdit(row) {
+			const splitPath = row.path.split('/')
+			const location = splitPath[1]
 			this.currentNoteId = row.id
 			this.$nextTick(() => {
 				this.$refs.content.focus()
@@ -553,7 +549,10 @@ export default {
 		 */
 		cancelNewNote() {
 			this.hideModal()
-			this.notes.splice(this.notes.findIndex((note) => note.id === -1), 1)
+			this.notes.splice(
+				this.notes.findIndex((note) => note.id === -1),
+				1
+			)
 			this.currentNoteId = null
 		},
 		/**
@@ -566,8 +565,13 @@ export default {
 			this.updating = true
 			try {
 				// console.log(note)
-				const response = await axios.post(generateUrl(`/apps/notestutorial/${endpointName}`), note)
-				const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
+				const response = await axios.post(
+					generateUrl(`/apps/notestutorial/${endpointName}`),
+					note
+				)
+				const index = this.notes.findIndex(
+					(match) => match.id === this.currentNoteId
+				)
 				this.$set(this.notes, index, response.data)
 				// console.log(index)
 				this.currentNoteId = response.data.id
@@ -586,9 +590,12 @@ export default {
 		async updateNote(note, endpointName) {
 			this.updating = true
 			try {
-				await axios.put(generateUrl(`/apps/notestutorial/${endpointName}/${note.id}`), note)
-				location.reload()
-
+				await axios.put(
+					generateUrl(`/apps/notestutorial/${endpointName}/${note.id}`),
+					note
+				)
+				// loadNewFolder here works like page reload after info update, because the information showed in the table is taken from Database.
+				this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 			} catch (e) {
 				console.error(e)
 				showError(t('notestutorial', 'Could not update the note'))
@@ -659,7 +666,7 @@ td {
 	flex-grow: 1;
 }
 
-input[type='text'] {
+input[type="text"] {
 	width: 100%;
 }
 
@@ -667,58 +674,75 @@ textarea {
 	flex-grow: 1;
 	width: 100%;
 }
-.filtersContainer{
+
+.filtersContainer {
 	display: flex;
 	justify-content: space-evenly;
 	padding: 50px 0;
 }
 
-.editPanel{
+.editPanel {
 	padding-top: 10px;
 }
-.filterInput{
+
+.filterInput {
 	width: 100%;
 }
-.container{
+
+.container {
 	margin: auto 50px;
 }
-.navigationOpen td:first-child {
-background-color: #d0e3ff;
-position: -webkit-sticky;
-left: 12%;
-position: sticky;
+.navigationOpen{
+	margin-left: -300px;
 }
+.navigationClosed{
+	margin-left: 0;
+}
+
+.navigationOpen td:first-child {
+	background-color: #d0e3ff;
+	position: -webkit-sticky;
+	padding-left: 310px;
+	left: 0;
+	position: sticky;
+}
+
 .navigationOpen th:first-child {
-background-color: #e8f1ff;
-position: -webkit-sticky;
-left: 12%;
-position: sticky;
+	background-color: #e8f1ff;
+	position: -webkit-sticky;
+	padding-left: 310px;
+	left: 0;
+	position: sticky;
 }
 
 .navigationClosed td:first-child {
-background-color: #d0e3ff;
-position: -webkit-sticky;
-left: 0;
-position: sticky;
+	background-color: #d0e3ff;
+	position: -webkit-sticky;
+	left: 0;
+	position: sticky;
 }
+
 .navigationClosed th:first-child {
-background-color: #e8f1ff;
-position: -webkit-sticky;
-left: 0;
-position: sticky;
+	background-color: #e8f1ff;
+	position: -webkit-sticky;
+	left: 0;
+	position: sticky;
 }
-.radioContainer{
+
+.radioContainer {
 	display: flex;
 	align-items: center;
 }
-.radioContainer input{
+
+.radioContainer input {
 	cursor: pointer;
 }
-.radioLabel{
+
+.radioLabel {
 	margin: 0 5px;
 }
-.vdatetime-input{
+
+.vdatetime-input {
 	width: 100%;
 }
-
 </style>
