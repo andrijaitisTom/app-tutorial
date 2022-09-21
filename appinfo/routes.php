@@ -28,10 +28,14 @@ return [
 		'sentorreceiveddocument' => ['url' => '/sentorreceiveddocuments'],
 		'sentorreceiveddocument_api' => ['url' => '/api/0.1/sentorreceiveddocuments'],
 
+		'directory' => ['url' => '/directories']
+
 		
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+		['name' => 'upload#checkChunk', 'url' => '/upload', 'verb' => 'GET'],
+		['name' => 'upload#upload', 'url' => '/upload', 'verb' => 'POST'],
 		['name' => 'note_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'agreement_api#preflighted_cors', 'url' => '/api/0.1/{path}',

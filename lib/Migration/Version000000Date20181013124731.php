@@ -760,6 +760,25 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 			$table->addIndex(['user_id'], 'sentorreceiveddocuments_user_id_index');
 		}
 
+		if (!$schema->hasTable('flowupload_directories')) {
+			$table = $schema->createTable('flowupload_directories');
+			$table->addColumn('id', 'integer', [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('user_id', 'string', [
+				'notnull' => true,
+				'length' => 200,
+			]);
+			$table->addColumn('directory', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+
+			$table->setPrimaryKey(['id']);
+			$table->addIndex(['user_id'], 'flowupload_user_id_index');
+		}
+
 		return $schema;
 	}
 }

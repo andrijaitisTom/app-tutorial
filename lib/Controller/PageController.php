@@ -7,10 +7,12 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\Util;
+use OCP\AppFramework\Http\ContentSecurityPolicy;
+
 
 class PageController extends Controller {
-	public function __construct(IRequest $request) {
-		parent::__construct(Application::APP_ID, $request);
+	public function __construct(string $AppName, IRequest $request) {
+		parent::__construct($AppName, $request);
 	}
 
 	/**
@@ -21,7 +23,15 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		Util::addScript(Application::APP_ID, 'notestutorial-main');
+		\OCP\Util::addScript('notestutorial', 'notestutorial-main');
+		\OCP\Util::addStyle('notestutorial', 'style');
 
-		return new TemplateResponse(Application::APP_ID, 'main');
+		$response = new TemplateResponse('notestutorial', 'main');
+
+		$csp = new ContentSecurityPolicy();
+        $csp->allowEvalScript(true);
+        $response->setContentSecurityPolicy($csp);
+
+		return $response;
 	}
 }

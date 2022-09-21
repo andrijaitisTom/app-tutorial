@@ -1,6 +1,6 @@
 {
   "Agreements": [
-    { "header": "Title" , "key" : "title", "fieldType":"", "required": "hidden"},
+    { "header": "Title" , "key" : "title", "fieldType":"", "required": ""},
     { "header": "Date" , "key" : "date", "fieldType":"", "required": "required"},
     { "header": "Description" , "key" : "description", "fieldType":"", "required": "required"},
     { "header": "Comments" , "key" : "comments", "fieldType":"", "required": "required"},
