@@ -1,0 +1,115 @@
+{
+    "area":[
+    "AML",
+    "Data Protection",
+    "Risk Management",
+    "ICT Security"
+    ]
+    ,
+    "decisionType":[
+    "Decision",
+    "Protocol",
+    "Minutes"
+    ],
+    "deliveryMethod":[
+        "E-mail",
+        "Post",
+        "E-delivery",
+        "Other"
+    ],
+    "direction":[
+        "Received",
+        "Sent"
+
+    ],
+    "documentForm":[
+    "Paper original",
+    "Paper copy",
+    "Electronic original (qualified e-signature)",
+    "Electronic copy (scanned or not signed)",
+    "Other"
+
+    ],
+    "documentStatus":[
+        "Signed",
+        "Reserved"
+    ],
+    "documentType":[
+"Agreement",
+"Letter",
+"Court Documents",
+"Other"
+
+    ],
+    "form":[
+        "Copy",
+        "Original"
+
+    ],
+    "materiality":[
+    "Material",
+    "Non-material"
+
+    ],
+    "orderType":[
+"Employment",
+"Work Safety",
+"Corporate",
+"Other"
+
+    ],
+    "responsibleUnit":[
+"Sole Shareholder",
+"Management Board",
+"Chief Executive Officer",
+"Compliance Division",
+"Risk Management Division",
+"Internal Audit Division",
+"AML/CTF Adviser",
+"Deputy CEO",
+"Legal Division",
+"AML/CTF Division",
+"Office Support Division",
+"Finance Division",
+"Operations Division",
+"Business Development Division",
+"Sales Division",
+"Transaction Monitoring Unit",
+"Ongoing Due Diligence Unit",
+"Quality Control Unit",
+"Individual Clients Onboarding Unit",
+"Corporate Clients Onboarding Unit",
+"Payment Services Analysis Unit",
+"Payment and Cards Operations Unit",
+"Business Development Unit",
+"Product Management Unit",
+"Sales Unit",
+"Business Relationship Management Unit"
+
+    ],
+    "typePi":[
+"Policy",
+"Instruction",
+"Other"
+
+    ],
+    "taskOutcome":[
+        "Approved",
+        "Rejected"
+
+    ],
+    "validity":[
+"Valid",
+"Repealed"
+
+    ],
+"it":[
+    "yes",
+    "no"
+],
+"outsourcing":[
+    "yes",
+    "no"
+]
+
+}

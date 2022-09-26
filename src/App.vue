@@ -53,12 +53,63 @@
 				@click="
 					loadNewFolder('SentOrReceivedDocuments', 'sentorreceiveddocuments')
 				" />
+			<div v-if="currentFolderName !== ''" class="filtersContainer">
+				<div v-for="filterName in filterNames[currentFolderName]" :key="filterName" class="form-group">
+					<div class="col-auto">
+						<label class="form-label text-large mr-2 pr-2">{{ filters[filterName].label }}</label>
+					</div>
+					<div v-if="filterName !== 'form' && filterName !== 'approvalDate' && filterName !== 'dateReceiptDate' && filterName !== 'lastRiskAssessmentDate' && filterName !== 'dateOfTheDocument' && filterName !== 'date' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'validSince' && filterName !== 'validUntil' && filterName !== 'form' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'documentStatus' && filterName !== 'validity' && filterName !== 'orderType' && filterName !== 'decisionType' && filterName !== 'deliveryMethod' && filterName !== 'direction' && filterName !== 'documentForm' && filterName !== 'documentType' && filterName !== 'validity' && filterName !== 'typePi' && filterName !== 'it'">
+						<div class="col">
+							<input v-model="filters[filterName].value" class="filterInput">
+						</div>
+					</div>
+					<div v-if="filterName === 'form' || filterName === 'it' || filterName === 'materiality' || filterName === 'outsourcing' || filterName === 'documentStatus' || filterName === 'validity' || filterName === 'orderType' || filterName === 'decisionType' || filterName === 'deliveryMethod' || filterName === 'direction' || filterName === 'documentForm' || filterName === 'documentType' || filterName === 'validity' || filterName === 'typePi' || filterName === 'it'">
+						<select v-model="filters[filterName].value"
+							class="selectFilter">
+							<option value="" selected>
+								---Select---
+							</option>
+							<option v-for="option in dropdownSelections[filterName]"
+								:key="option"
+								:value="option">
+								{{ option }}
+							</option>
+						</select>
+					</div>
+
+					<div v-if="filterName === 'date' || filterName === 'dateReceiptDate' || filterName === 'lastRiskAssessmentDate' || filterName === 'approvalDate' || filterName === 'dateOfTheDocument' || filterName === 'validSince' || filterName === 'validUntil'" class="dateFilterContainer">
+						<datetime v-model="filters[filterName].value.min"
+							type="datetime"
+							placeholder="Click to enter date" />
+						<select v-model="filters[filterName].value.select">
+							<option value="" selected style="color: grey;">
+								Action
+							</option>
+							<option value="on">
+								On
+							</option>
+							<option value="before">
+								Before
+							</option>
+							<option value="after">
+								After
+							</option>
+						</select>
+					</div>
+				</div>
+			</div>
 		</AppNavigation>
 		<AppContent>
 			<div>
+				<h1 v-if="currentFolderName !== ''" class="folderName">
+					{{ currentFolderName }}
+				</h1>
 				<b-modal id="modal-1"
 					ref="info-modal"
 					hide-footer
+					:no-close-on-esc="recentlyUploadedFileName !== ''"
+					:no-close-on-backdrop="recentlyUploadedFileName !== ''"
+					:hide-header-close="recentlyUploadedFileName !== ''"
 					title="Edit file information">
 					<div v-if="currentNote" class="editPanel">
 						<form>
@@ -68,8 +119,7 @@
 										tableInfo.fieldType !== 'date' &&
 											tableInfo.fieldType !== 'boolean' &&
 											tableInfo.fieldType !== 'choice' &&
-											tableInfo.fieldType !== 'number'
-									"
+											tableInfo.fieldType !== 'number'"
 									ref="title"
 									v-model="currentNote[tableInfo.key]"
 									:required="tableInfo.required === 'required'"
@@ -99,7 +149,7 @@
 								</div>
 								<div v-if="tableInfo.fieldType === 'choice'">
 									<select v-model="currentNote[tableInfo.key]">
-										<option v-for="option in tableInfo.options" :value="option">
+										<option v-for="option in dropdownSelections[tableInfo.key]" :value="option">
 											{{ option }}
 										</option>
 									</select>
@@ -113,6 +163,7 @@
 
 							<input type="button"
 								class="primary"
+								:disabled="recentlyUploadedFileName !== ''"
 								:value="t('notestutorial', 'Cancel')"
 								@click="cancelNewNote(currentNote)">
 						</form>
@@ -122,32 +173,6 @@
 
 			<template>
 				<div class="container">
-					<div v-if="currentFolderName !== ''" class="filtersContainer">
-						<div class="form-group">
-							<div class="col-auto">
-								<label class="form-label text-large mr-2 pr-2">Filter by Name:</label>
-							</div>
-							<div class="col">
-								<input v-model="filters.title.value" class="filterInput">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-auto">
-								<label class="form-label text-large mr-2 pr-2">Filter by location:</label>
-							</div>
-							<div class="col">
-								<input v-model="filters.location.value" class="filterInput">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-auto">
-								<label class="form-label text-large mr-2 pr-2">Filter all:</label>
-							</div>
-							<div class="col">
-								<input v-model="filters.all.value" class="filterInput">
-							</div>
-						</div>
-					</div>
 					<v-table :data="nodesAndNotes"
 						:filters="filters"
 						:hide-sort-icons="true"
@@ -209,7 +234,7 @@
 					</li>
 				</ul>
 				<button v-if="currentFolderName !== ''" @click="toggleFileUploadMenu()">
-					Upload new file
+					Toggle Upload menu
 				</button>
 				<template v-if="showFileUploadMenu">
 					<Content :class="{'icon-loading': loading}" app-name="flowupload">
@@ -223,147 +248,145 @@
 								</div>
 								<div v-if="activeLocation != undefined" id="locationSelected">
 									<h2 id="title">
-										{{ t('flowupload', `Upload files to ${currentFolderName}`) }}
+										{{ t('flowupload', `Upload a new file to ${currentFolderName} folder`) }}
 									</h2>
 									<div class="buttonGroup">
-										<span v-uploadSelectButton class="button" uploadtype="file">
+										<!-- <span v-uploadSelectButton class="button" uploadtype="file">
 											<span class="icon icon-file select-file-icon" />
 											<span>{{ t('flowupload', 'Select File') }}</span>
-										</span>
-										<input id="FileSelectInput"
-											type="file"
-											@change="filesSelected">
-										<span v-show="activeLocation.flow.supportDirectory"
-											v-uploadSelectButton
-											class="button"
-											uploadtype="folder">
-											<span class="icon icon-files" style="background-image: var(--icon-files-000);" />
-											<span>{{ t('flowupload', 'Select Folder +++') }}</span>
-										</span>
-										<input id="FolderSelectInput"
-											type="file"
-											multiple="multiple"
-											webkitdirectory="webkitdirectory"
-											@change="filesSelected">
+										</span> -->
+										<label for="FileSelectInput" class="selectionLabel">
+											<div class="icon-file fileIcon" />
+											<h3>Click here to select file</h3>
+										</label>
+										or drag & drop your file on this area
 									</div>
-									<hr>
-									<div class="buttonGroup">
-										<a class="button" @click="activeLocation.flow.resume()">
-											<span class="icon icon-play" />
-											<span>{{ t('flowupload', 'Start/Resume') }}</span>
-										</a>
-										<a class="button" @click="activeLocation.flow.pause()">
-											<span class="icon icon-pause" />
-											<span>{{ t('flowupload', 'Pause') }}</span>
-										</a>
-										<a class="button" @click="activeLocation.flow.cancel()">
-											<span class="icon icon-close" />
-											<span>{{ t('flowupload', 'Cancel') }}</span>
-										</a>
-										<a id="hideFinishedButton" class="button" @click="hideFinished = !hideFinished">
-											<input v-model="hideFinished" type="checkbox">
-											<span>{{ t('flowupload', 'Hide finished uploads') }}</span>
-										</a>
-									</div>
-									<hr>
-									<p>
-										<span class="label">{{ t('flowupload', 'Size') + ' : ' + bytes(activeLocation.flow.getSize()) }}</span>
-										<span v-if="activeLocationFilesCount != 0" class="label">{{ t('flowupload', 'Progress') + ' : ' + trimDecimals(activeLocation.flow.progress()*100, 2) + '%' }}</span>
-										<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('flowupload', 'Time remaining') + ' : ' + seconds(activeLocation.flow.timeRemaining()) }}</span>
-										<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('flowupload', 'Uploading') + '...' }}</span>
-									</p>
-									<hr>
-									<table id="uploadsTable">
-										<thead>
-											<tr>
-												<th class="hideOnMobile" style="width:5%">
-													<span class="noselect">#</span>
-												</th>
-												<th @click="selectSortingMethod('name')">
-													<a class="noselect">
-														<span>{{ t('flowupload', 'Name') }}</span>
-														<span :class="{'icon-triangle-n': (sort == 'name' && sortReverse), 'icon-triangle-s': (sort == 'name' && !sortReverse)}" class="sortIndicator" />
-													</a>
-												</th>
-												<th />
-												<th class="hideOnMobile" style="width:10%" @click="selectSortingMethod('uploadspeed')">
-													<a class="noselect">
-														<span>{{ t('flowupload', 'Upload speed') }}</span>
-														<span :class="{'icon-triangle-n': (sort == 'uploadspeed' && sortReverse), 'icon-triangle-s': (sort == 'uploadspeed' && !sortReverse)}" class="sortIndicator" />
-													</a>
-												</th>
-												<th style="width:10%" @click="selectSortingMethod('size')">
-													<a class="noselect">
-														<span>{{ t('flowupload', 'Size') }}</span>
-														<span :class="{'icon-triangle-n': (sort == 'size' && sortReverse), 'icon-triangle-s': (sort == 'size' && !sortReverse)}" class="sortIndicator" />
-													</a>
-												</th>
-												<th style="width:20%" @click="selectSortingMethod('progress')">
-													<a class="noselect">
-														<span>{{ t('flowupload', 'Progress') }}</span>
-														<span :class="{'icon-triangle-n': (sort == 'progress' && sortReverse), 'icon-triangle-s': (sort == 'progress' && !sortReverse)}" class="sortIndicator" />
-													</a>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr v-for="(file, index) in filteredFiles" :key="'file-' + file.uniqueIdentifier">
-												<td class="hideOnMobile">
-													{{ index+1 }}
-												</td>
-												<td class="ellipsis" :title="'UID: ' + file.uniqueIdentifier">
-													<span>{{ file.relativePath }}</span>
-												</td>
-												<td>
-													<div v-if="!file.isComplete() || file.error" class="actions">
-														<a v-if="!file.isUploading() && !file.error"
-															class="action permanent"
-															:title="t('flowupload', 'Resume')"
-															@click="file.resume()">
-															<span class="icon icon-play" />
-														</a>
-														<a v-if="file.isUploading() && !file.error"
-															class="action permanent"
-															:title="t('flowupload', 'Pause')"
-															@click="file.pause()">
-															<span class="icon icon-pause" />
-														</a>
-														<a v-show="file.error"
-															class="action permanent"
-															:title="t('flowupload', 'Retry')"
-															@click="file.retry()">
-															<span class="icon icon-play" />
-														</a>
-														<a class="action permanent" :title="t('flowupload', 'Cancel')" @click="file.cancel()">
-															<span class="icon icon-close" />
-														</a>
-													</div>
-												</td>
-												<td class="hideOnMobile">
-													<span v-if="file.isUploading()">{{ byterate(file.currentSpeed) }}</span>
-												</td>
-												<td :title="'Chunks: ' + completedChunks(file) + ' / ' + file.chunks.length">
-													<span v-if="!file.isComplete()" class="hideOnMobile">{{ bytes(file.size*file.progress()) }}/</span>
-													<span>{{ bytes(file.size) }}</span>
-												</td>
-												<td>
-													<progress v-if="!file.isComplete() && !file.error"
-														class="progressbar hideOnMobile"
-														max="1"
-														:value="file.progress()" />
-													<span v-if="!file.isComplete() && !file.error">{{ trimDecimals(file.progress()*100, 2) }}%</span>
-													<span v-if="file.isComplete() && !file.error">{{ t('flowupload', 'Completed') }}</span>
-													<i v-if="file.isComplete() && !file.error">{{ afterFileUpload }}</i>
-													<span v-if="file.error">{{ t('flowupload', 'Error') }}</span>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+									<input id="FileSelectInput"
+										class="selectionInput"
+										type="file"
+										@change="filesSelected">
 								</div>
+								<hr>
+								<div class="buttonGroup">
+									<a class="button" @click="activeLocation.flow.resume()">
+										<span class="icon icon-play" />
+										<span>{{ t('flowupload', 'START UPLOADING') }}</span>
+									</a>
+
+									<!-- the buttons below can be used to stop or cancel an ungoing uploading operation -->
+									<!-- <a class="button" @click="activeLocation.flow.pause()">
+										<span class="icon icon-pause" />
+										<span>{{ t('flowupload', 'Pause') }}</span>
+									</a>
+									<a class="button" @click="activeLocation.flow.cancel()">
+										<span class="icon icon-close" />
+										<span>{{ t('flowupload', 'Cancel') }}</span>
+									</a> -->
+								</div>
+								<hr>
+								<p>
+									<span class="label">{{ t('flowupload', 'Size') + ' : ' + bytes(activeLocation.flow.getSize()) }}</span>
+									<span v-if="activeLocationFilesCount != 0" class="label">{{ t('flowupload', 'Progress') + ' : ' + trimDecimals(activeLocation.flow.progress()*100, 2) + '%' }}</span>
+									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('flowupload', 'Time remaining') + ' : ' + seconds(activeLocation.flow.timeRemaining()) }}</span>
+									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('flowupload', 'Uploading') + '...' }}</span>
+								</p>
+								<hr>
+								<table id="uploadsTable">
+									<thead>
+										<tr>
+											<th class="hideOnMobile" style="width:5%">
+												<span class="noselect">#</span>
+											</th>
+											<th @click="selectSortingMethod('name')">
+												<a class="noselect">
+													<span>{{ t('flowupload', 'Name') }}</span>
+													<span :class="{'icon-triangle-n': (sort == 'name' && sortReverse), 'icon-triangle-s': (sort == 'name' && !sortReverse)}" class="sortIndicator" />
+												</a>
+											</th>
+											<th />
+											<th class="hideOnMobile" style="width:10%" @click="selectSortingMethod('uploadspeed')">
+												<a class="noselect">
+													<span>{{ t('flowupload', 'Upload speed') }}</span>
+													<span :class="{'icon-triangle-n': (sort == 'uploadspeed' && sortReverse), 'icon-triangle-s': (sort == 'uploadspeed' && !sortReverse)}" class="sortIndicator" />
+												</a>
+											</th>
+											<th style="width:10%" @click="selectSortingMethod('size')">
+												<a class="noselect">
+													<span>{{ t('flowupload', 'Size') }}</span>
+													<span :class="{'icon-triangle-n': (sort == 'size' && sortReverse), 'icon-triangle-s': (sort == 'size' && !sortReverse)}" class="sortIndicator" />
+												</a>
+											</th>
+											<th style="width:20%" @click="selectSortingMethod('progress')">
+												<a class="noselect">
+													<span>{{ t('flowupload', 'Progress') }}</span>
+													<span :class="{'icon-triangle-n': (sort == 'progress' && sortReverse), 'icon-triangle-s': (sort == 'progress' && !sortReverse)}" class="sortIndicator" />
+												</a>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="(file, index) in filteredFiles" :key="'file-' + file.uniqueIdentifier">
+											<td class="hideOnMobile">
+												{{ index+1 }}
+											</td>
+											<td class="ellipsis" :title="'UID: ' + file.uniqueIdentifier">
+												<span>{{ file.relativePath }}</span>
+											</td>
+											<td>
+												<div v-if="!file.isComplete() || file.error" class="actions">
+													<a v-if="!file.isUploading() && !file.error"
+														class="action permanent"
+														:title="t('flowupload', 'Resume')"
+														@click="file.resume()">
+														<span class="icon icon-play" />
+													</a>
+													<a v-if="file.isUploading() && !file.error"
+														class="action permanent"
+														:title="t('flowupload', 'Pause')"
+														@click="file.pause()">
+														<span class="icon icon-pause" />
+													</a>
+													<a v-show="file.error"
+														class="action permanent"
+														:title="t('flowupload', 'Retry')"
+														@click="file.retry()">
+														<span class="icon icon-play" />
+													</a>
+													<a class="action permanent" :title="t('flowupload', 'Cancel')" @click="file.cancel()">
+														<span class="icon icon-close" />
+													</a>
+												</div>
+											</td>
+											<td class="hideOnMobile">
+												<span v-if="file.isUploading()">{{ byterate(file.currentSpeed) }}</span>
+											</td>
+											<td :title="'Chunks: ' + completedChunks(file) + ' / ' + file.chunks.length">
+												<span v-if="!file.isComplete()" class="hideOnMobile">{{ bytes(file.size*file.progress()) }}/</span>
+												<span>{{ bytes(file.size) }}</span>
+											</td>
+											<td>
+												<progress v-if="!file.isComplete() && !file.error"
+													class="progressbar hideOnMobile"
+													max="1"
+													:value="file.progress()" />
+												<span v-if="!file.isComplete() && !file.error">{{ trimDecimals(file.progress()*100, 2) }}%</span>
+												<span v-if="file.isComplete() && !file.error">{{ t('flowupload', 'Completed') }}</span>
+												<i v-if="file.isComplete() && !file.error">{{ afterFileUpload }}</i>
+												<span v-if="file.error">{{ t('flowupload', 'Error') }}</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-						</AppContent>
-					</Content>
+						</appcontent>
+					</content>
 				</template>
+			</template>
+		</appcontent>
+	</div>
+	</AppContent>
+	</Content>
+</template>
 			</template>
 		</AppContent>
 	</div>
@@ -386,6 +409,7 @@ import Flow from '@flowjs/flow.js'
 import Content from '@nextcloud/vue/dist/Components/Content'
 import locationsJson from './table/locations.json'
 import tableInfo from './table/tableInfo.json'
+import dropdownSelections from './table/dropdownSelections.json'
 
 export default {
 	name: 'App',
@@ -487,24 +511,362 @@ export default {
 		isNavigationOpen: true,
 		currentFolderName: '',
 		showFileUploadMenu: false,
-
 		locations: [],
 		baseUrl: generateUrl('/apps/flowupload'),
 		currentLocation: undefined,
-		hideFinished: false,
 		activeLocationPath: false,
 		sort: 'name',
 		sortReverse: false,
 		search: '',
 		recentlyUploadedFileName: '',
+		dropdownSelections,
 
 		filters: {
-			title: { value: '', keys: ['title'] },
-			location: { value: '', keys: ['physicalLocation'] },
-			all: {
-				value: '',
-				keys: ['title', 'idfile', 'physicalLocation', 'title', 'content'],
+
+			date: {
+				label: 'Date',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.date)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
 			},
+			lastRiskAssessmentDate: {
+				label: 'Last Risk Assessment Date',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.lastRiskAssessmentDate)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
+			},
+			materiality: {
+				value: '',
+				keys: ['materiality'],
+				label: 'Materiality',
+
+			},
+			decisionType: {
+				value: '',
+				keys: ['decisionType'],
+				label: 'Decision type',
+			},
+			deliveryMethod: {
+				value: '',
+				keys: ['deliveryMethod'],
+				label: 'Delivery method',
+			},
+			direction: {
+				value: '',
+				keys: ['direction'],
+				label: 'Direction',
+			},
+			documentForm: {
+				value: '',
+				keys: ['documentForm'],
+				label: 'Document form',
+			},
+			documentOrganizer: {
+				value: '',
+				keys: ['documentOrganizer'],
+				label: 'Document organizer',
+			},
+			documentType: {
+				value: '',
+				keys: ['documentType'],
+				label: 'Document type',
+			},
+			form: {
+				value: '',
+				keys: ['form'],
+				label: 'Form',
+			},
+			it: {
+				value: '',
+				keys: ['it'],
+				label: 'IT',
+			},
+			participants: {
+				value: '',
+				keys: ['participants'],
+				label: 'Participants',
+			},
+			personalOwner: {
+				value: '',
+				keys: ['personalOwner'],
+				label: 'Personal owner',
+			},
+			recipientEmployee: {
+				value: '',
+				keys: ['recipientEmployee'],
+				label: 'Recipient employee',
+			},
+			typePi: {
+				value: '',
+				keys: ['typePi'],
+				label: 'Type Pi',
+			},
+			createdBy: {
+				value: '',
+				keys: ['createdBy'],
+				label: 'Created by',
+			},
+			outsourcing: {
+				value: '',
+				keys: ['outsourcing'],
+				label: 'Outsourcing',
+
+			},
+			validity: {
+				value: '',
+				keys: ['validity'],
+				label: 'Validity',
+
+			},
+			description: {
+				value: '',
+				keys: ['description'],
+				label: 'Description',
+
+			},
+			documentStatus: {
+				value: '',
+				keys: ['documentStatus'],
+				label: 'Document Status',
+
+			},
+			orderType: {
+				value: '',
+				keys: ['orderType'],
+				label: 'Order Type',
+
+			},
+			validSince: {
+
+				label: 'Valid Since',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.validSince)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
+
+			},
+			validUntil: {
+				label: 'Valid Until',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.validUntil)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
+
+			},
+			dateOfTheDocument: {
+				label: 'Date (date of the document)',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.validUntil)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
+			},
+			dateReceiptDate: {
+				label: 'Date (receipt date)',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.validUntil)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
+			},
+			approvalDate: {
+				label: 'Approval date',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.validUntil)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
+			},
+			inForceUntil: {
+				label: 'In force until (date)',
+				value: { min: '', select: '' },
+				custom: function date(filterValue, row) {
+					if (filterValue.min !== '') {
+						const currentDate = Date.parse(row.validUntil)
+						const userDate = Date.parse(filterValue.min)
+						if (filterValue.select === 'before') {
+							return currentDate < userDate
+						}
+						if (filterValue.select === 'after') {
+							return currentDate > userDate
+						}
+						if (filterValue.select === 'on') {
+							return currentDate === userDate
+						}
+
+					}
+					return true
+				},
+
+			},
+
+		},
+
+		filterNames: {
+
+			Agreements: [
+				'date',
+				'form',
+				'it',
+				'lastRiskAssessmentDate',
+				'materiality',
+				'createdBy',
+				'outsourcing',
+				'validSince',
+				'validUntil',
+			],
+			Ceoresolutions: [
+				'createdBy',
+				'dateOfTheDocument',
+				'documentStatus',
+				'form',
+				'validity',
+				'orderType',
+			],
+			Contracts: [
+				'personalOwner',
+				'outsourcing',
+				'createdBy',
+				'date',
+				'documentType',
+				'inForceUntil',
+				'it',
+				'lastRiskAssessmentDate',
+				'materiality',
+			],
+			Mbdecisions: [
+				'dateOfTheDocument',
+				'decisionType',
+				'documentStatus',
+				'form',
+				'validity',
+				'participants',
+				'createdBy',
+
+			],
+			Sbdecisions: [
+				'dateOfTheDocument',
+				'createdBy',
+				'decisionType',
+				'documentStatus',
+				'form',
+				'participants',
+				'validity',
+			],
+			PoliciesAndInstructions: [
+				'validity',
+				'typePi',
+				'createdBy',
+				'approvalDate',
+			],
+			SentOrReceivedDocuments: [
+				'createdBy',
+				'dateReceiptDate',
+				'dateOfTheDocument',
+				'deliveryMethod',
+				'direction',
+				'documentForm',
+				'documentOrganizer',
+				'documentType',
+				'recipientEmployee',
+			],
 		},
 	}),
 
@@ -520,13 +882,7 @@ export default {
 			if (this.activeLocation.flow) {
 				let sorted
 
-				if (this.hideFinished) {
-					sorted = [...this.activeLocation.flow.files].filter(function(file) {
-				        return !file.isComplete()
-				    })
-				} else {
-					sorted = [...this.activeLocation.flow.files]
-				}
+				sorted = [...this.activeLocation.flow.files]
 
 				if (this.sort === 'name') {
 					sorted = sorted.sort(function(a, b) {
@@ -608,12 +964,13 @@ export default {
 
 		},
 		afterFileUpload() {
+
 			// if (this.filteredFiles[0].isComplete()) {
 			console.log('after file upload')
 			console.log(this.filteredFiles[0].name)
 			// if (this.filteredFiles[0].isComplete() && !this.filteredFiles[0].error) {
-			const uploadedFileName = this.filteredFiles[0].name
-			// console.log(this.recentlyUploadedFileName)
+			// const uploadedFileName = this.filteredFiles[0].name
+			this.recentlyUploadedFileName = this.filteredFiles[0].name
 			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 			setTimeout(() => {
 				console.log('Delayed for 1 second.')
@@ -623,12 +980,10 @@ export default {
 
 			setTimeout(() => {
 				console.log('Delayed for 1 second.')
-				this.$refs[uploadedFileName][0].click()
+				this.$refs[this.recentlyUploadedFileName][0].click()
 
 			}, '3000')
 			this.activeLocation.flow.cancel()
-
-
 
 			return null
 		},
@@ -670,6 +1025,7 @@ export default {
 		},
 		switchActiveLocationById(id) {
 			const location = this.getLocationById(id)
+
 			// console.log('location')
 			// console.log(location)
 			// console.log(this.activeLocationPath)
@@ -677,6 +1033,7 @@ export default {
 			this.activeLocationPath = location.path
 		},
 		switchActiveLocationByPath(path) {
+			console.log(`currentFolderName ${this.currentFolderName}`)
 
 			this.activeLocationPath = path
 
@@ -976,15 +1333,15 @@ export default {
 
 				// if (this.recentlyUploadedFileName !== '') {
 
-					// console.log('CIA nodes and notes array !!!')
-					// console.log(this.nodesAndNotes)
-					// console.log(`CIA paskutinio ikelto failo vardas.. . . !!! ${this.recentlyUploadedFileName}`)
+				// console.log('CIA nodes and notes array !!!')
+				// console.log(this.nodesAndNotes)
+				// console.log(`CIA paskutinio ikelto failo vardas.. . . !!! ${this.recentlyUploadedFileName}`)
 
-					// for (let index = 0; index < this.filteredFiles.length; index++) {
+				// for (let index = 0; index < this.filteredFiles.length; index++) {
 
-					// 	console.log(this.filteredFiles[index].isComplete())
-					// }
-					// this.recentlyUploadedFileName = ''
+				// 	console.log(this.filteredFiles[index].isComplete())
+				// }
+				// this.recentlyUploadedFileName = ''
 				// }
 
 			} catch (e) {
@@ -1075,6 +1432,7 @@ export default {
 		 */
 		saveNote() {
 			this.hideModal()
+			this.recentlyUploadedFileName = ''
 			if (this.currentNoteId === -1) {
 				this.createNote(this.currentNote)
 			} else {
@@ -1245,7 +1603,7 @@ textarea {
 }
 
 .filterInput {
-	width: 100%;
+	width: auto;
 }
 
 .container {
@@ -1303,5 +1661,60 @@ textarea {
 
 .vdatetime-input {
 	width: 100%;
+}
+#title{
+	text-align: center;
+}
+#locationSelected{
+	border: solid 5px grey;
+    border-style: dashed;
+    border-radius: 10px;
+	padding: 40px;
+	background: aliceblue;
+}
+.selectionInput{
+	display: none;
+}
+.selectionLabel{
+	background-color: rgb(219, 232, 253);
+	cursor: pointer;
+	width: 100%;
+	height: 100px;
+}
+.selectionLabel:hover{
+	background-color: rgb(197, 219, 255);
+	cursor: pointer;
+
+}
+.fileIcon{
+	cursor: pointer;
+
+transform: scale(3);
+margin-top: 15px;
+padding: 20px;
+}
+.buttonGroup{
+	text-align: center;
+}
+#modal-1{
+	margin-top: 100px;
+}
+#app-navigation-vue{
+	z-index: 1050;
+}
+.filtersContainer{
+	flex-direction: column;
+    width: max-content;
+	padding-left: 10%;
+}
+.dateFilterContainer{
+	display: flex;
+    align-items: center;
+}
+.folderName{
+	padding-top: 50px;
+}
+.selectFilter{
+	width: 200px;
 }
 </style>
