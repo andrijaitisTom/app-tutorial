@@ -224,7 +224,7 @@
 						{{ t("dmsapp", "Select folder on left side to start") }}
 					</h2>
 				</div>
-				<strong>Selected:</strong>
+				<!-- <strong>Selected:</strong>
 				<div v-if="selectedRows.length === 0" class="text-muted">
 					No Rows Selected
 				</div>
@@ -232,7 +232,7 @@
 					<li v-for="selected in selectedRows">
 						{{ selected }}
 					</li>
-				</ul>
+				</ul> -->
 				<button v-if="currentFolderName !== ''" @click="toggleFileUploadMenu()">
 					Toggle Upload menu
 				</button>
@@ -410,6 +410,8 @@ import Content from '@nextcloud/vue/dist/Components/Content'
 import locationsJson from './table/locations.json'
 import tableInfo from './table/tableInfo.json'
 import dropdownSelections from './table/dropdownSelections.json'
+import filterNames from './table/filterNames.json'
+
 
 export default {
 	name: 'App',
@@ -520,6 +522,8 @@ export default {
 		search: '',
 		recentlyUploadedFileName: '',
 		dropdownSelections,
+		filterNames,
+		initialFilterValue: '',
 
 		filters: {
 
@@ -799,86 +803,6 @@ export default {
 
 		},
 
-		filterNames: {
-
-			Agreements: [
-				'date',
-				'form',
-				'it',
-				'lastRiskAssessmentDate',
-				'materiality',
-				'createdBy',
-				'outsourcing',
-				'validSince',
-				'validUntil',
-			],
-			OutsourcingAgreements: [
-				'date',
-				'form',
-				'it',
-				'lastRiskAssessmentDate',
-				'materiality',
-				'createdBy',
-				'outsourcing',
-				'validSince',
-				'validUntil',
-			],
-			Ceoresolutions: [
-				'createdBy',
-				'dateOfTheDocument',
-				'documentStatus',
-				'form',
-				'validity',
-				'orderType',
-			],
-			Contracts: [
-				'personalOwner',
-				'outsourcing',
-				'createdBy',
-				'date',
-				'documentType',
-				'inForceUntil',
-				'it',
-				'lastRiskAssessmentDate',
-				'materiality',
-			],
-			Mbdecisions: [
-				'dateOfTheDocument',
-				'decisionType',
-				'documentStatus',
-				'form',
-				'validity',
-				'participants',
-				'createdBy',
-
-			],
-			Sbdecisions: [
-				'dateOfTheDocument',
-				'createdBy',
-				'decisionType',
-				'documentStatus',
-				'form',
-				'participants',
-				'validity',
-			],
-			PoliciesAndInstructions: [
-				'validity',
-				'typePi',
-				'createdBy',
-				'approvalDate',
-			],
-			SentOrReceivedDocuments: [
-				'createdBy',
-				'dateReceiptDate',
-				'dateOfTheDocument',
-				'deliveryMethod',
-				'direction',
-				'documentForm',
-				'documentOrganizer',
-				'documentType',
-				'recipientEmployee',
-			],
-		},
 	}),
 
 	computed: {
@@ -1051,20 +975,6 @@ export default {
 			console.log(this.activeLocationPath)
 		},
 
-		// loadLocations() {
-		// 	const self = this
-		// 	return new Promise(function(resolve, reject) {
-		// 		self.getStarredLocations().then(function(locations) {
-		// 			self.locations = []
-
-		// 			for (let i = 0; i < locations.length; i++) {
-		// 				self.addLocation(locations[i].id, locations[i].directory, true)
-		// 			}
-
-		// 			resolve()
-		// 		})
-		// 	})
-		// },
 		pickNewLocation() {
 			const self = this
 			OC.dialogs.filepicker('Select a new Upload Folder', function(path) {
