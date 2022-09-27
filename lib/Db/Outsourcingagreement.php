@@ -17,9 +17,8 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 	protected $description;
 	protected $comments;
 	protected $outsourcing;
-	protected $auditDate
-;
-	protected $partiesRelatedToTheCompanyWhoAlsoUseThisService;
+	protected $auditDate;
+	protected $partiesRelated;
 	protected $validSince;
 	protected $validUntil;
 	protected $form;
@@ -58,10 +57,8 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 'description' => $this->description,
 'comments' => $this->comments,
 'outsourcing' => $this->outsourcing,
-'auditDate
-' => $this->auditDate
-,
-'partiesRelatedToTheCompanyWhoAlsoUseThisService' => $this->partiesRelatedToTheCompanyWhoAlsoUseThisService,
+'auditDate' => $this->auditDate,
+'partiesRelated' => $this->partiesRelated,
 'validSince' => $this->validSince,
 'validUntil' => $this->validUntil,
 'form' => $this->form,

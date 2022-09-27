@@ -5,7 +5,7 @@
     <name>DMS app</name>
     <summary>App for more convenient document management</summary>
     <description><![CDATA[App for more convenient document management using Nextcloud API]]></description>
-    <version>18.0.0</version>
+    <version>1.0.0</version>
     <licence>agpl</licence>
     <author >Tomas Andrijaitis</author>
     <namespace>DmsApp</namespace>

@@ -51,7 +51,7 @@
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="
-					loadNewFolder('SentOrReceivedDocuments', 'sentorreceiveddocuments')
+					loadNewFolder('SentOrReceivedDocuments', 'sntorrcvddocs')
 				" />
 			<div v-if="currentFolderName !== ''" class="filtersContainer">
 				<div v-for="filterName in filterNames[currentFolderName]" :key="filterName" class="form-group">
@@ -219,20 +219,20 @@
 					</v-table>
 				</div>
 				<div v-if="currentFolderName === ''" id="emptycontent">
-					<div class="icon-file" />
+					<div class="icon-clippy" />
 					<h2>
 						{{ t("dmsapp", "Select folder on left side to start") }}
 					</h2>
 				</div>
-				<strong>Selected:</strong>
+				<!-- <strong>Selected:</strong>
 				<div v-if="selectedRows.length === 0" class="text-muted">
 					No Rows Selected
-				</div>
-				<ul>
+				</div> -->
+				<!-- <ul>
 					<li v-for="selected in selectedRows">
 						{{ selected }}
 					</li>
-				</ul>
+				</ul> -->
 				<button v-if="currentFolderName !== ''" @click="toggleFileUploadMenu()">
 					Toggle Upload menu
 				</button>
@@ -812,6 +812,17 @@ export default {
 				'validSince',
 				'validUntil',
 			],
+			OutsourcingAgreements: [
+				'date',
+				'form',
+				'it',
+				'lastRiskAssessmentDate',
+				'materiality',
+				'createdBy',
+				'outsourcing',
+				'validSince',
+				'validUntil',
+			],
 			Ceoresolutions: [
 				'createdBy',
 				'dateOfTheDocument',
@@ -981,7 +992,6 @@ export default {
 			setTimeout(() => {
 				console.log('Delayed for 3 second.')
 				this.$refs[this.recentlyUploadedFileName][0].click()
-
 			}, '3000')
 			this.activeLocation.flow.cancel()
 
@@ -1284,9 +1294,8 @@ export default {
 							orderType: 'N/A',
 							registrationNumberCdro: 'N/A',
 							registrationNumberCdrsbd: 'N/A',
-							auditDate
-: 'N/A',
-							partiesRelatedToTheCompanyWhoAlsoUseThisService: 'N/A',
+							auditDate: 'N/A',
+							partiesRelated: 'N/A',
 							natureOfFunction: 'N/A',
 							lastRiskAssessmentResult: 'N/A',
 							basisForMateriality: 'N/A',
@@ -1334,8 +1343,8 @@ export default {
 
 				// if (this.recentlyUploadedFileName !== '') {
 
-				// console.log('CIA nodes and notes array !!!')
-				// console.log(this.nodesAndNotes)
+				console.log('CIA nodes and notes array !!!')
+				console.log(this.nodesAndNotes)
 				// console.log(`CIA paskutinio ikelto failo vardas.. . . !!! ${this.recentlyUploadedFileName}`)
 
 				// for (let index = 0; index < this.filteredFiles.length; index++) {
@@ -1347,7 +1356,7 @@ export default {
 
 			} catch (e) {
 				console.error(e)
-				showError(t('dmsapp', 'Could not fetch notes'))
+				showError(t('dmsapp', `Could not fetch! Make sure that folder named '${folderName}'' exists`))
 			}
 			this.loading = false
 		},

@@ -53,9 +53,8 @@ class OutsourcingagreementService {
 	$description,
 	$comments,
 	$outsourcing,
-	$auditDate
-,
-	$partiesRelatedToTheCompanyWhoAlsoUseThisService,
+	$auditDate,
+	$partiesRelated,
 	$validSince,
 	$validUntil,
 	$form,
@@ -94,10 +93,8 @@ class OutsourcingagreementService {
 		$outsourcingagreement->setDescription($description);
 		$outsourcingagreement->setComments($comments);
 		$outsourcingagreement->setOutsourcing($outsourcing);
-		$outsourcingagreement->setAuditDate
-($auditDate
-);
-		$outsourcingagreement->setPartiesRelatedToTheCompanyWhoAlsoUseThisService($partiesRelatedToTheCompanyWhoAlsoUseThisService);
+		$outsourcingagreement->setAuditDate($auditDate);
+		$outsourcingagreement->setPartiesRelated($partiesRelated);
 		$outsourcingagreement->setValidSince($validSince);
 		$outsourcingagreement->setValidUntil($validUntil);
 		$outsourcingagreement->setForm($form);
@@ -137,9 +134,8 @@ class OutsourcingagreementService {
 	$description,
 	$comments,
 	$outsourcing,
-	$auditDate
-,
-	$partiesRelatedToTheCompanyWhoAlsoUseThisService,
+	$auditDate,
+	$partiesRelated,
 	$validSince,
 	$validUntil,
 	$form,
@@ -179,10 +175,8 @@ class OutsourcingagreementService {
 			$outsourcingagreement->setDescription($description);
 			$outsourcingagreement->setComments($comments);
 			$outsourcingagreement->setOutsourcing($outsourcing);
-			$outsourcingagreement->setAuditDate
-($auditDate
-);
-			$outsourcingagreement->setPartiesRelatedToTheCompanyWhoAlsoUseThisService($partiesRelatedToTheCompanyWhoAlsoUseThisService);
+			$outsourcingagreement->setAuditDate($auditDate);
+			$outsourcingagreement->setPartiesRelated($partiesRelated);
 			$outsourcingagreement->setValidSince($validSince);
 			$outsourcingagreement->setValidUntil($validUntil);
 			$outsourcingagreement->setForm($form);

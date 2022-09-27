@@ -332,9 +332,6 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-
-
-	
 			$table->addColumn('name', 'text', [
 				'notnull' => true,
 				'default' => ''
@@ -379,10 +376,17 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
+			$table->addColumn('namelt', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['user_id'], 'ceoresolutions_user_id_index');
 		}
+
+
+
 
 
 		if (!$schema->hasTable('sbresolutions')) {
@@ -470,9 +474,6 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-
-
-	
 			$table->addColumn('name', 'text', [
 				'notnull' => true,
 				'default' => ''
