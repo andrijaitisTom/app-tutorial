@@ -1,14 +1,14 @@
 <?php
 
-namespace OCA\NotesTutorial\Service;
+namespace OCA\DmsApp\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\NotesTutorial\Db\Mbdecision;
-use OCA\NotesTutorial\Db\MbdecisionMapper;
+use OCA\DmsApp\Db\Mbdecision;
+use OCA\DmsApp\Db\MbdecisionMapper;
 
 class MbdecisionService {
 

@@ -1,15 +1,15 @@
 <?php
- namespace OCA\NotesTutorial\Controller;
+ namespace OCA\DmsApp\Controller;
 
  use OC_Util;
  use OCP\AppFramework\Http;
- use OCA\NotesTutorial\Http\BlankResponse;
+ use OCA\DmsApp\Http\BlankResponse;
 
  use OCP\IRequest;
  use OCP\AppFramework\Controller;
- use OCA\NotesTutorial\Service\Flow\Config;
- use OCA\NotesTutorial\Service\Flow\Request;
- use OCA\NotesTutorial\Service\Flow\File;
+ use OCA\DmsApp\Service\Flow\Config;
+ use OCA\DmsApp\Service\Flow\Request;
+ use OCA\DmsApp\Service\Flow\File;
 
  class UploadController extends Controller {
 
@@ -73,7 +73,7 @@
 
         // check if path is valid
         if (!\OC\Files\Filesystem::isValidPath($this->path)) {
-            \OCP\Util::writeLog('notestutorial', "Upload to a invalid Path failed", \OCP\ILogger::ERROR);
+            \OCP\Util::writeLog('dmsapp', "Upload to a invalid Path failed", \OCP\ILogger::ERROR);
             print("invalid path");
             return new BlankResponse(400);
         }

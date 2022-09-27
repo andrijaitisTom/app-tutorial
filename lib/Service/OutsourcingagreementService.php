@@ -1,14 +1,14 @@
 <?php
 
-namespace OCA\NotesTutorial\Service;
+namespace OCA\DmsApp\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\NotesTutorial\Db\Outsourcingagreement;
-use OCA\NotesTutorial\Db\OutsourcingagreementMapper;
+use OCA\DmsApp\Db\Outsourcingagreement;
+use OCA\DmsApp\Db\OutsourcingagreementMapper;
 
 class OutsourcingagreementService {
 
@@ -53,7 +53,8 @@ class OutsourcingagreementService {
 	$description,
 	$comments,
 	$outsourcing,
-	$outsourcingFunctionAuditDate,
+	$auditDate
+,
 	$partiesRelatedToTheCompanyWhoAlsoUseThisService,
 	$validSince,
 	$validUntil,
@@ -68,21 +69,21 @@ class OutsourcingagreementService {
 	$locationOfData,
 	$locationOfServices,
 	$transferOfData,
-	$bankOfLithuaniaApprovalDate,
-	$bankOfLithuaniaNotificationDate,
-	$isTheServiceProviderRelatedToUabPervesk,
+	$bankLtApprovalDate,
+	$bankLtNotifDate,
+	$relatedToPervesk,
 	$agreementApprovedBy,
 	$governingLawOfTheAgreement,
 	$subcontractors,
 	$serviceProviderAddress,
-	$serviceProviderLegalEntityCode,
+	$providerEntCode,
 	$serviceProviderName,
-	$serviceProviderParentCompany,
-	$serviceProviderSubstitutabilityAssessmentResult,
+	$providerPrntCompany,
+	$providerResult,
 	$alternativeServiceProviders,
-	$doesThisFunctionSupportBusinessOperationsCritical,
+	$fnSupCritical,
 	$priceOfAgreement,
-	$eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel,
+	$outsrcdFnNotProvided,
 	) {
 		$outsourcingagreement = new Outsourcingagreement();
 		$outsourcingagreement->setUserId($userId);
@@ -93,7 +94,9 @@ class OutsourcingagreementService {
 		$outsourcingagreement->setDescription($description);
 		$outsourcingagreement->setComments($comments);
 		$outsourcingagreement->setOutsourcing($outsourcing);
-		$outsourcingagreement->setOutsourcingFunctionAuditDate($outsourcingFunctionAuditDate);
+		$outsourcingagreement->setAuditDate
+($auditDate
+);
 		$outsourcingagreement->setPartiesRelatedToTheCompanyWhoAlsoUseThisService($partiesRelatedToTheCompanyWhoAlsoUseThisService);
 		$outsourcingagreement->setValidSince($validSince);
 		$outsourcingagreement->setValidUntil($validUntil);
@@ -108,21 +111,21 @@ class OutsourcingagreementService {
 		$outsourcingagreement->setLocationOfData($locationOfData);
 		$outsourcingagreement->setLocationOfServices($locationOfServices);
 		$outsourcingagreement->setTransferOfData($transferOfData);
-		$outsourcingagreement->setBankOfLithuaniaApprovalDate($bankOfLithuaniaApprovalDate);
-		$outsourcingagreement->setBankOfLithuaniaNotificationDate($bankOfLithuaniaNotificationDate);
-		$outsourcingagreement->setIsTheServiceProviderRelatedToUabPervesk($isTheServiceProviderRelatedToUabPervesk);
+		$outsourcingagreement->setBankLtApprovalDate($bankLtApprovalDate);
+		$outsourcingagreement->setBankLtNotifDate($bankLtNotifDate);
+		$outsourcingagreement->setRelatedToPervesk($relatedToPervesk);
 		$outsourcingagreement->setAgreementApprovedBy($agreementApprovedBy);
 		$outsourcingagreement->setGoverningLawOfTheAgreement($governingLawOfTheAgreement);
 		$outsourcingagreement->setSubcontractors($subcontractors);
 		$outsourcingagreement->setServiceProviderAddress($serviceProviderAddress);
-		$outsourcingagreement->setServiceProviderLegalEntityCode($serviceProviderLegalEntityCode);
+		$outsourcingagreement->setProviderEntCode($providerEntCode);
 		$outsourcingagreement->setServiceProviderName($serviceProviderName);
-		$outsourcingagreement->setServiceProviderParentCompany($serviceProviderParentCompany);
-		$outsourcingagreement->setServiceProviderSubstitutabilityAssessmentResult($serviceProviderSubstitutabilityAssessmentResult);
+		$outsourcingagreement->setProviderPrntCompany($providerPrntCompany);
+		$outsourcingagreement->setProviderResult($providerResult);
 		$outsourcingagreement->setAlternativeServiceProviders($alternativeServiceProviders);
-		$outsourcingagreement->setDoesThisFunctionSupportBusinessOperationsCritical($doesThisFunctionSupportBusinessOperationsCritical);
+		$outsourcingagreement->setFnSupCritical($fnSupCritical);
 		$outsourcingagreement->setPriceOfAgreement($priceOfAgreement);
-		$outsourcingagreement->setEventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel($eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel);
+		$outsourcingagreement->setOutsrcdFnNotProvided($outsrcdFnNotProvided);
 
 		return $this->mapper->insert($outsourcingagreement);
 	}
@@ -134,7 +137,8 @@ class OutsourcingagreementService {
 	$description,
 	$comments,
 	$outsourcing,
-	$outsourcingFunctionAuditDate,
+	$auditDate
+,
 	$partiesRelatedToTheCompanyWhoAlsoUseThisService,
 	$validSince,
 	$validUntil,
@@ -149,21 +153,21 @@ class OutsourcingagreementService {
 	$locationOfData,
 	$locationOfServices,
 	$transferOfData,
-	$bankOfLithuaniaApprovalDate,
-	$bankOfLithuaniaNotificationDate,
-	$isTheServiceProviderRelatedToUabPervesk,
+	$bankLtApprovalDate,
+	$bankLtNotifDate,
+	$relatedToPervesk,
 	$agreementApprovedBy,
 	$governingLawOfTheAgreement,
 	$subcontractors,
 	$serviceProviderAddress,
-	$serviceProviderLegalEntityCode,
+	$providerEntCode,
 	$serviceProviderName,
-	$serviceProviderParentCompany,
-	$serviceProviderSubstitutabilityAssessmentResult,
+	$providerPrntCompany,
+	$providerResult,
 	$alternativeServiceProviders,
-	$doesThisFunctionSupportBusinessOperationsCritical,
+	$fnSupCritical,
 	$priceOfAgreement,
-	$eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel,
+	$outsrcdFnNotProvided,
 	) {
 		try {
 			
@@ -175,7 +179,9 @@ class OutsourcingagreementService {
 			$outsourcingagreement->setDescription($description);
 			$outsourcingagreement->setComments($comments);
 			$outsourcingagreement->setOutsourcing($outsourcing);
-			$outsourcingagreement->setOutsourcingFunctionAuditDate($outsourcingFunctionAuditDate);
+			$outsourcingagreement->setAuditDate
+($auditDate
+);
 			$outsourcingagreement->setPartiesRelatedToTheCompanyWhoAlsoUseThisService($partiesRelatedToTheCompanyWhoAlsoUseThisService);
 			$outsourcingagreement->setValidSince($validSince);
 			$outsourcingagreement->setValidUntil($validUntil);
@@ -190,21 +196,21 @@ class OutsourcingagreementService {
 			$outsourcingagreement->setLocationOfData($locationOfData);
 			$outsourcingagreement->setLocationOfServices($locationOfServices);
 			$outsourcingagreement->setTransferOfData($transferOfData);
-			$outsourcingagreement->setBankOfLithuaniaApprovalDate($bankOfLithuaniaApprovalDate);
-			$outsourcingagreement->setBankOfLithuaniaNotificationDate($bankOfLithuaniaNotificationDate);
-			$outsourcingagreement->setIsTheServiceProviderRelatedToUabPervesk($isTheServiceProviderRelatedToUabPervesk);
+			$outsourcingagreement->setBankLtApprovalDate($bankLtApprovalDate);
+			$outsourcingagreement->setBankLtNotifDate($bankLtNotifDate);
+			$outsourcingagreement->setRelatedToPervesk($relatedToPervesk);
 			$outsourcingagreement->setAgreementApprovedBy($agreementApprovedBy);
 			$outsourcingagreement->setGoverningLawOfTheAgreement($governingLawOfTheAgreement);
 			$outsourcingagreement->setSubcontractors($subcontractors);
 			$outsourcingagreement->setServiceProviderAddress($serviceProviderAddress);
-			$outsourcingagreement->setServiceProviderLegalEntityCode($serviceProviderLegalEntityCode);
+			$outsourcingagreement->setProviderEntCode($providerEntCode);
 			$outsourcingagreement->setServiceProviderName($serviceProviderName);
-			$outsourcingagreement->setServiceProviderParentCompany($serviceProviderParentCompany);
-			$outsourcingagreement->setServiceProviderSubstitutabilityAssessmentResult($serviceProviderSubstitutabilityAssessmentResult);
+			$outsourcingagreement->setProviderPrntCompany($providerPrntCompany);
+			$outsourcingagreement->setProviderResult($providerResult);
 			$outsourcingagreement->setAlternativeServiceProviders($alternativeServiceProviders);
-			$outsourcingagreement->setDoesThisFunctionSupportBusinessOperationsCritical($doesThisFunctionSupportBusinessOperationsCritical);
+			$outsourcingagreement->setFnSupCritical($fnSupCritical);
 			$outsourcingagreement->setPriceOfAgreement($priceOfAgreement);
-			$outsourcingagreement->setEventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel($eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel);
+			$outsourcingagreement->setOutsrcdFnNotProvided($outsrcdFnNotProvided);
 			
 	
 			return $this->mapper->update($outsourcingagreement);

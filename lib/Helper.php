@@ -20,7 +20,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  *
  */
-namespace OCA\NotesTutorial;
+namespace OCA\DmsApp;
 
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;

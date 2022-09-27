@@ -1,13 +1,13 @@
 <?php
 
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\DmsApp\Controller;
 
 use Closure;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 
-use OCA\NotesTutorial\Service\NoteNotFound;
+use OCA\DmsApp\Service\NoteNotFound;
 
 trait Errors {
 	protected function handleNotFound(Closure $callback): DataResponse {

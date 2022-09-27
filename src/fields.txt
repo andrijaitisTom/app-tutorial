@@ -105,7 +105,8 @@ orderType
 registrationNumberCdrSbd
 
 
-outsourcingFunctionAuditDate
+auditDate
+
 partiesRelatedToTheCompanyWhoAlsoUseThisService
 natureOfFunction
 lastRiskAssessmentResult
@@ -113,21 +114,21 @@ basisForMateriality
 locationOfData
 locationOfServices
 transferOfData
-bankOfLithuaniaApprovalDate
-bankOfLithuaniaNotificationDate
-isTheServiceProviderRelatedToUabPervesk
+bankLtApprovalDate
+bankLtNotifDate
+relatedToPervesk
 agreementApprovedBy
 governingLawOfTheAgreement
 subcontractors
 serviceProviderAddress
-serviceProviderLegalEntityCode
+providerEntCode
 serviceProviderName
-serviceProviderParentCompany
-serviceProviderSubstitutabilityAssessmentResult
+providerPrntCompany
+providerResult
 alternativeServiceProviders
-doesThisFunctionSupportBusinessOperationsCritical
+fnSupCritical
 priceOfAgreement
-eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel
+outsrcdFnNotProvided
 typePi
 approvalDate
 responsibleUnit

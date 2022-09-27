@@ -8,7 +8,7 @@ on:
       - stable*
 
 env:
-  APP_NAME: notestutorial
+  APP_NAME: dmsapp
   # Location of the phpunit.xml and phpunit.integration.xml files
   # Comment to disable
   PHPUNIT_CONFIG: ./tests/phpunit.xml

@@ -1,54 +1,54 @@
 <template>
-	<div id="content" class="app-notestutorial" @click="handleNavigationToggle()">
+	<div id="content" class="app-dmsapp" @click="handleNavigationToggle()">
 		<AppNavigation class="navigationContainer">
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Agreements')"
+				:text="t('dmsapp', 'Agreements')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Agreements', 'agreements')" />
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Ceo Resolutions')"
+				:text="t('dmsapp', 'Ceo Resolutions')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Ceoresolutions', 'ceoresolutions')" />
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Mb decisions')"
+				:text="t('dmsapp', 'Mb decisions')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Mbdecisions', 'mbdecisions')" />
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Contracts')"
+				:text="t('dmsapp', 'Contracts')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Contracts', 'contracts')" />
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Sb decisions')"
+				:text="t('dmsapp', 'Sb decisions')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('Sbdecisions', 'sbdecisions')" />
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Outsourcing Agreements')"
+				:text="t('dmsapp', 'Outsourcing Agreements')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="loadNewFolder('OutsourcingAgreements', 'outsourcingagreements')" />
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Policies And Instructions')"
+				:text="t('dmsapp', 'Policies And Instructions')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="
-					loadNewFolder('PoliciesAndInstructions', 'policiesandinstructions')
+					loadNewFolder('PoliciesAndInstructions', 'plciesninstrctns')
 				" />
 			<AppNavigationNew v-if="!loading"
-				:text="t('notestutorial', 'Sent Or Received Documents')"
+				:text="t('dmsapp', 'Sent Or Received Documents')"
 				:disabled="false"
-				button-id="new-notestutorial-button"
+				button-id="new-dmsapp-button"
 				button-class="icon-folder"
 				@click="
 					loadNewFolder('SentOrReceivedDocuments', 'sentorreceiveddocuments')
@@ -157,14 +157,14 @@
 							</div>
 							<input type="submit"
 								class="primary"
-								:value="t('notestutorial', 'Save')"
+								:value="t('dmsapp', 'Save')"
 								:disabled="updating || savePossible"
 								@click="saveNote">
 
 							<input type="button"
 								class="primary"
 								:disabled="recentlyUploadedFileName !== ''"
-								:value="t('notestutorial', 'Cancel')"
+								:value="t('dmsapp', 'Cancel')"
 								@click="cancelNewNote(currentNote)">
 						</form>
 					</div>
@@ -204,14 +204,14 @@
 									<input :ref="`${row.nodeName}`"
 										type="button"
 										class="primary"
-										:value="t('notestutorial', 'Edit')"
+										:value="t('dmsapp', 'Edit')"
 										@click="openEdit(row)">
 								</td>
 
 								<td>
 									<input type="button"
 										class="primary"
-										:value="t('notestutorial', 'Open')"
+										:value="t('dmsapp', 'Open')"
 										@click="openFile(row.idfile, row.path)">
 								</td>
 							</v-tr>
@@ -221,7 +221,7 @@
 				<div v-if="currentFolderName === ''" id="emptycontent">
 					<div class="icon-file" />
 					<h2>
-						{{ t("notestutorial", "Select folder on left side to start") }}
+						{{ t("dmsapp", "Select folder on left side to start") }}
 					</h2>
 				</div>
 				<strong>Selected:</strong>
@@ -237,23 +237,23 @@
 					Toggle Upload menu
 				</button>
 				<template v-if="showFileUploadMenu">
-					<Content :class="{'icon-loading': loading}" app-name="flowupload">
+					<Content :class="{'icon-loading': loading}" app-name="dmsapp">
 						<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 						<!-- CONTENT -->
 						<AppContent>
 							<div v-if="!loading" v-activeLocationFileDropZone style="margin-left: 4%; margin-right: 4%; margin-top: 7px; width:auto">
 								<div v-if="activeLocation === undefined" id="noLocationSelected">
-									{{ t('flowupload', 'Please select a location') }}
+									{{ t('dmsapp', 'Please select a location') }}
 								</div>
 								<div v-if="activeLocation != undefined" id="locationSelected">
 									<h2 id="title">
-										{{ t('flowupload', `Upload a new file to ${currentFolderName} folder`) }}
+										{{ t('dmsapp', `Upload a new file to ${currentFolderName} folder`) }}
 									</h2>
 									<div class="buttonGroup">
 										<!-- <span v-uploadSelectButton class="button" uploadtype="file">
 											<span class="icon icon-file select-file-icon" />
-											<span>{{ t('flowupload', 'Select File') }}</span>
+											<span>{{ t('dmsapp', 'Select File') }}</span>
 										</span> -->
 										<label for="FileSelectInput" class="selectionLabel">
 											<div class="icon-file fileIcon" />
@@ -270,25 +270,25 @@
 								<div class="buttonGroup">
 									<a class="button" @click="activeLocation.flow.resume()">
 										<span class="icon icon-play" />
-										<span>{{ t('flowupload', 'START UPLOADING') }}</span>
+										<span>{{ t('dmsapp', 'START UPLOADING') }}</span>
 									</a>
 
 									<!-- the buttons below can be used to stop or cancel an ungoing uploading operation -->
 									<!-- <a class="button" @click="activeLocation.flow.pause()">
 										<span class="icon icon-pause" />
-										<span>{{ t('flowupload', 'Pause') }}</span>
+										<span>{{ t('dmsapp', 'Pause') }}</span>
 									</a>
 									<a class="button" @click="activeLocation.flow.cancel()">
 										<span class="icon icon-close" />
-										<span>{{ t('flowupload', 'Cancel') }}</span>
+										<span>{{ t('dmsapp', 'Cancel') }}</span>
 									</a> -->
 								</div>
 								<hr>
 								<p>
-									<span class="label">{{ t('flowupload', 'Size') + ' : ' + bytes(activeLocation.flow.getSize()) }}</span>
-									<span v-if="activeLocationFilesCount != 0" class="label">{{ t('flowupload', 'Progress') + ' : ' + trimDecimals(activeLocation.flow.progress()*100, 2) + '%' }}</span>
-									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('flowupload', 'Time remaining') + ' : ' + seconds(activeLocation.flow.timeRemaining()) }}</span>
-									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('flowupload', 'Uploading') + '...' }}</span>
+									<span class="label">{{ t('dmsapp', 'Size') + ' : ' + bytes(activeLocation.flow.getSize()) }}</span>
+									<span v-if="activeLocationFilesCount != 0" class="label">{{ t('dmsapp', 'Progress') + ' : ' + trimDecimals(activeLocation.flow.progress()*100, 2) + '%' }}</span>
+									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('dmsapp', 'Time remaining') + ' : ' + seconds(activeLocation.flow.timeRemaining()) }}</span>
+									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('dmsapp', 'Uploading') + '...' }}</span>
 								</p>
 								<hr>
 								<table id="uploadsTable">
@@ -299,26 +299,26 @@
 											</th>
 											<th @click="selectSortingMethod('name')">
 												<a class="noselect">
-													<span>{{ t('flowupload', 'Name') }}</span>
+													<span>{{ t('dmsapp', 'Name') }}</span>
 													<span :class="{'icon-triangle-n': (sort == 'name' && sortReverse), 'icon-triangle-s': (sort == 'name' && !sortReverse)}" class="sortIndicator" />
 												</a>
 											</th>
 											<th />
 											<th class="hideOnMobile" style="width:10%" @click="selectSortingMethod('uploadspeed')">
 												<a class="noselect">
-													<span>{{ t('flowupload', 'Upload speed') }}</span>
+													<span>{{ t('dmsapp', 'Upload speed') }}</span>
 													<span :class="{'icon-triangle-n': (sort == 'uploadspeed' && sortReverse), 'icon-triangle-s': (sort == 'uploadspeed' && !sortReverse)}" class="sortIndicator" />
 												</a>
 											</th>
 											<th style="width:10%" @click="selectSortingMethod('size')">
 												<a class="noselect">
-													<span>{{ t('flowupload', 'Size') }}</span>
+													<span>{{ t('dmsapp', 'Size') }}</span>
 													<span :class="{'icon-triangle-n': (sort == 'size' && sortReverse), 'icon-triangle-s': (sort == 'size' && !sortReverse)}" class="sortIndicator" />
 												</a>
 											</th>
 											<th style="width:20%" @click="selectSortingMethod('progress')">
 												<a class="noselect">
-													<span>{{ t('flowupload', 'Progress') }}</span>
+													<span>{{ t('dmsapp', 'Progress') }}</span>
 													<span :class="{'icon-triangle-n': (sort == 'progress' && sortReverse), 'icon-triangle-s': (sort == 'progress' && !sortReverse)}" class="sortIndicator" />
 												</a>
 											</th>
@@ -336,23 +336,23 @@
 												<div v-if="!file.isComplete() || file.error" class="actions">
 													<a v-if="!file.isUploading() && !file.error"
 														class="action permanent"
-														:title="t('flowupload', 'Resume')"
+														:title="t('dmsapp', 'Resume')"
 														@click="file.resume()">
 														<span class="icon icon-play" />
 													</a>
 													<a v-if="file.isUploading() && !file.error"
 														class="action permanent"
-														:title="t('flowupload', 'Pause')"
+														:title="t('dmsapp', 'Pause')"
 														@click="file.pause()">
 														<span class="icon icon-pause" />
 													</a>
 													<a v-show="file.error"
 														class="action permanent"
-														:title="t('flowupload', 'Retry')"
+														:title="t('dmsapp', 'Retry')"
 														@click="file.retry()">
 														<span class="icon icon-play" />
 													</a>
-													<a class="action permanent" :title="t('flowupload', 'Cancel')" @click="file.cancel()">
+													<a class="action permanent" :title="t('dmsapp', 'Cancel')" @click="file.cancel()">
 														<span class="icon icon-close" />
 													</a>
 												</div>
@@ -370,9 +370,9 @@
 													max="1"
 													:value="file.progress()" />
 												<span v-if="!file.isComplete() && !file.error">{{ trimDecimals(file.progress()*100, 2) }}%</span>
-												<span v-if="file.isComplete() && !file.error">{{ t('flowupload', 'Completed') }}</span>
+												<span v-if="file.isComplete() && !file.error">{{ t('dmsapp', 'Completed') }}</span>
 												<i v-if="file.isComplete() && !file.error">{{ afterFileUpload }}</i>
-												<span v-if="file.error">{{ t('flowupload', 'Error') }}</span>
+												<span v-if="file.error">{{ t('dmsapp', 'Error') }}</span>
 											</td>
 										</tr>
 									</tbody>
@@ -512,7 +512,7 @@ export default {
 		currentFolderName: '',
 		showFileUploadMenu: false,
 		locations: [],
-		baseUrl: generateUrl('/apps/flowupload'),
+		baseUrl: generateUrl('/apps/dmsapp'),
 		currentLocation: undefined,
 		activeLocationPath: false,
 		sort: 'name',
@@ -979,7 +979,7 @@ export default {
 			}, '1000')
 
 			setTimeout(() => {
-				console.log('Delayed for 1 second.')
+				console.log('Delayed for 3 second.')
 				this.$refs[this.recentlyUploadedFileName][0].click()
 
 			}, '3000')
@@ -1018,9 +1018,9 @@ export default {
 		updateTitle() {
 			if (this.activeLocation !== undefined && this.activeLocation.flow.files.length !== 0) {
 				const progress = parseFloat(Math.round(this.activeLocation.flow.progress() * 100 * 100) / 100).toFixed(2) // round to two digits after comma
-				document.title = 'FlowUpload ' + progress + '%'
+				document.title = 'dmsapp ' + progress + '%'
 			} else {
-				document.title = 'FlowUpload'
+				document.title = 'dmsapp'
 			}
 		},
 		switchActiveLocationById(id) {
@@ -1207,11 +1207,11 @@ export default {
 		async loadNewFolder(folderName, endpointName) {
 			try {
 				const response = await axios.get(
-					generateUrl(`/apps/notestutorial/${endpointName}`)
+					generateUrl(`/apps/dmsapp/${endpointName}`)
 				)
 				this.notes = response.data
 				const nodesResponse = await axios.get(
-					generateUrl(`/apps/notestutorial/nodelist/${folderName}`)
+					generateUrl(`/apps/dmsapp/nodelist/${folderName}`)
 				)
 				this.nodes = nodesResponse.data
 
@@ -1284,7 +1284,8 @@ export default {
 							orderType: 'N/A',
 							registrationNumberCdro: 'N/A',
 							registrationNumberCdrsbd: 'N/A',
-							outsourcingFunctionAuditDate: 'N/A',
+							auditDate
+: 'N/A',
 							partiesRelatedToTheCompanyWhoAlsoUseThisService: 'N/A',
 							natureOfFunction: 'N/A',
 							lastRiskAssessmentResult: 'N/A',
@@ -1292,21 +1293,21 @@ export default {
 							locationOfData: 'N/A',
 							locationOfServices: 'N/A',
 							transferOfData: 'N/A',
-							bankOfLithuaniaApprovalDate: 'N/A',
-							bankOfLithuaniaNotificationDate: 'N/A',
-							isTheServiceProviderRelatedToUabPervesk: 'N/A',
+							bankLtApprovalDate: 'N/A',
+							bankLtNotifDate: 'N/A',
+							relatedToPervesk: 'N/A',
 							agreementApprovedBy: 'N/A',
 							governingLawOfTheAgreement: 'N/A',
 							subcontractors: 'N/A',
 							serviceProviderAddress: 'N/A',
-							serviceProviderLegalEntityCode: 'N/A',
+							providerEntCode: 'N/A',
 							serviceProviderName: 'N/A',
-							serviceProviderParentCompany: 'N/A',
-							serviceProviderSubstitutabilityAssessmentResult: 'N/A',
+							providerPrntCompany: 'N/A',
+							providerResult: 'N/A',
 							alternativeServiceProviders: 'N/A',
-							doesThisFunctionSupportBusinessOperationsCritical: 'N/A',
+							fnSupCritical: 'N/A',
 							priceOfAgreement: 'N/A',
-							eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel: 'N/A',
+							outsrcdFnNotProvided: 'N/A',
 							typePi: 'N/A',
 							approvalDate: 'N/A',
 							responsibleUnit: 'N/A',
@@ -1346,7 +1347,7 @@ export default {
 
 			} catch (e) {
 				console.error(e)
-				showError(t('notestutorial', 'Could not fetch notes'))
+				showError(t('dmsapp', 'Could not fetch notes'))
 			}
 			this.loading = false
 		},
@@ -1483,7 +1484,7 @@ export default {
 			try {
 				// console.log(note)
 				const response = await axios.post(
-					generateUrl(`/apps/notestutorial/${endpointName}`),
+					generateUrl(`/apps/dmsapp/${endpointName}`),
 					note
 				)
 				const index = this.notes.findIndex(
@@ -1494,7 +1495,7 @@ export default {
 				this.currentNoteId = response.data.id
 			} catch (e) {
 				console.error(e)
-				showError(t('notestutorial', 'Could not create the note'))
+				showError(t('dmsapp', 'Could not create the note'))
 			}
 			this.updating = false
 		},
@@ -1508,14 +1509,14 @@ export default {
 			this.updating = true
 			try {
 				await axios.put(
-					generateUrl(`/apps/notestutorial/${endpointName}/${note.id}`),
+					generateUrl(`/apps/dmsapp/${endpointName}/${note.id}`),
 					note
 				)
 				// loadNewFolder here works like page reload after info update, because the information showed in the table is taken from Database.
 				this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 			} catch (e) {
 				console.error(e)
-				showError(t('notestutorial', 'Could not update the note'))
+				showError(t('dmsapp', 'Could not update the note'))
 			}
 			this.updating = false
 		},
@@ -1528,15 +1529,15 @@ export default {
 		 */
 		async deleteNote(note) {
 			try {
-				await axios.delete(generateUrl(`/apps/notestutorial/notes/${note.id}`))
+				await axios.delete(generateUrl(`/apps/dmsapp/notes/${note.id}`))
 				this.notes.splice(this.notes.indexOf(note), 1)
 				if (this.currentNoteId === note.id) {
 					this.currentNoteId = null
 				}
-				showSuccess(t('notestutorial', 'Note deleted'))
+				showSuccess(t('dmsapp', 'Note deleted'))
 			} catch (e) {
 				console.error(e)
-				showError(t('notestutorial', 'Could not delete the note'))
+				showError(t('dmsapp', 'Could not delete the note'))
 			}
 		},
 	},

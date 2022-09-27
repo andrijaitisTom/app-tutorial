@@ -1,13 +1,13 @@
 <?php
-namespace OCA\NotesTutorial\Service;
+namespace OCA\DmsApp\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\NotesTutorial\Db\Directory;
-use OCA\NotesTutorial\Db\DirectoryMapper;
+use OCA\DmsApp\Db\Directory;
+use OCA\DmsApp\Db\DirectoryMapper;
 
 
 class DirectoryService {

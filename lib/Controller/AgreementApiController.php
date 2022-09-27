@@ -1,9 +1,9 @@
 <?php
 
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\DmsApp\Controller;
 
-use OCA\NotesTutorial\AppInfo\Application;
-use OCA\NotesTutorial\Service\AgreementService;
+use OCA\DmsApp\AppInfo\Application;
+use OCA\DmsApp\Service\AgreementService;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;

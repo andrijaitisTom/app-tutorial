@@ -1,13 +1,13 @@
 <?php
 
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\DmsApp\Controller;
 
 use OCP\IRequest;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 
-use OCA\NotesTutorial\Service\NoteNotFound;
-use OCA\NotesTutorial\Service\DirectoryService;
+use OCA\DmsApp\Service\NoteNotFound;
+use OCA\DmsApp\Service\DirectoryService;
 
 class DirectoryController extends Controller {
     /** @var DirectoryService */

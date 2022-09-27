@@ -1,8 +1,8 @@
 <?php
 
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\DmsApp\Controller;
 
-use OCA\NotesTutorial\AppInfo\Application;
+use OCA\DmsApp\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
@@ -22,11 +22,11 @@ class PageController extends Controller {
 	 * Render default template
 	 */
 	public function index() {
-		Util::addScript(Application::APP_ID, 'notestutorial-main');
-		\OCP\Util::addScript('notestutorial', 'notestutorial-main');
-		\OCP\Util::addStyle('notestutorial', 'style');
+		Util::addScript(Application::APP_ID, 'dmsapp-main');
+		\OCP\Util::addScript('dmsapp', 'dmsapp-main');
+		\OCP\Util::addStyle('dmsapp', 'style');
 
-		$response = new TemplateResponse('notestutorial', 'main');
+		$response = new TemplateResponse('dmsapp', 'main');
 
 		$csp = new ContentSecurityPolicy();
         $csp->allowEvalScript(true);

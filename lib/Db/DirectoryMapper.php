@@ -1,5 +1,5 @@
 <?php
-namespace OCA\NotesTutorial\Db;
+namespace OCA\DmsApp\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;

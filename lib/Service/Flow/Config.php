@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NotesTutorial\Service\Flow;
+namespace OCA\DmsApp\Service\Flow;
 
 class Config implements ConfigInterface
 {

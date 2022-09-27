@@ -1,14 +1,14 @@
 <?php
 
-namespace OCA\NotesTutorial\Service;
+namespace OCA\DmsApp\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\NotesTutorial\Db\Agreement;
-use OCA\NotesTutorial\Db\AgreementMapper;
+use OCA\DmsApp\Db\Agreement;
+use OCA\DmsApp\Db\AgreementMapper;
 
 class AgreementService {
 

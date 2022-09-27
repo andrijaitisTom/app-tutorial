@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\NotesTutorial\Migration;
+namespace OCA\DmsApp\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;
@@ -23,8 +23,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if (!$schema->hasTable('notestutorial')) {
-			$table = $schema->createTable('notestutorial');
+		if (!$schema->hasTable('dmsapp')) {
+			$table = $schema->createTable('dmsapp');
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -55,7 +55,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'notestutorial_user_id_index');
+			$table->addIndex(['user_id'], 'dmsapp_user_id_index');
 		}
 
 
@@ -497,15 +497,19 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('outsourcing_function_audit_date', 'text', [
+			$table->addColumn('audit_date', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('parties_related_to_the_company_who_also_use_this_service', 'text', [
+			$table->addColumn('parties_related', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('valid_since`, `valid_until', 'text', [
+			$table->addColumn('valid_since', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('valid_until', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -533,7 +537,11 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('namelt`, `basis_for_materiality', 'text', [
+			$table->addColumn('namelt', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('basis_for_materiality', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -549,15 +557,15 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('bank_of_lithuania_approval_date', 'text', [
+			$table->addColumn('bank_lt_approval_date', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('bank_of_lithuania_notification_date', 'text', [
+			$table->addColumn('bank_lt_notif_date', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('is_the_service_provider_related_to_uab_pervesk', 'text', [
+			$table->addColumn('related_to_pervesk', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -573,7 +581,11 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('service_provider_address`, `service_provider_legal_entity_code', 'text', [
+			$table->addColumn('provider_ent_code', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('service_provider_address', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -581,11 +593,11 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('service_provider_parent_company', 'text', [
+			$table->addColumn('provider_prnt_company', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('service_provider_substitutability_assessment_result', 'text', [
+			$table->addColumn('provider_result', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -593,7 +605,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('does_this_function_support_business_operations_critical', 'text', [
+			$table->addColumn('fn_sup_critical', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -601,18 +613,18 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
-			$table->addColumn('events_when_outsourced_function_was_not_provided_at_agreed_level', 'text', [
+			$table->addColumn('outsrcd_fn_not_provided', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);	
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'outsourcingagreements_user_id_index');
+			$table->addIndex(['user_id'], 'outagagreements_user_id_index');
 		}
 
 
-		if (!$schema->hasTable('policiesandinstructions')) {
-			$table = $schema->createTable('policiesandinstructions');
+		if (!$schema->hasTable('plciesninstrctns')) {
+			$table = $schema->createTable('plciesninstrctns');
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -670,12 +682,12 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 			]);	
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'policiesandinstructions_user_id_index');
+			$table->addIndex(['user_id'], 'plciesninstrctns_user_id_index');
 		}
 
 
-		if (!$schema->hasTable('sentorreceiveddocuments	')) {
-			$table = $schema->createTable('sentorreceiveddocuments	');
+		if (!$schema->hasTable('sntorrcvddocs')) {
+			$table = $schema->createTable('sntorrcvddocs');
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -687,10 +699,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 			$table->addColumn('idfile', 'text', [
 				'notnull' => true,
 				'default' => ''
-			]);
-
-
-	
+			]);	
 			$table->addColumn('name', 'text', [
 				'notnull' => true,
 				'default' => ''
@@ -757,7 +766,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 			]);	
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'sentorreceiveddocuments_user_id_index');
+			$table->addIndex(['user_id'], 'sntorrcvddocs_user_id_index');
 		}
 
 		if (!$schema->hasTable('flowupload_directories')) {

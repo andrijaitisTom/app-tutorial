@@ -22,11 +22,11 @@ return [
 		'outsourcingagreement' => ['url' => '/outsourcingagreements'],
 		'outsourcingagreement_api' => ['url' => '/api/0.1/outsourcingagreements'],
 
-		'policiesandinstructions' => ['url' => '/policiesandinstructions'],
-		'policiesandinstructions_api' => ['url' => '/api/0.1/policiesandinstructions'],
+		'plciesninstrctns' => ['url' => '/plciesninstrctns'],
+		'plciesninstrctns_api' => ['url' => '/api/0.1/plciesninstrctns'],
 
-		'sentorreceiveddocument' => ['url' => '/sentorreceiveddocuments'],
-		'sentorreceiveddocument_api' => ['url' => '/api/0.1/sentorreceiveddocuments'],
+		'sntorrcvddoc' => ['url' => '/sntorrcvddocs'],
+		'sntorrcvddoc_api' => ['url' => '/api/0.1/sntorrcvddocs'],
 
 		'directory' => ['url' => '/directories']
 
@@ -50,9 +50,9 @@ return [
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 		['name' => 'outsourcingagreement_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
-		['name' => 'policiesandinstructions_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+		['name' => 'plciesninstrctns_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
-		['name' => 'sentorreceiveddocument_api#preflighted_cors', 'url' => '/api/0.1/{path}',
+		['name' => 'sntorrcvddoc_api#preflighted_cors', 'url' => '/api/0.1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 			['name' => 'page#index', 'url' => '/files', 'verb' => 'GET', 'postfix' => 'files'],
 			['name' => 'page#index', 'url' => '/filters', 'verb' => 'GET', 'postfix' => 'filters'],

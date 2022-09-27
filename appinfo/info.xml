@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>notestutorial</id>
+    <id>dmsapp</id>
     <name>DMS app</name>
     <summary>App for more convenient document management</summary>
     <description><![CDATA[App for more convenient document management using Nextcloud API]]></description>
     <version>18.0.0</version>
     <licence>agpl</licence>
     <author >Tomas Andrijaitis</author>
-    <namespace>NotesTutorial</namespace>
+    <namespace>DmsApp</namespace>
     <category>office</category>
     <dependencies>
         <nextcloud min-version="21" max-version="24"/>
@@ -16,7 +16,7 @@
     <navigations>
         <navigation>
             <name>DMS app</name>
-            <route>notestutorial.page.index</route>
+            <route>dmsapp.page.index</route>
         </navigation>
     </navigations>
 </info>

@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NotesTutorial\Filter;
+namespace OCA\DmsApp\Filter;
 
 use OC\Files\Search\SearchComparison;
 use OC\Files\Search\SearchBinaryOperator;

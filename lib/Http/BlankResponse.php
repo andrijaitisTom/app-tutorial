@@ -1,5 +1,5 @@
 <?php
-namespace OCA\NotesTutorial\Http;
+namespace OCA\DmsApp\Http;
 
 use OCP\AppFramework\Http\Response;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\DmsApp\Controller;
 
-use OCA\NotesTutorial\AppInfo\Application;
-use OCA\NotesTutorial\Helper;
+use OCA\DmsApp\AppInfo\Application;
+use OCA\DmsApp\Helper;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;

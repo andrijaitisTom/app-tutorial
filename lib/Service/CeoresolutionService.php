@@ -1,14 +1,14 @@
 <?php
 
-namespace OCA\NotesTutorial\Service;
+namespace OCA\DmsApp\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\NotesTutorial\Db\Ceoresolution;
-use OCA\NotesTutorial\Db\CeoresolutionMapper;
+use OCA\DmsApp\Db\Ceoresolution;
+use OCA\DmsApp\Db\CeoresolutionMapper;
 
 class CeoresolutionService {
 

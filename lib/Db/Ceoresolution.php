@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NotesTutorial\Db;
+namespace OCA\DmsApp\Db;
 
 use JsonSerializable;
 

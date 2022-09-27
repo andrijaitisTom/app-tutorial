@@ -99,7 +99,7 @@
 
   ,
 
-  "OutsourcingAgreements": [
+  "OutsourcingAgreementsrcingAgreements": [
     { "header": "Name", "key" : "name", "fieldType":"", "required": "required"},
     { "header": "Title", "key" : "title", "fieldType":"", "required": "optional"},
     { "header": "Date", "key" : "date", "fieldType":"date", "required": "optional"},

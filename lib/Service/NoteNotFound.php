@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NotesTutorial\Service;
+namespace OCA\DmsApp\Service;
 
 class NoteNotFound extends \Exception {
 }

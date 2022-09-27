@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NotesTutorial\Db;
+namespace OCA\DmsApp\Db;
 
 use JsonSerializable;
 
@@ -17,7 +17,8 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 	protected $description;
 	protected $comments;
 	protected $outsourcing;
-	protected $outsourcingFunctionAuditDate;
+	protected $auditDate
+;
 	protected $partiesRelatedToTheCompanyWhoAlsoUseThisService;
 	protected $validSince;
 	protected $validUntil;
@@ -32,21 +33,21 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 	protected $locationOfData;
 	protected $locationOfServices;
 	protected $transferOfData;
-	protected $bankOfLithuaniaApprovalDate;
-	protected $bankOfLithuaniaNotificationDate;
-	protected $isTheServiceProviderRelatedToUabPervesk;
+	protected $bankLtApprovalDate;
+	protected $bankLtNotifDate;
+	protected $relatedToPervesk;
 	protected $agreementApprovedBy;
 	protected $governingLawOfTheAgreement;
 	protected $subcontractors;
 	protected $serviceProviderAddress;
-	protected $serviceProviderLegalEntityCode;
+	protected $providerEntCode;
 	protected $serviceProviderName;
-	protected $serviceProviderParentCompany;
-	protected $serviceProviderSubstitutabilityAssessmentResult;
+	protected $providerPrntCompany;
+	protected $providerResult;
 	protected $alternativeServiceProviders;
-	protected $doesThisFunctionSupportBusinessOperationsCritical;
+	protected $fnSupCritical;
 	protected $priceOfAgreement;
-	protected $eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel;
+	protected $outsrcdFnNotProvided;
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
@@ -57,7 +58,9 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 'description' => $this->description,
 'comments' => $this->comments,
 'outsourcing' => $this->outsourcing,
-'outsourcingFunctionAuditDate' => $this->outsourcingFunctionAuditDate,
+'auditDate
+' => $this->auditDate
+,
 'partiesRelatedToTheCompanyWhoAlsoUseThisService' => $this->partiesRelatedToTheCompanyWhoAlsoUseThisService,
 'validSince' => $this->validSince,
 'validUntil' => $this->validUntil,
@@ -72,21 +75,21 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 'locationOfData' => $this->locationOfData,
 'locationOfServices' => $this->locationOfServices,
 'transferOfData' => $this->transferOfData,
-'bankOfLithuaniaApprovalDate' => $this->bankOfLithuaniaApprovalDate,
-'bankOfLithuaniaNotificationDate' => $this->bankOfLithuaniaNotificationDate,
-'isTheServiceProviderRelatedToUabPervesk' => $this->isTheServiceProviderRelatedToUabPervesk,
+'bankLtApprovalDate' => $this->bankLtApprovalDate,
+'bankLtNotifDate' => $this->bankLtNotifDate,
+'relatedToPervesk' => $this->relatedToPervesk,
 'agreementApprovedBy' => $this->agreementApprovedBy,
 'governingLawOfTheAgreement' => $this->governingLawOfTheAgreement,
 'subcontractors' => $this->subcontractors,
 'serviceProviderAddress' => $this->serviceProviderAddress,
-'serviceProviderLegalEntityCode' => $this->serviceProviderLegalEntityCode,
+'providerEntCode' => $this->providerEntCode,
 'serviceProviderName' => $this->serviceProviderName,
-'serviceProviderParentCompany' => $this->serviceProviderParentCompany,
-'serviceProviderSubstitutabilityAssessmentResult' => $this->serviceProviderSubstitutabilityAssessmentResult,
+'providerPrntCompany' => $this->providerPrntCompany,
+'providerResult' => $this->providerResult,
 'alternativeServiceProviders' => $this->alternativeServiceProviders,
-'doesThisFunctionSupportBusinessOperationsCritical' => $this->doesThisFunctionSupportBusinessOperationsCritical,
+'fnSupCritical' => $this->fnSupCritical,
 'priceOfAgreement' => $this->priceOfAgreement,
-'eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel' => $this->eventsWhenOutsourcedFunctionWasNotProvidedAtAgreedLevel,
+'outsrcdFnNotProvided' => $this->outsrcdFnNotProvided,
 		];
 	}
 }
