@@ -39,6 +39,8 @@ class Ceoresolution extends Entity implements JsonSerializable {
 			'orderType' => $this->  orderType,
 			'relation' => $this->  relation,
 			'namelt' => $this->  namelt,
+			'userId' => $this->	userId,
+
 		];
 	}
 }

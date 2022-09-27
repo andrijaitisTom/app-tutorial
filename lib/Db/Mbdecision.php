@@ -37,6 +37,8 @@ class Mbdecision extends Entity implements JsonSerializable {
 			'registrationNumberCdrmbd' => $this->registrationNumberCdrmbd,
 			'relation' => $this->relation,
 			'namelt' => $this->namelt,
+			'userId' => $this->	userId,
+
 		];
 	}
 }

@@ -224,15 +224,15 @@
 						{{ t("dmsapp", "Select folder on left side to start") }}
 					</h2>
 				</div>
-				<!-- <strong>Selected:</strong>
+				<strong>Selected:</strong>
 				<div v-if="selectedRows.length === 0" class="text-muted">
 					No Rows Selected
-				</div> -->
-				<!-- <ul>
+				</div>
+				<ul>
 					<li v-for="selected in selectedRows">
 						{{ selected }}
 					</li>
-				</ul> -->
+				</ul>
 				<button v-if="currentFolderName !== ''" @click="toggleFileUploadMenu()">
 					Toggle Upload menu
 				</button>
@@ -633,7 +633,7 @@ export default {
 			},
 			createdBy: {
 				value: '',
-				keys: ['createdBy'],
+				keys: ['userId'],
 				label: 'Created by',
 			},
 			outsourcing: {
@@ -1344,7 +1344,7 @@ export default {
 				// if (this.recentlyUploadedFileName !== '') {
 
 				console.log('CIA nodes and notes array !!!')
-				console.log(this.nodesAndNotes)
+				console.log(this.notes)
 				// console.log(`CIA paskutinio ikelto failo vardas.. . . !!! ${this.recentlyUploadedFileName}`)
 
 				// for (let index = 0; index < this.filteredFiles.length; index++) {

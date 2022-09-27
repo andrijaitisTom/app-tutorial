@@ -52,6 +52,8 @@ class Agreement extends Entity implements JsonSerializable {
 			'lastRiskAssessmentDate' => $this->	lastRiskAssessmentDate,
 			'relation' => $this->	relation,
 			'date' => $this->	date,
+			'userId' => $this->	userId,
+
 		];
 	}
 }

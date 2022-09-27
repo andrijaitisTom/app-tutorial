@@ -47,6 +47,8 @@ class Sntorrcvddoc extends Entity implements JsonSerializable {
 			'direction' => $this->direction,
 			'relation' => $this->relation,
 			'namelt' => $this->namelt,
+			'userId' => $this->	userId,
+
 		];
 	}
 }

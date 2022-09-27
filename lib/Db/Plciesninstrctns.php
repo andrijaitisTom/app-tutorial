@@ -35,6 +35,8 @@ class Plciesninstrctns extends Entity implements JsonSerializable {
 			'relation' => $this->			relation,
 			'namelt' => $this->			namelt,
 			'area' => $this->			area,
+			'userId' => $this->	userId,
+
 		];
 	}
 }

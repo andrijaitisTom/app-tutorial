@@ -52,6 +52,8 @@ protected $namelt;
 			'comments' => $this->comments,
 			'relation' => $this->relation,
 			'namelt' => $this->namelt,
+			'userId' => $this->	userId,
+
 		];
 	}
 }

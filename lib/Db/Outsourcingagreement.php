@@ -87,6 +87,8 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 'fnSupCritical' => $this->fnSupCritical,
 'priceOfAgreement' => $this->priceOfAgreement,
 'outsrcdFnNotProvided' => $this->outsrcdFnNotProvided,
+'userId' => $this->	userId,
+
 		];
 	}
 }

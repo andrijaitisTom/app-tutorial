@@ -39,6 +39,8 @@ class Sbdecision extends Entity implements JsonSerializable {
 			'decisionType' => $this->			decisionType,
 			'relation' => $this->			relation,
 			'namelt' => $this->			namelt,
+			'userId' => $this->	userId,
+
 		];
 	}
 }
