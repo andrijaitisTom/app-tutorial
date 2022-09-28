@@ -412,7 +412,6 @@ import tableInfo from './table/tableInfo.json'
 import dropdownSelections from './table/dropdownSelections.json'
 import filterNames from './table/filterNames.json'
 
-
 export default {
 	name: 'App',
 	components: {
@@ -426,6 +425,8 @@ export default {
 		AppNavigationCounter,
 	},
 	directives: {
+		emptyString: '',
+
 		customLocationFileDropZone: {
 			inserted(elm, binding, vnode) {
 				const self = vnode.context
@@ -515,7 +516,6 @@ export default {
 		showFileUploadMenu: false,
 		locations: [],
 		baseUrl: generateUrl('/apps/dmsapp'),
-		currentLocation: undefined,
 		activeLocationPath: false,
 		sort: 'name',
 		sortReverse: false,
@@ -523,7 +523,6 @@ export default {
 		recentlyUploadedFileName: '',
 		dropdownSelections,
 		filterNames,
-		initialFilterValue: '',
 
 		filters: {
 
@@ -901,25 +900,28 @@ export default {
 		afterFileUpload() {
 
 			// if (this.filteredFiles[0].isComplete()) {
-			console.log('after file upload')
-			console.log(this.filteredFiles[0].name)
+			// console.log('after file upload')
+			// console.log(this.filteredFiles[0].name)
 			// if (this.filteredFiles[0].isComplete() && !this.filteredFiles[0].error) {
 			// const uploadedFileName = this.filteredFiles[0].name
 			this.recentlyUploadedFileName = this.filteredFiles[0].name
 			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 			setTimeout(() => {
-				console.log('Delayed for 1 second.')
+				// console.log('Delayed for 1 second.')
 				this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 				console.log(this.$refs)
 			}, '1000')
 
 			setTimeout(() => {
-				console.log('Delayed for 3 second.')
+				// console.log('Delayed for 3 second.')
 				this.$refs[this.recentlyUploadedFileName][0].click()
 			}, '3000')
 			this.activeLocation.flow.cancel()
 
 			return null
+		},
+		returnEmptyString() {
+			return ''
 		},
 	},
 	/**
@@ -931,6 +933,19 @@ export default {
 	},
 
 	methods: {
+		removeMatchingFilters(folderName) {
+			const filtersForThisFolder = this.filterNames[folderName]
+			for (let index = 0; index < filtersForThisFolder.length; index++) {
+				const filterInfo = this.filters[filtersForThisFolder[index]]
+				if (typeof filterInfo.value === 'object') {
+					filterInfo.value.min = ''
+					filterInfo.value.select = ''
+				}
+				if (typeof filterInfo.value === 'string') {
+					filterInfo.value = ''
+				}
+			}
+		},
 		filesSelected(event) {
 			this.activeLocation.flow.addFiles(event.target.files)
 			document.querySelectorAll('#FileSelectInput, #FolderSelectInput').value = null
@@ -967,12 +982,12 @@ export default {
 			this.activeLocationPath = location.path
 		},
 		switchActiveLocationByPath(path) {
-			console.log(`currentFolderName ${this.currentFolderName}`)
+			// console.log(`currentFolderName ${this.currentFolderName}`)
 
 			this.activeLocationPath = path
 
 			// console.log(this.currentFolderName)
-			console.log(this.activeLocationPath)
+			// console.log(this.activeLocationPath)
 		},
 
 		pickNewLocation() {
@@ -980,8 +995,8 @@ export default {
 			OC.dialogs.filepicker('Select a new Upload Folder', function(path) {
 				// console.log(path)
 				// console.log(this.currentFolderName)
-				console.log('the path')
-				console.log(path)
+				// console.log('the path')
+				// console.log(path)
 
 				self.addLocation(path + '/')
 				setTimeout(function() {
@@ -1026,7 +1041,7 @@ export default {
 					path,
 					flow: newFlow,
 				})
-				console.log(this.locations)
+				// console.log(this.locations)
 			}
 		},
 		starLocation(path) {
@@ -1103,7 +1118,7 @@ export default {
 				}
 			})
 
-			console.log(completeChunks)
+			// console.log(completeChunks)
 
 			return completeChunks
 		},
@@ -1253,8 +1268,8 @@ export default {
 
 				// if (this.recentlyUploadedFileName !== '') {
 
-				console.log('CIA nodes and notes array !!!')
-				console.log(this.notes)
+				// console.log('CIA nodes and notes array !!!')
+				// console.log(this.notes)
 				// console.log(`CIA paskutinio ikelto failo vardas.. . . !!! ${this.recentlyUploadedFileName}`)
 
 				// for (let index = 0; index < this.filteredFiles.length; index++) {
@@ -1264,9 +1279,15 @@ export default {
 				// this.recentlyUploadedFileName = ''
 				// }
 
+				/// //////////   FIltrus galima resetint naudojant loadNewFolder funkcija.
+				/// //////// Cia galima parasyt kazkoki loopa kuris pereitu per visu filtru values ir values{min, select}
+				/// /////// ir juos nusetintu i tuscia stringa
+				/// ///////// tokia funkcija kviest kiekviena karta kvieciant loadNewFolder()
+				this.removeMatchingFilters(folderName)
+
 			} catch (e) {
 				console.error(e)
-				showError(t('dmsapp', `Could not fetch! Make sure that folder named '${folderName}'' exists`))
+				showError(t('dmsapp', `Could not fetch! Make sure that folder named '${folderName}' exists`))
 			}
 			this.loading = false
 		},
@@ -1315,7 +1336,7 @@ export default {
 		 */
 		openFile(fileId) {
 			const host = new URL(window.location.href).origin
-			const redirectTo = `${host}/nextcloud24.0.3/nextcloud/index.php/f/${fileId}`
+			const redirectTo = `${host}/index.php/f/${fileId}`
 			window.open(redirectTo)
 		},
 		/**
@@ -1463,6 +1484,9 @@ export default {
 }
 </script>
 <style scoped>
+#body-user #header, #body-settings #header, #body-public #header {
+		z-index: 0;
+	}
 body {
 	padding: 1rem;
 	color: #000;
