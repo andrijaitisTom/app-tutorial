@@ -6,42 +6,56 @@
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection }"
+				:class="{selectedFolder: currentFolderName === 'Agreements'}"
 				@click="loadNewFolder('Agreements', 'agreements')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('dmsapp', 'Ceo Resolutions')"
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection"
+				:class="{selectedFolder: currentFolderName === 'Ceoresolutions'}"
 				@click="loadNewFolder('Ceoresolutions', 'ceoresolutions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('dmsapp', 'Mb decisions')"
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection"
+				:class="{selectedFolder: currentFolderName === 'Mbdecisions'}"
 				@click="loadNewFolder('Mbdecisions', 'mbdecisions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('dmsapp', 'Contracts')"
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection"
+				:class="{selectedFolder: currentFolderName === 'Contracts'}"
 				@click="loadNewFolder('Contracts', 'contracts')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('dmsapp', 'Sb decisions')"
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection"
+				:class="{selectedFolder: currentFolderName === 'Sbdecisions'}"
 				@click="loadNewFolder('Sbdecisions', 'sbdecisions')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('dmsapp', 'Outsourcing Agreements')"
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection"
+				:class="{selectedFolder: currentFolderName === 'OutsourcingAgreements'}"
 				@click="loadNewFolder('OutsourcingAgreements', 'outsourcingagreements')" />
 			<AppNavigationNew v-if="!loading"
 				:text="t('dmsapp', 'Policies And Instructions')"
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection"
+				:class="{selectedFolder: currentFolderName === 'PoliciesAndInstructions'}"
 				@click="
 					loadNewFolder('PoliciesAndInstructions', 'plciesninstrctns')
 				" />
@@ -50,6 +64,8 @@
 				:disabled="false"
 				button-id="new-dmsapp-button"
 				button-class="icon-folder"
+				class="navigationFolderSelection"
+				:class="{selectedFolder: currentFolderName === 'SentOrReceivedDocuments'}"
 				@click="
 					loadNewFolder('SentOrReceivedDocuments', 'sntorrcvddocs')
 				" />
@@ -119,7 +135,8 @@
 										tableInfo.fieldType !== 'date' &&
 											tableInfo.fieldType !== 'boolean' &&
 											tableInfo.fieldType !== 'choice' &&
-											tableInfo.fieldType !== 'number'"
+											tableInfo.fieldType !== 'number' &&
+											tableInfo.key !== 'name'"
 									ref="title"
 									v-model="currentNote[tableInfo.key]"
 									:required="tableInfo.required === 'required'"
@@ -131,6 +148,9 @@
 										type="datetime"
 										placeholder="Click to enter date"
 										:required="tableInfo.required === 'required'" />
+								</div>
+								<div v-if="tableInfo.key === 'name'">
+									<p>{{ currentNote.name }}</p>
 								</div>
 								<div v-if="tableInfo.fieldType === 'boolean'" class="radioContainer">
 									<input id="yes"
@@ -224,162 +244,64 @@
 						{{ t("dmsapp", "Select folder on left side to start") }}
 					</h2>
 				</div>
-				<!-- <strong>Selected:</strong>
-				<div v-if="selectedRows.length === 0" class="text-muted">
-					No Rows Selected
-				</div>
-				<ul>
-					<li v-for="selected in selectedRows">
-						{{ selected }}
-					</li>
-				</ul> -->
-				<button v-if="currentFolderName !== ''" @click="toggleFileUploadMenu()">
-					Toggle Upload menu
-				</button>
-				<template v-if="showFileUploadMenu">
-					<Content :class="{'icon-loading': loading}" app-name="dmsapp">
-						<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-						<!-- CONTENT -->
-						<AppContent>
-							<div v-if="!loading" v-activeLocationFileDropZone style="margin-left: 4%; margin-right: 4%; margin-top: 7px; width:auto">
-								<div v-if="activeLocation === undefined" id="noLocationSelected">
-									{{ t('dmsapp', 'Please select a location') }}
-								</div>
-								<div v-if="activeLocation != undefined" id="locationSelected">
-									<h2 id="title">
-										{{ t('dmsapp', `Upload a new file to ${currentFolderName} folder`) }}
-									</h2>
-									<div class="buttonGroup">
-										<!-- <span v-uploadSelectButton class="button" uploadtype="file">
-											<span class="icon icon-file select-file-icon" />
-											<span>{{ t('dmsapp', 'Select File') }}</span>
-										</span> -->
-										<label for="FileSelectInput" class="selectionLabel">
-											<div class="icon-file fileIcon" />
-											<h3>Click here to select file</h3>
-										</label>
-										or drag & drop your file on this area
+				<template v-if="currentFolderName !== ''">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+					<div v-if="!loading" v-activeLocationFileDropZone style="margin-left: 4%; margin-right: 4%; margin-top: 7px; width:auto">
+						<div v-if="activeLocation === undefined" id="noLocationSelected">
+							{{ t('dmsapp', 'Please select a location') }}
+						</div>
+						<div v-if="activeLocation != undefined" id="locationSelected">
+							<label for="FileSelectInput">
+								<div class="uploadButton"><span class="icon-file fileIcon" />Upload file</div>
+							</label>
+
+							<input id="FileSelectInput"
+								class="selectionInput"
+								type="file"
+								@change="filesSelected">
+						</div>
+						<p>
+							<span v-if="activeLocationFilesCount != 0" class="label">{{ t('dmsapp', 'Progress') + ' : ' + trimDecimals(activeLocation.flow.progress()*100, 2) + '%' }}</span>
+							<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('dmsapp', 'Time remaining') + ' : ' + seconds(activeLocation.flow.timeRemaining()) }}</span>
+							<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('dmsapp', 'Uploading') + '...' }}</span>
+						</p>
+						<b-modal id="modal-2"
+							ref="upload-modal"
+							hide-footer
+							no-close-on-esc
+							no-close-on-backdrop
+							hide-header-close>
+							<p class="uploadModalMessage">
+								Please wait ...
+							</p>
+							<div v-if="filteredFiles">
+								<div v-for="(file, index) in filteredFiles" :key="'file-' + file.uniqueIdentifier">
+									<p v-if="!file.isComplete() && !file.error" class="ellipsis" :title="'UID: ' + file.uniqueIdentifier">
+										<span>Uploading {{ file.relativePath }}</span>
+									</p>
+
+									<p>
+										<progress v-if="!file.isComplete() && !file.error"
+											class="progressbar hideOnMobile"
+											max="1"
+											:value="file.progress()" />
+										<span v-if="!file.isComplete() && !file.error">{{ trimDecimals(file.progress()*100, 2) }}%</span>
+										<span v-if="file.isComplete() && !file.error">{{ t('dmsapp', 'Completed') }}</span>
+										<i v-if="file.isComplete() && !file.error">{{ afterFileUpload }}</i>
+									</p>
+									<div v-if="file.error">
+										<span>{{ t('dmsapp', 'Unexpected error') }}</span>
+										<button class="reloadButton" @click="reloadPage">
+											Reload page
+										</button>
 									</div>
-									<input id="FileSelectInput"
-										class="selectionInput"
-										type="file"
-										@change="filesSelected">
+									</p>
 								</div>
-								<hr>
-								<div class="buttonGroup">
-									<a class="button" @click="activeLocation.flow.resume()">
-										<span class="icon icon-play" />
-										<span>{{ t('dmsapp', 'START UPLOADING') }}</span>
-									</a>
-
-									<!-- the buttons below can be used to stop or cancel an ungoing uploading operation -->
-									<!-- <a class="button" @click="activeLocation.flow.pause()">
-										<span class="icon icon-pause" />
-										<span>{{ t('dmsapp', 'Pause') }}</span>
-									</a>
-									<a class="button" @click="activeLocation.flow.cancel()">
-										<span class="icon icon-close" />
-										<span>{{ t('dmsapp', 'Cancel') }}</span>
-									</a> -->
-								</div>
-								<hr>
-								<p>
-									<span class="label">{{ t('dmsapp', 'Size') + ' : ' + bytes(activeLocation.flow.getSize()) }}</span>
-									<span v-if="activeLocationFilesCount != 0" class="label">{{ t('dmsapp', 'Progress') + ' : ' + trimDecimals(activeLocation.flow.progress()*100, 2) + '%' }}</span>
-									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('dmsapp', 'Time remaining') + ' : ' + seconds(activeLocation.flow.timeRemaining()) }}</span>
-									<span v-if="activeLocation.flow.isUploading()" class="label">{{ t('dmsapp', 'Uploading') + '...' }}</span>
-								</p>
-								<hr>
-								<table id="uploadsTable">
-									<thead>
-										<tr>
-											<th class="hideOnMobile" style="width:5%">
-												<span class="noselect">#</span>
-											</th>
-											<th @click="selectSortingMethod('name')">
-												<a class="noselect">
-													<span>{{ t('dmsapp', 'Name') }}</span>
-													<span :class="{'icon-triangle-n': (sort == 'name' && sortReverse), 'icon-triangle-s': (sort == 'name' && !sortReverse)}" class="sortIndicator" />
-												</a>
-											</th>
-											<th />
-											<th class="hideOnMobile" style="width:10%" @click="selectSortingMethod('uploadspeed')">
-												<a class="noselect">
-													<span>{{ t('dmsapp', 'Upload speed') }}</span>
-													<span :class="{'icon-triangle-n': (sort == 'uploadspeed' && sortReverse), 'icon-triangle-s': (sort == 'uploadspeed' && !sortReverse)}" class="sortIndicator" />
-												</a>
-											</th>
-											<th style="width:10%" @click="selectSortingMethod('size')">
-												<a class="noselect">
-													<span>{{ t('dmsapp', 'Size') }}</span>
-													<span :class="{'icon-triangle-n': (sort == 'size' && sortReverse), 'icon-triangle-s': (sort == 'size' && !sortReverse)}" class="sortIndicator" />
-												</a>
-											</th>
-											<th style="width:20%" @click="selectSortingMethod('progress')">
-												<a class="noselect">
-													<span>{{ t('dmsapp', 'Progress') }}</span>
-													<span :class="{'icon-triangle-n': (sort == 'progress' && sortReverse), 'icon-triangle-s': (sort == 'progress' && !sortReverse)}" class="sortIndicator" />
-												</a>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr v-for="(file, index) in filteredFiles" :key="'file-' + file.uniqueIdentifier">
-											<td class="hideOnMobile">
-												{{ index+1 }}
-											</td>
-											<td class="ellipsis" :title="'UID: ' + file.uniqueIdentifier">
-												<span>{{ file.relativePath }}</span>
-											</td>
-											<td>
-												<div v-if="!file.isComplete() || file.error" class="actions">
-													<a v-if="!file.isUploading() && !file.error"
-														class="action permanent"
-														:title="t('dmsapp', 'Resume')"
-														@click="file.resume()">
-														<span class="icon icon-play" />
-													</a>
-													<a v-if="file.isUploading() && !file.error"
-														class="action permanent"
-														:title="t('dmsapp', 'Pause')"
-														@click="file.pause()">
-														<span class="icon icon-pause" />
-													</a>
-													<a v-show="file.error"
-														class="action permanent"
-														:title="t('dmsapp', 'Retry')"
-														@click="file.retry()">
-														<span class="icon icon-play" />
-													</a>
-													<a class="action permanent" :title="t('dmsapp', 'Cancel')" @click="file.cancel()">
-														<span class="icon icon-close" />
-													</a>
-												</div>
-											</td>
-											<td class="hideOnMobile">
-												<span v-if="file.isUploading()">{{ byterate(file.currentSpeed) }}</span>
-											</td>
-											<td :title="'Chunks: ' + completedChunks(file) + ' / ' + file.chunks.length">
-												<span v-if="!file.isComplete()" class="hideOnMobile">{{ bytes(file.size*file.progress()) }}/</span>
-												<span>{{ bytes(file.size) }}</span>
-											</td>
-											<td>
-												<progress v-if="!file.isComplete() && !file.error"
-													class="progressbar hideOnMobile"
-													max="1"
-													:value="file.progress()" />
-												<span v-if="!file.isComplete() && !file.error">{{ trimDecimals(file.progress()*100, 2) }}%</span>
-												<span v-if="file.isComplete() && !file.error">{{ t('dmsapp', 'Completed') }}</span>
-												<i v-if="file.isComplete() && !file.error">{{ afterFileUpload }}</i>
-												<span v-if="file.error">{{ t('dmsapp', 'Error') }}</span>
-											</td>
-										</tr>
-									</tbody>
-								</table>
 							</div>
-						</appcontent>
-					</content>
+						</b-modal>
+					</div>
 				</template>
 			</template>
 		</appcontent>
@@ -497,6 +419,7 @@ export default {
 		},
 	},
 	data: () => ({
+		fileIsBeingUploaded: false,
 		name: 'Selection',
 		selectedRows: [],
 		notes: [],
@@ -915,6 +838,8 @@ export default {
 			setTimeout(() => {
 				// console.log('Delayed for 3 second.')
 				this.$refs[this.recentlyUploadedFileName][0].click()
+				this.fileIsBeingUploaded = false
+				this.hideUploadModal()
 			}, '3000')
 			this.activeLocation.flow.cancel()
 
@@ -933,6 +858,9 @@ export default {
 	},
 
 	methods: {
+		reloadPage() {
+			window.location.reload()
+		},
 		removeMatchingFilters(folderName) {
 			const filtersForThisFolder = this.filterNames[folderName]
 			for (let index = 0; index < filtersForThisFolder.length; index++) {
@@ -949,6 +877,9 @@ export default {
 		filesSelected(event) {
 			this.activeLocation.flow.addFiles(event.target.files)
 			document.querySelectorAll('#FileSelectInput, #FolderSelectInput').value = null
+			this.fileIsBeingUploaded = true
+			this.showUploadModal()
+			this.activeLocation.flow.resume()
 		},
 		setupDynamicTitleInterval() {
 			const self = this
@@ -1139,6 +1070,12 @@ export default {
 		hideModal() {
 			this.$refs['info-modal'].hide()
 		},
+		showUploadModal() {
+			this.$refs['upload-modal'].show()
+		},
+		hideUploadModal() {
+			this.$refs['upload-modal'].hide()
+		},
 		async loadNewFolder(folderName, endpointName) {
 			try {
 				const response = await axios.get(
@@ -1325,8 +1262,6 @@ export default {
 		handleDateChange() {
 			// console.log(this.dateAndTime)
 			const timestamp = new Date(this.dateAndTime).valueOf()
-			// console.log(timestamp)
-			// console.log(new Date(timestamp))
 		},
 		/**
 		 * open the clicked file
@@ -1345,12 +1280,7 @@ export default {
 		 * @param {object} row Note object
 		 */
 		openEdit(row) {
-			const splitPath = row.path.split('/')
-			const location = splitPath[1]
 			this.currentNoteId = row.id
-			this.$nextTick(() => {
-				this.$refs.content.focus()
-			})
 			this.showModal()
 		},
 		/**
@@ -1364,7 +1294,7 @@ export default {
 			}
 			this.currentNoteId = note.id
 			this.$nextTick(() => {
-				this.$refs.content.focus()
+				this.$refs.title.focus()
 			})
 		},
 		/**
@@ -1422,7 +1352,6 @@ export default {
 		async createNote(note, endpointName) {
 			this.updating = true
 			try {
-				// console.log(note)
 				const response = await axios.post(
 					generateUrl(`/apps/dmsapp/${endpointName}`),
 					note
@@ -1431,7 +1360,6 @@ export default {
 					(match) => match.id === this.currentNoteId
 				)
 				this.$set(this.notes, index, response.data)
-				// console.log(index)
 				this.currentNoteId = response.data.id
 			} catch (e) {
 				console.error(e)
@@ -1483,7 +1411,68 @@ export default {
 	},
 }
 </script>
+<style>
+
+	.navigationContainer>.navigationFolderSelection>button{
+	border: none;
+    background-color: white;
+    border-radius: 0;
+}
+.navigationContainer>.navigationFolderSelection>button:active{
+	color: #00aeff!important;
+}
+.navigationContainer>.navigationFolderSelection>button:hover{
+	color: #70a9ff
+}
+
+.selectedFolder{
+	border-left: solid 5px #0d6efd;
+}
+.selectedFolder>button{
+	color: #0d6efd
+}
+
+#header{
+	z-index: 1000!important;
+}
+
+#modal-2___BV_modal_content_{
+	margin-top: 100px;
+	background-color: transparent;
+	border: none!important;
+	position: absolute;
+	padding-top: 50%;
+	left: 20%;
+	color: white;
+	font-size: xx-large;
+}
+#modal-2___BV_modal_header_{
+border-bottom: none!important
+}
+
+</style>
 <style scoped>
+	.uploadButton:hover{
+	border-left: solid 5px #6aa5ff;
+	color: #6aa5ff;
+	cursor: pointer;
+}
+.selectedFolder:active{
+	border-left: solid 5px #0d6efd;
+	color: #0d6efd;
+}
+	.progressbar{
+		width: 100%;
+		height: 50px;
+	}
+	.reloadButton{
+	border-radius: 2px;
+    margin-left: 20px;
+    color: white;
+    background: #00b6ff85;
+    padding: 10px 50px;
+    border: none;
+}
 #body-user #header, #body-settings #header, #body-public #header {
 		z-index: 0;
 	}
@@ -1610,11 +1599,7 @@ textarea {
 	text-align: center;
 }
 #locationSelected{
-	border: solid 5px grey;
-    border-style: dashed;
-    border-radius: 10px;
-	padding: 40px;
-	background: aliceblue;
+
 }
 .selectionInput{
 	display: none;
@@ -1643,8 +1628,10 @@ padding: 20px;
 #modal-1{
 	margin-top: 100px;
 }
+
 #app-navigation-vue{
 	z-index: 1050;
+	height: max-content;
 }
 .filtersContainer{
 	flex-direction: column;
@@ -1657,8 +1644,14 @@ padding: 20px;
 }
 .folderName{
 	padding-top: 50px;
+	margin-left: 34px;
+    margin-bottom: 24px;
 }
 .selectFilter{
 	width: 200px;
 }
+.navigationFolderSelection:hover{
+    border-left: solid 5px #70a9ff;
+}
+
 </style>
