@@ -1433,7 +1433,7 @@ export default {
 }
 
 #header{
-	z-index: 1000!important;
+	z-index: 1050!important;
 }
 
 #modal-2___BV_modal_content_{
