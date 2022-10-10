@@ -4,6 +4,7 @@ return [
 	'resources' => [
 		'note' => ['url' => '/notes'],
 		'note_api' => ['url' => '/api/0.1/notes'],
+		
 		'agreement' => ['url' => '/agreements'],
 		'agreement_api' => ['url' => '/api/0.1/agreements'],
 

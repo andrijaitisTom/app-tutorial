@@ -2,7 +2,7 @@
 
 This app allows to filter and sort documents more conveniently on nextcloud
  
-## Try it 
+## Installation
 To install it change into your Nextcloud's apps directory:
 
     cd nextcloud/apps
@@ -71,7 +71,11 @@ From frontend you can now call the endpoint using axios like this:
 	 
 	Group Folders MUST be named the same as their descriptive names in src/table/tableInfo.json
 	 ----------
+	 
     Migration commands only work when nextcloud debug mode is enabled.
+
+	--------------
+	Table sorting, filters and pagination is based on Vuejs Smart table, it's documentation can be found here: https://tochoromero.github.io/vuejs-smart-table/
 	
 
 			

@@ -1,0 +1,10 @@
+[
+    {"title":"Agreements","folderName":"Agreements", "endpoint":"agreements" },
+    {"title":"Ceo Resolutions","folderName":"Ceoresolutions", "endpoint":"ceoresolutions" },
+    {"title":"Mb decisions","folderName":"Mbdecisions", "endpoint":"mbdecisions" },
+    {"title":"Contracts","folderName":"Contracts", "endpoint":"contracts" },
+    {"title":"Sb decisions","folderName":"Sbdecisions", "endpoint":"sbdecisions" },
+    {"title":"Outsourcing Agreements","folderName":"OutsourcingAgreements", "endpoint":"outsourcingagreements" },
+    {"title":"Policies And Instructions","folderName":"PoliciesAndInstructions", "endpoint":"plciesninstrctns" },
+    {"title":"Sent Or Received Documents","folderName":"SentOrReceivedDocuments", "endpoint":"sntorrcvddocs" }
+]

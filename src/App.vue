@@ -1,74 +1,18 @@
 <template>
 	<div id="content" class="app-dmsapp" @click="handleNavigationToggle()">
-		<AppNavigation class="navigationContainer">
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Agreements')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection }"
-				:class="{selectedFolder: currentFolderName === 'Agreements'}"
-				@click="loadNewFolder('Agreements', 'agreements')" />
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Ceo Resolutions')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection"
-				:class="{selectedFolder: currentFolderName === 'Ceoresolutions'}"
-				@click="loadNewFolder('Ceoresolutions', 'ceoresolutions')" />
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Mb decisions')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection"
-				:class="{selectedFolder: currentFolderName === 'Mbdecisions'}"
-				@click="loadNewFolder('Mbdecisions', 'mbdecisions')" />
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Contracts')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection"
-				:class="{selectedFolder: currentFolderName === 'Contracts'}"
-				@click="loadNewFolder('Contracts', 'contracts')" />
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Sb decisions')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection"
-				:class="{selectedFolder: currentFolderName === 'Sbdecisions'}"
-				@click="loadNewFolder('Sbdecisions', 'sbdecisions')" />
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Outsourcing Agreements')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection"
-				:class="{selectedFolder: currentFolderName === 'OutsourcingAgreements'}"
-				@click="loadNewFolder('OutsourcingAgreements', 'outsourcingagreements')" />
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Policies And Instructions')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection"
-				:class="{selectedFolder: currentFolderName === 'PoliciesAndInstructions'}"
-				@click="
-					loadNewFolder('PoliciesAndInstructions', 'plciesninstrctns')
-				" />
-			<AppNavigationNew v-if="!loading"
-				:text="t('dmsapp', 'Sent Or Received Documents')"
-				:disabled="false"
-				button-id="new-dmsapp-button"
-				button-class="icon-folder"
-				class="navigationFolderSelection"
-				:class="{selectedFolder: currentFolderName === 'SentOrReceivedDocuments'}"
-				@click="
-					loadNewFolder('SentOrReceivedDocuments', 'sntorrcvddocs')
-				" />
+		<AppNavigation>
+			<div v-for="navigationInfo in folderNames" :key="navigationInfo.endpoint" class="navigationContainer">
+				<AppNavigationNew v-if="!loading"
+					:text="t('dmsapp', `${navigationInfo.title}`)"
+					:disabled="false"
+					button-id="new-dmsapp-button"
+					button-class="icon-folder"
+					class="navigationFolderSelection"
+					:class="{selectedFolder: currentFolderName === `${navigationInfo.folderName}`}"
+					@click="
+						loadNewFolder(`${navigationInfo.folderName}`, `${navigationInfo.endpoint}`)
+					" />
+			</div>
 			<div v-if="currentFolderName !== ''" class="filtersContainer">
 				<div v-for="filterName in filterNames[currentFolderName]" :key="filterName" class="form-group">
 					<div class="col-auto">
@@ -129,7 +73,7 @@
 					title="Edit file information">
 					<div v-if="currentNote" class="editPanel">
 						<form>
-							<div v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
+							<div v-for="tableInfo in currentTableInfo" :key="tableInfo.key" :sort-key="tableInfo.key">
 								<label>{{ `${tableInfo.header} :` }}</label>
 								<input v-if="
 										tableInfo.fieldType !== 'date' &&
@@ -169,7 +113,7 @@
 								</div>
 								<div v-if="tableInfo.fieldType === 'choice'">
 									<select v-model="currentNote[tableInfo.key]">
-										<option v-for="option in dropdownSelections[tableInfo.key]" :value="option">
+										<option v-for="option in dropdownSelections[tableInfo.key]" :key="option" :value="option">
 											{{ option }}
 										</option>
 									</select>
@@ -195,7 +139,9 @@
 				<div class="container">
 					<v-table :data="nodesAndNotes"
 						:filters="filters"
-						:hide-sort-icons="true"
+						hide-sort-icons="true"
+						:current-page.sync="currentPage"
+						:page-size="paginationSize"
 						class="my-2 table table-striped"
 						selection-mode="single"
 						selected-class="table-info"
@@ -203,15 +149,22 @@
 							navigationOpen: isNavigationOpen,
 							navigationClosed: !isNavigationOpen,
 						}"
+						@totalPagesChanged="totalPages = $event"
 						@selectionChanged="selectedRows = $event">
 						<thead slot="head">
-							<v-th v-for="tableInfo in currentTableInfo" :sort-key="tableInfo.key">
-								<b>{{ tableInfo.header }}</b>
+							<v-th v-for="tableInfo in currentTableInfo"
+								:key="tableInfo.key"
+								:sort-key="tableInfo.key"
+								class="tableHead">
+								<div class="tableHeadTextContainer">
+
+									<b >{{ tableInfo.header }}</b>
+								</div>
 							</v-th>
 						</thead>
 						<tbody slot="body" slot-scope="{ displayData }">
 							<v-tr v-for="row in displayData" :key="row.id" :row="row">
-								<td v-for="rowInfo in currentTableInfo">
+								<td v-for="rowInfo in currentTableInfo" :key="rowInfo.key">
 									<span v-if="rowInfo.fieldType !== 'date'">{{
 										row[rowInfo.key]
 									}}</span>
@@ -237,6 +190,22 @@
 							</v-tr>
 						</tbody>
 					</v-table>
+					<div v-if="currentFolderName !== '' " class="paginationContainer">
+						<smart-pagination :hide-single-page="false"
+							:current-page.sync="currentPage"
+							:total-pages="totalPages" />
+						<select v-model="paginationSize" class="paginationSelect">
+							<option :value="25" selected>
+								25
+							</option>
+							<option :value="50">
+								50
+							</option>
+							<option :value="100">
+								100
+							</option>
+						</select>
+					</div>
 				</div>
 				<div v-if="currentFolderName === ''" id="emptycontent">
 					<div class="icon-clippy" />
@@ -277,7 +246,7 @@
 								Please wait ...
 							</p>
 							<div v-if="filteredFiles">
-								<div v-for="(file, index) in filteredFiles" :key="'file-' + file.uniqueIdentifier">
+								<div v-for="(file) in filteredFiles" :key="'file-' + file.uniqueIdentifier">
 									<p v-if="!file.isComplete() && !file.error" class="ellipsis" :title="'UID: ' + file.uniqueIdentifier">
 										<span>Uploading {{ file.relativePath }}</span>
 									</p>
@@ -297,20 +266,13 @@
 											Reload page
 										</button>
 									</div>
-									</p>
 								</div>
 							</div>
 						</b-modal>
 					</div>
 				</template>
 			</template>
-		</appcontent>
-	</div>
-	</AppContent>
-	</Content>
-</template>
-			</template>
-		</AppContent>
+		</Appcontent>
 	</div>
 </template>
 
@@ -329,10 +291,10 @@ import users from './users.json'
 import AppNavigationCounter from '@nextcloud/vue/dist/Components/AppNavigationCounter'
 import Flow from '@flowjs/flow.js'
 import Content from '@nextcloud/vue/dist/Components/Content'
-import locationsJson from './table/locations.json'
 import tableInfo from './table/tableInfo.json'
 import dropdownSelections from './table/dropdownSelections.json'
 import filterNames from './table/filterNames.json'
+import folderNames from './table/folderNames.json'
 
 export default {
 	name: 'App',
@@ -347,8 +309,6 @@ export default {
 		AppNavigationCounter,
 	},
 	directives: {
-		emptyString: '',
-
 		customLocationFileDropZone: {
 			inserted(elm, binding, vnode) {
 				const self = vnode.context
@@ -419,13 +379,15 @@ export default {
 		},
 	},
 	data: () => ({
+		currentPage: 1,
+		totalPages: 0,
+		paginationSize: 25,
 		fileIsBeingUploaded: false,
 		name: 'Selection',
 		selectedRows: [],
 		notes: [],
 		nodes: [],
 		nodesAndNotes: [],
-		notRegistered: [],
 		currentNoteId: null,
 		updating: false,
 		loading: true,
@@ -446,6 +408,7 @@ export default {
 		recentlyUploadedFileName: '',
 		dropdownSelections,
 		filterNames,
+		folderNames,
 
 		filters: {
 
@@ -821,12 +784,6 @@ export default {
 
 		},
 		afterFileUpload() {
-
-			// if (this.filteredFiles[0].isComplete()) {
-			// console.log('after file upload')
-			// console.log(this.filteredFiles[0].name)
-			// if (this.filteredFiles[0].isComplete() && !this.filteredFiles[0].error) {
-			// const uploadedFileName = this.filteredFiles[0].name
 			this.recentlyUploadedFileName = this.filteredFiles[0].name
 			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 			setTimeout(() => {
@@ -845,16 +802,12 @@ export default {
 
 			return null
 		},
-		returnEmptyString() {
-			return ''
-		},
 	},
 	/**
 	 * change loading state after loaded
 	 */
 	async mounted() {
 		this.loading = false
-		// console.log(this.notes)
 	},
 
 	methods: {
@@ -905,30 +858,15 @@ export default {
 		},
 		switchActiveLocationById(id) {
 			const location = this.getLocationById(id)
-
-			// console.log('location')
-			// console.log(location)
-			// console.log(this.activeLocationPath)
-
 			this.activeLocationPath = location.path
 		},
 		switchActiveLocationByPath(path) {
-			// console.log(`currentFolderName ${this.currentFolderName}`)
-
 			this.activeLocationPath = path
-
-			// console.log(this.currentFolderName)
-			// console.log(this.activeLocationPath)
 		},
 
 		pickNewLocation() {
 			const self = this
 			OC.dialogs.filepicker('Select a new Upload Folder', function(path) {
-				// console.log(path)
-				// console.log(this.currentFolderName)
-				// console.log('the path')
-				// console.log(path)
-
 				self.addLocation(path + '/')
 				setTimeout(function() {
 					self.switchActiveLocationByPath(path + '/')
@@ -953,7 +891,6 @@ export default {
 			return false
 		},
 		addLocation(path) {
-			// console.log(this.currentFolderName)
 		    if (!this.getLocationByPath(path)) {
 				const newFlow = new Flow({
 					query(flowFile, flowChunk) {
@@ -972,14 +909,10 @@ export default {
 					path,
 					flow: newFlow,
 				})
-				// console.log(this.locations)
 			}
 		},
 		starLocation(path) {
 			const location = this.getLocationByPath(path)
-
-			// contentType: "application/json",
-
 			axios.post(this.baseUrl + '/directories', {
 				path,
 			})
@@ -1048,9 +981,6 @@ export default {
 					completeChunks++
 				}
 			})
-
-			// console.log(completeChunks)
-
 			return completeChunks
 		},
 		openLocationInFiles(path) {
@@ -1078,6 +1008,7 @@ export default {
 		},
 		async loadNewFolder(folderName, endpointName) {
 			try {
+				console.log(this.folderNames)
 				const response = await axios.get(
 					generateUrl(`/apps/dmsapp/${endpointName}`)
 				)
@@ -1086,8 +1017,6 @@ export default {
 					generateUrl(`/apps/dmsapp/nodelist/${folderName}`)
 				)
 				this.nodes = nodesResponse.data
-
-				// console.log(response)
 				this.currentEndpoint = endpointName
 				this.currentTableInfo = tableInfo[folderName]
 				this.currentFolderName = folderName
@@ -1105,10 +1034,6 @@ export default {
 					const element = this.notes[index]
 					notesIds.push(element.idfile)
 				}
-
-				// console.log(nodesIds)
-				// console.log(notesIds)
-
 				const matches = nodesIds.filter(
 					(id) => !notesIds.includes(JSON.stringify(id))
 				)
@@ -1122,8 +1047,8 @@ export default {
 						{
 							id: -1,
 							name: JSON.stringify(currentObject.nodeName),
-							title: 'N/A',
 							idfile: JSON.stringify(currentObject.id),
+							title: 'N/A',
 							content: 'N/A',
 							physical: 'N/A',
 							namelt: 'N/A',
@@ -1203,23 +1128,7 @@ export default {
 					...this.notes.find((t2) => Number(t2.idfile) === t1.id),
 				}))
 
-				// if (this.recentlyUploadedFileName !== '') {
-
-				// console.log('CIA nodes and notes array !!!')
-				// console.log(this.notes)
-				// console.log(`CIA paskutinio ikelto failo vardas.. . . !!! ${this.recentlyUploadedFileName}`)
-
-				// for (let index = 0; index < this.filteredFiles.length; index++) {
-
-				// 	console.log(this.filteredFiles[index].isComplete())
-				// }
-				// this.recentlyUploadedFileName = ''
-				// }
-
-				/// //////////   FIltrus galima resetint naudojant loadNewFolder funkcija.
-				/// //////// Cia galima parasyt kazkoki loopa kuris pereitu per visu filtru values ir values{min, select}
-				/// /////// ir juos nusetintu i tuscia stringa
-				/// ///////// tokia funkcija kviest kiekviena karta kvieciant loadNewFolder()
+				// this
 				this.removeMatchingFilters(folderName)
 
 			} catch (e) {
@@ -1253,16 +1162,7 @@ export default {
 				// console.log(this.isNavigationOpen)
 			}
 		},
-		/*
-		 *
-		 * handle time change
-		 *
-		 *
-		 */
-		handleDateChange() {
-			// console.log(this.dateAndTime)
-			const timestamp = new Date(this.dateAndTime).valueOf()
-		},
+
 		/**
 		 * open the clicked file
 		 *
@@ -1412,6 +1312,10 @@ export default {
 }
 </script>
 <style>
+	.navigationContainer{
+		padding: 0;
+		z-index: 1049!important;
+	}
 
 	.navigationContainer>.navigationFolderSelection>button{
 	border: none;
@@ -1448,6 +1352,9 @@ export default {
 }
 #modal-2___BV_modal_header_{
 border-bottom: none!important
+}
+#new-dmsapp-button{
+	padding: 0 0 0 30px;
 }
 
 </style>
@@ -1489,21 +1396,24 @@ td {
 	white-space: nowrap;
 }
 
-.vt-sort::after {
-	padding-left: 0.5em;
-	display: inline-block;
+.vt-sort:before{
+    font-family: FontAwesome;
+    padding-right: 0.5em;
+    width: 1.28571429em;
+    display: inline-block;
+    text-align: center;
 }
 
-.vt-sortable::after {
+.vt-sortable::before {
 	content: "\25B2";
 	color: transparent;
 }
 
-.vt-asc::after {
+.vt-asc::before {
 	content: "\25BC";
 }
 
-.vt-desc::after {
+.vt-desc::before {
 	content: "\25B2";
 }
 
@@ -1598,9 +1508,6 @@ textarea {
 #title{
 	text-align: center;
 }
-#locationSelected{
-
-}
 .selectionInput{
 	display: none;
 }
@@ -1653,5 +1560,25 @@ padding: 20px;
 .navigationFolderSelection:hover{
     border-left: solid 5px #70a9ff;
 }
-
+.navigationFolderSelection{
+	padding: 0;
+}
+.paginationContainer{
+	display: flex;
+	flex-direction: row;
+}
+.paginationSelect{
+	margin-left: 30px;
+}
+.tableHead{
+	background-color: rgb(146, 94, 94);
+}
+.tableHeadTextContainer{
+	width: min-content;
+	display: flex;
+align-items: center;
+white-space: normal;
+color: rgb(0, 0, 0);
+	}
+	
 </style>
