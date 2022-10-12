@@ -60,6 +60,17 @@
 			</div>
 		</AppNavigation>
 		<AppContent>
+			<select v-model="selectedCompany" class="selectFilter">
+				<option value="Pervesk">
+					Pervesk
+				</option>
+				<option value="Bankera" selected>
+					Bankera
+				</option>
+				<option value="SpectroCoin">
+					SpectroCoin
+				</option>
+			</select>
 			<div>
 				<h1 v-if="currentFolderName !== ''" class="folderName">
 					{{ currentFolderName }}
@@ -139,7 +150,7 @@
 				<div class="container">
 					<v-table :data="nodesAndNotes"
 						:filters="filters"
-						hide-sort-icons="true"
+						:hide-sort-icons="true"
 						:current-page.sync="currentPage"
 						:page-size="paginationSize"
 						class="my-2 table table-striped"
@@ -157,8 +168,7 @@
 								:sort-key="tableInfo.key"
 								class="tableHead">
 								<div class="tableHeadTextContainer">
-
-									<b >{{ tableInfo.header }}</b>
+									<b>{{ tableInfo.header }}</b>
 								</div>
 							</v-th>
 						</thead>
@@ -383,6 +393,7 @@ export default {
 		totalPages: 0,
 		paginationSize: 25,
 		fileIsBeingUploaded: false,
+		selectedCompany: 'Bankera',
 		name: 'Selection',
 		selectedRows: [],
 		notes: [],
@@ -693,6 +704,8 @@ export default {
 	computed: {
 		activeLocation() {
 			if (this.activeLocationPath) {
+				console.log('activeLocationPath')
+				console.log(this.activeLocationPath)
 				return this.getLocationByPath(this.activeLocationPath)
 			} else {
 				return undefined
@@ -784,16 +797,17 @@ export default {
 
 		},
 		afterFileUpload() {
+			console.log(this.filteredFiles[0].name)
 			this.recentlyUploadedFileName = this.filteredFiles[0].name
 			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 			setTimeout(() => {
-				// console.log('Delayed for 1 second.')
+				console.log('Delayed for 1 second.')
 				this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 				console.log(this.$refs)
 			}, '1000')
 
 			setTimeout(() => {
-				// console.log('Delayed for 3 second.')
+				console.log('Delayed for 3 second.')
 				this.$refs[this.recentlyUploadedFileName][0].click()
 				this.fileIsBeingUploaded = false
 				this.hideUploadModal()
@@ -864,15 +878,15 @@ export default {
 			this.activeLocationPath = path
 		},
 
-		pickNewLocation() {
-			const self = this
-			OC.dialogs.filepicker('Select a new Upload Folder', function(path) {
-				self.addLocation(path + '/')
-				setTimeout(function() {
-					self.switchActiveLocationByPath(path + '/')
-				}, 500)
-			}, false, 'httpd/unix-directory', true, OC.dialogs.FILEPICKER_TYPE_CHOOSE)
-		},
+		// pickNewLocation() {
+		// 	const self = this
+		// 	OC.dialogs.filepicker('Select a new Upload Folder', function(path) {
+		// 		self.addLocation(path + '/')
+		// 		setTimeout(function() {
+		// 			self.switchActiveLocationByPath(path + '/')
+		// 		}, 500)
+		// 	}, false, 'httpd/unix-directory', true, OC.dialogs.FILEPICKER_TYPE_CHOOSE)
+		// },
 		getLocationByPath(path) {
 			for (let i = 0; i < this.locations.length; i++) {
 				if (this.locations[i].path === path) {
@@ -1014,7 +1028,7 @@ export default {
 				)
 				this.notes = response.data
 				const nodesResponse = await axios.get(
-					generateUrl(`/apps/dmsapp/nodelist/${folderName}`)
+					generateUrl(`/apps/dmsapp/nodelist/${this.selectedCompany}/${folderName}`)
 				)
 				this.nodes = nodesResponse.data
 				this.currentEndpoint = endpointName
@@ -1023,8 +1037,8 @@ export default {
 
 				const notesIds = []
 				const nodesIds = []
-				this.addLocation(`/${this.currentFolderName}/`)
-				this.switchActiveLocationByPath(`/${this.currentFolderName}/`)
+				this.addLocation(`/${this.selectedCompany}/${this.currentFolderName}/`)
+				this.switchActiveLocationByPath(`/${this.selectedCompany}/${this.currentFolderName}/`)
 
 				for (let index = 0; index < this.nodes.length; index++) {
 					const element = this.nodes[index]
@@ -1571,7 +1585,7 @@ padding: 20px;
 	margin-left: 30px;
 }
 .tableHead{
-	background-color: rgb(146, 94, 94);
+	background-color: rgb(211, 211, 211);
 }
 .tableHeadTextContainer{
 	width: min-content;
@@ -1580,5 +1594,4 @@ align-items: center;
 white-space: normal;
 color: rgb(0, 0, 0);
 	}
-	
 </style>
