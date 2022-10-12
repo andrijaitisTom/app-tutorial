@@ -59,6 +59,8 @@ class CeoresolutionService {
 	$orderType,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		$ceoresolutions = new Ceoresolution();
 		$ceoresolutions->setUserId($userId);
@@ -75,6 +77,8 @@ class CeoresolutionService {
 		$ceoresolutions->setOrderType($orderType);
 		$ceoresolutions->setRelation($relation);
 		$ceoresolutions->setNamelt($namelt);
+		$ceoresolutions-> setCompany($company);
+
 
 		return $this->mapper->insert($ceoresolutions);
 	}
@@ -92,6 +96,8 @@ class CeoresolutionService {
 	$orderType,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		try {
 			$ceoresolutions = $this->mapper->find($id, $userId);
@@ -108,6 +114,8 @@ class CeoresolutionService {
 			$ceoresolutions->setOrderType($orderType);
 			$ceoresolutions->setRelation($relation);
 			$ceoresolutions->setNamelt($namelt);	
+			$ceoresolutions-> setCompany($company);
+
 	
 			return $this->mapper->update($ceoresolutions);
 		} catch (Exception $e) {

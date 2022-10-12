@@ -59,6 +59,8 @@ class SbdecisionService {
 	$decisionType,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		$sbdecision = new Sbdecision();
 		$sbdecision->setUserId($userId);
@@ -75,6 +77,7 @@ $sbdecision->setRegistrationNumberCdrsbd($registrationNumberCdrsbd);
 $sbdecision->setDecisionType($decisionType);
 $sbdecision->setRelation($relation);
 $sbdecision->setNamelt($namelt);
+$sbdecision-> setCompany($company);
 
 		return $this->mapper->insert($sbdecision);
 	}
@@ -92,6 +95,8 @@ $sbdecision->setNamelt($namelt);
 	$decisionType,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		try {
 			$sbdecision = $this->mapper->find($id, $userId);
@@ -108,6 +113,7 @@ $sbdecision->setRegistrationNumberCdrsbd($registrationNumberCdrsbd);
 $sbdecision->setDecisionType($decisionType);
 $sbdecision->setRelation($relation);
 $sbdecision->setNamelt($namelt);
+$sbdecision-> setCompany($company);
 
 			return $this->mapper->update($sbdecision);
 		} catch (Exception $e) {

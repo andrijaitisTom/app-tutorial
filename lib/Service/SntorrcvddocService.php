@@ -63,6 +63,8 @@ class SntorrcvddocService {
 	$direction,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		$sntorrcvddoc = new Sntorrcvddoc();
 		$sntorrcvddoc->setUserId($userId);
@@ -83,6 +85,8 @@ class SntorrcvddocService {
 		$sntorrcvddoc->setDirection($direction);
 		$sntorrcvddoc->setRelation($relation);
 		$sntorrcvddoc->setNamelt($namelt);
+		$sntorrcvddoc-> setCompany($company);
+
 		return $this->mapper->insert($sntorrcvddoc);
 	}
 
@@ -103,6 +107,8 @@ class SntorrcvddocService {
 	$direction,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		try {
 			$sntorrcvddoc = $this->mapper->find($id, $userId);
@@ -123,6 +129,7 @@ class SntorrcvddocService {
 			$sntorrcvddoc->setDirection($direction);
 			$sntorrcvddoc->setRelation($relation);
 			$sntorrcvddoc->setNamelt($namelt);
+			$sntorrcvddoc-> setCompany($company);
 
 			return $this->mapper->update($sntorrcvddoc);
 		} catch (Exception $e) {

@@ -61,6 +61,8 @@ class SntorrcvddocController extends Controller {
 	string $direction,
 	string $relation,
 	string $namelt,
+	string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($this->userId, $idfile,
 		$name,
@@ -79,6 +81,8 @@ class SntorrcvddocController extends Controller {
 		$direction,
 		$relation,
 		$namelt,
+		$company,
+
 		));
 	}
 
@@ -102,6 +106,8 @@ class SntorrcvddocController extends Controller {
 	string $direction,
 	string $relation,
 	string $namelt,
+	string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $idfile,
 		$name,
@@ -120,6 +126,8 @@ class SntorrcvddocController extends Controller {
 		$direction,
 		$relation,
 		$namelt,
+		$company,
+
 		) {
 			return $this->service->update($id, $this->userId, $idfile,
 			$name,
@@ -138,6 +146,8 @@ class SntorrcvddocController extends Controller {
 			$direction,
 			$relation,
 			$namelt,
+			$company,
+
 		);
 		});
 	}

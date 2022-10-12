@@ -23,6 +23,8 @@ class Sbdecision extends Entity implements JsonSerializable {
 	protected $decisionType;
 	protected $relation;
 	protected $namelt;
+	protected $company;
+
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
@@ -40,6 +42,7 @@ class Sbdecision extends Entity implements JsonSerializable {
 			'relation' => $this->			relation,
 			'namelt' => $this->			namelt,
 			'userId' => $this->	userId,
+			'company' => $this-> company,
 
 		];
 	}

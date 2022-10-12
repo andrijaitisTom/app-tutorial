@@ -58,6 +58,8 @@ class MbdecisionService {
 	$registrationNumberCdrmbd,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		$mbdecision = new Mbdecision();
 		$mbdecision->setUserId($userId);
@@ -73,6 +75,7 @@ class MbdecisionService {
 		$mbdecision->setRegistrationNumberCdrmbd($registrationNumberCdrmbd);
 		$mbdecision->setRelation($relation);
 		$mbdecision->setNamelt($namelt);		
+		$mbdecision-> setCompany($company);
 
 		return $this->mapper->insert($mbdecision);
 	}
@@ -89,6 +92,8 @@ class MbdecisionService {
 	$registrationNumberCdrmbd,
 	$relation,
 	$namelt,
+	$company,
+
 	) {
 		try {
 			$mbdecision = $this->mapper->find($id, $userId);
@@ -104,6 +109,8 @@ class MbdecisionService {
 			$mbdecision->setRegistrationNumberCdrmbd($registrationNumberCdrmbd);
 			$mbdecision->setRelation($relation);
 			$mbdecision->setNamelt($namelt);	
+			$mbdecision-> setCompany($company);
+
 	
 			return $this->mapper->update($mbdecision);
 		} catch (Exception $e) {

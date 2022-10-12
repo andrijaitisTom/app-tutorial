@@ -69,6 +69,8 @@ string $physicalLocation,
 string $comments,
 string $relation,
 string $namelt,
+string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($this->userId, $idfile, 
 		$name,
@@ -89,6 +91,8 @@ $physicalLocation,
 $comments,
 $relation,
 $namelt,
+$company,
+
 		));
 	}
 
@@ -116,6 +120,8 @@ string $physicalLocation,
 string $comments,
 string $relation,
 string $namelt,
+string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $idfile, 
 		$name,
@@ -136,6 +142,8 @@ $physicalLocation,
 $comments,
 $relation,
 $namelt,
+$company,
+
 		) {
 			return $this->service->update($id, $this->userId, $idfile,
 			$name,
@@ -156,6 +164,8 @@ $physicalLocation,
 $comments,
 $relation,
 $namelt,
+$company,
+
 		);
 		});
 	}

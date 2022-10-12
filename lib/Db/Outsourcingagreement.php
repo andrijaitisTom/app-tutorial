@@ -47,6 +47,8 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 	protected $fnSupCritical;
 	protected $priceOfAgreement;
 	protected $outsrcdFnNotProvided;
+	protected $company;
+
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
@@ -88,6 +90,7 @@ class Outsourcingagreement extends Entity implements JsonSerializable {
 'priceOfAgreement' => $this->priceOfAgreement,
 'outsrcdFnNotProvided' => $this->outsrcdFnNotProvided,
 'userId' => $this->	userId,
+'company' => $this-> company,
 
 		];
 	}

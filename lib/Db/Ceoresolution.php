@@ -23,6 +23,8 @@ class Ceoresolution extends Entity implements JsonSerializable {
 	protected $orderType;
 	protected $relation;
 	protected $namelt;
+	protected $company;
+
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
@@ -40,6 +42,7 @@ class Ceoresolution extends Entity implements JsonSerializable {
 			'relation' => $this->  relation,
 			'namelt' => $this->  namelt,
 			'userId' => $this->	userId,
+			'company' => $this-> company,
 
 		];
 	}

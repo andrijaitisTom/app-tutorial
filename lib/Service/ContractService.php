@@ -65,6 +65,8 @@ $physicalLocation,
 $comments,
 $relation,
 $namelt,
+$company,
+
 	) {
 		$contract = new Contract();
 		$contract->setUserId($userId);
@@ -87,7 +89,8 @@ $contract->setPhysicalLocation($physicalLocation);
 $contract->setComments($comments);
 $contract->setRelation($relation);
 $contract->setNamelt($namelt);
-		
+$contract-> setCompany($company);
+
 
 		return $this->mapper->insert($contract);
 	}
@@ -111,6 +114,8 @@ $physicalLocation,
 $comments,
 $relation,
 $namelt,
+$company,
+
 	) {
 		try {
 			$contract = $this->mapper->find($id, $userId);
@@ -133,6 +138,8 @@ $contract->setPhysicalLocation($physicalLocation);
 $contract->setComments($comments);
 $contract->setRelation($relation);
 $contract->setNamelt($namelt);
+$contract-> setCompany($company);
+
 
 			return $this->mapper->update($contract);
 		} catch (Exception $e) {

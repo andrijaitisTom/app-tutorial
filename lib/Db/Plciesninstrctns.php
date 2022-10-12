@@ -21,6 +21,8 @@ class Plciesninstrctns extends Entity implements JsonSerializable {
 	protected $relation;
 	protected $namelt;
 	protected $area;
+	protected $company;
+
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
@@ -36,6 +38,7 @@ class Plciesninstrctns extends Entity implements JsonSerializable {
 			'namelt' => $this->			namelt,
 			'area' => $this->			area,
 			'userId' => $this->	userId,
+			'company' => $this-> company,
 
 		];
 	}

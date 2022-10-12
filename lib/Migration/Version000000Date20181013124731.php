@@ -73,11 +73,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 			$table->addColumn('idfile', 'text', [
 				'notnull' => true,
 				'default' => ''
-			]);
-
-
-	
-	
+			]);	
 			$table->addColumn('title', 'text', [
 				'notnull' => true,
 				'default' => ''
@@ -147,6 +143,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'default' => ''
 			]);
 			$table->addColumn('date', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('company', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -245,6 +245,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);
+			$table->addColumn('company', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['user_id'], 'contracts_user_id_index');
@@ -309,6 +313,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'default' => ''
 			]);
 			$table->addColumn('registration_number_cdrmbd', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('company', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -377,6 +385,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'default' => ''
 			]);
 			$table->addColumn('namelt', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('company', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -451,6 +463,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'default' => ''
 			]);
 			$table->addColumn('namelt', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
+			$table->addColumn('company', 'text', [
 				'notnull' => true,
 				'default' => ''
 			]);
@@ -618,6 +634,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);	
+			$table->addColumn('company', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['user_id'], 'outagagreements_user_id_index');
@@ -681,6 +701,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);	
+			$table->addColumn('company', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['user_id'], 'plciesninstrctns_user_id_index');
@@ -765,6 +789,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep
 				'notnull' => true,
 				'default' => ''
 			]);	
+			$table->addColumn('company', 'text', [
+				'notnull' => true,
+				'default' => ''
+			]);
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['user_id'], 'sntorrcvddocs_user_id_index');

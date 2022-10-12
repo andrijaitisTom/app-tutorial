@@ -56,6 +56,8 @@ class MbdecisionController extends Controller {
 	string $registrationNumberCdrmbd,
 	string $relation,
 	string $namelt,
+	string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($this->userId, $idfile,
 		$title,
@@ -69,6 +71,8 @@ class MbdecisionController extends Controller {
 		$registrationNumberCdrmbd,
 		$relation,
 		$namelt,
+		$company,
+
 		));
 	}
 
@@ -87,6 +91,8 @@ class MbdecisionController extends Controller {
 	string $registrationNumberCdrmbd,
 	string $relation,
 	string $namelt,
+	string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $idfile,
 		$title,
@@ -100,6 +106,8 @@ class MbdecisionController extends Controller {
 		$registrationNumberCdrmbd,
 		$relation,
 		$namelt,
+		$company,
+
 		) {
 			return $this->service->update($id, $this->userId, $idfile,
 			$title,
@@ -113,6 +121,8 @@ class MbdecisionController extends Controller {
 			$registrationNumberCdrmbd,
 			$relation,
 			$namelt,
+			$company,
+
 		);
 		});
 	}

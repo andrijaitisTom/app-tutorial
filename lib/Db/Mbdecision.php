@@ -22,6 +22,8 @@ class Mbdecision extends Entity implements JsonSerializable {
 	protected $registrationNumberCdrmbd;
 	protected $relation;
 	protected $namelt;
+	protected $company;
+
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
@@ -38,6 +40,7 @@ class Mbdecision extends Entity implements JsonSerializable {
 			'relation' => $this->relation,
 			'namelt' => $this->namelt,
 			'userId' => $this->	userId,
+			'company' => $this-> company,
 
 		];
 	}

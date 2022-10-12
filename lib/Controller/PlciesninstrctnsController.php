@@ -55,6 +55,8 @@ class PlciesninstrctnsController extends Controller {
 	string $relation,
 	string $namelt,
 	string $area,
+	string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($this->userId, $idfile,
 		$name,
@@ -67,6 +69,8 @@ class PlciesninstrctnsController extends Controller {
 		$relation,
 		$namelt,
 		$area,
+		$company,
+
 		));
 	}
 
@@ -84,6 +88,8 @@ class PlciesninstrctnsController extends Controller {
 	string $relation,
 	string $namelt,
 	string $area,
+	string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $idfile,
 		$name,
@@ -96,6 +102,8 @@ class PlciesninstrctnsController extends Controller {
 		$relation,
 		$namelt,
 		$area,
+		$company,
+
 		) {
 			return $this->service->update($id, $this->userId, $idfile,
 			$name,
@@ -108,6 +116,8 @@ class PlciesninstrctnsController extends Controller {
 			$relation,
 			$namelt,
 			$area,
+			$company,
+
 		);
 		});
 	}

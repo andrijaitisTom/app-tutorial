@@ -83,6 +83,8 @@ class OutsourcingagreementService {
 	$fnSupCritical,
 	$priceOfAgreement,
 	$outsrcdFnNotProvided,
+	$company,
+
 	) {
 		$outsourcingagreement = new Outsourcingagreement();
 		$outsourcingagreement->setUserId($userId);
@@ -123,6 +125,7 @@ class OutsourcingagreementService {
 		$outsourcingagreement->setFnSupCritical($fnSupCritical);
 		$outsourcingagreement->setPriceOfAgreement($priceOfAgreement);
 		$outsourcingagreement->setOutsrcdFnNotProvided($outsrcdFnNotProvided);
+		$outsourcingagreement-> setCompany($company);
 
 		return $this->mapper->insert($outsourcingagreement);
 	}
@@ -164,6 +167,8 @@ class OutsourcingagreementService {
 	$fnSupCritical,
 	$priceOfAgreement,
 	$outsrcdFnNotProvided,
+	$company,
+
 	) {
 		try {
 			
@@ -205,7 +210,8 @@ class OutsourcingagreementService {
 			$outsourcingagreement->setFnSupCritical($fnSupCritical);
 			$outsourcingagreement->setPriceOfAgreement($priceOfAgreement);
 			$outsourcingagreement->setOutsrcdFnNotProvided($outsrcdFnNotProvided);
-			
+			$outsourcingagreement-> setCompany($company);
+
 	
 			return $this->mapper->update($outsourcingagreement);
 		} catch (Exception $e) {

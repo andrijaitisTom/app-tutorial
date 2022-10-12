@@ -67,6 +67,8 @@ class SntorrcvddocApiController extends ApiController {
 	string $direction,
 	string $relation,
 	string $namelt,
+	string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($this->userId, $idfile, 
 		$name,
@@ -85,6 +87,8 @@ class SntorrcvddocApiController extends ApiController {
 		$direction,
 		$relation,
 		$namelt,
+		$company,
+
 		));
 	}
 
@@ -110,6 +114,8 @@ class SntorrcvddocApiController extends ApiController {
 	string $direction,
 	string $relation,
 	string $namelt,
+	string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $idfile, 
 		$name,
@@ -128,6 +134,8 @@ class SntorrcvddocApiController extends ApiController {
 		$direction,
 		$relation,
 		$namelt,
+		$company,
+
 		) {
 			return $this->service->update($id, $this->userId, $idfile,
 			$name,
@@ -146,6 +154,8 @@ class SntorrcvddocApiController extends ApiController {
 			$direction,
 			$relation,
 			$namelt,
+			$company,
+
 		);
 		});
 	}

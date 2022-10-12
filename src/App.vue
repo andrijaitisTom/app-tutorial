@@ -162,11 +162,11 @@
 						}"
 						@totalPagesChanged="totalPages = $event"
 						@selectionChanged="selectedRows = $event">
-						<thead slot="head">
+						<thead slot="head" class="tableHead">
 							<v-th v-for="tableInfo in currentTableInfo"
 								:key="tableInfo.key"
 								:sort-key="tableInfo.key"
-								class="tableHead">
+								class="tableHeadOptions">
 								<div class="tableHeadTextContainer">
 									<b>{{ tableInfo.header }}</b>
 								</div>
@@ -1588,13 +1588,14 @@ padding: 20px;
 .paginationSelect{
 	margin-left: 30px;
 }
-.tableHead{
+.tableHeadOptions{
 	background-color: rgb(211, 211, 211);
 }
+.tableHead{}
 .tableHeadTextContainer{
 	width: min-content;
-	display: flex;
-align-items: center;
+	display: inline-block;
+
 white-space: normal;
 color: rgb(0, 0, 0);
 	}

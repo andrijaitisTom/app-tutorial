@@ -81,6 +81,8 @@ class OutsourcingagreementController extends Controller {
 	string $fnSupCritical,
 	string $priceOfAgreement,
 	string $outsrcdFnNotProvided,
+	string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($this->userId, $idfile,
 		$name,
@@ -119,6 +121,8 @@ class OutsourcingagreementController extends Controller {
 		$fnSupCritical,
 		$priceOfAgreement,
 		$outsrcdFnNotProvided,
+		$company,
+
 		));
 	}
 
@@ -162,6 +166,8 @@ class OutsourcingagreementController extends Controller {
 	string $fnSupCritical,
 	string $priceOfAgreement,
 	string $outsrcdFnNotProvided,
+	string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $idfile,
 		$name,
@@ -200,6 +206,8 @@ class OutsourcingagreementController extends Controller {
 		$fnSupCritical,
 		$priceOfAgreement,
 		$outsrcdFnNotProvided,
+		$company,
+
 		) {
 			return $this->service->update($id, $this->userId, $idfile,
 			$name,
@@ -238,6 +246,8 @@ class OutsourcingagreementController extends Controller {
 			$fnSupCritical,
 			$priceOfAgreement,
 			$outsrcdFnNotProvided,
+			$company,
+
 		);
 		});
 	}

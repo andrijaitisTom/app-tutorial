@@ -29,6 +29,8 @@ protected $physicalLocation;
 protected $comments;
 protected $relation;
 protected $namelt;
+protected $company;
+
 
 	public function jsonSerialize(): array {
 		return [
@@ -53,6 +55,7 @@ protected $namelt;
 			'relation' => $this->relation,
 			'namelt' => $this->namelt,
 			'userId' => $this->	userId,
+			'company' => $this-> company,
 
 		];
 	}

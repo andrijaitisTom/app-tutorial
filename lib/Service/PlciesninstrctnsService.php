@@ -57,6 +57,8 @@ class PlciesninstrctnsService {
 	$relation,
 	$namelt,
 	$area,
+	$company,
+
 	) {
 		$plciesninstrctns = new Plciesninstrctns();
 		$plciesninstrctns->setUserId($userId);
@@ -71,6 +73,7 @@ $plciesninstrctns->setOwner($owner);
 $plciesninstrctns->setRelation($relation);
 $plciesninstrctns->setNamelt($namelt);
 $plciesninstrctns->setArea($area);
+$plciesninstrctns-> setCompany($company);
 
 		return $this->mapper->insert($plciesninstrctns);
 	}
@@ -86,6 +89,8 @@ $plciesninstrctns->setArea($area);
 	$relation,
 	$namelt,
 	$area,
+	$company,
+
 	) {
 		try {
 			$plciesninstrctns = $this->mapper->find($id, $userId);
@@ -100,7 +105,8 @@ $plciesninstrctns->setOwner($owner);
 $plciesninstrctns->setRelation($relation);
 $plciesninstrctns->setNamelt($namelt);
 $plciesninstrctns->setArea($area);
-	
+$plciesninstrctns-> setCompany($company);
+
 			return $this->mapper->update($plciesninstrctns);
 		} catch (Exception $e) {
 			$this->handleException($e);

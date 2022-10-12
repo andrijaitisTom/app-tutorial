@@ -62,6 +62,8 @@ class MbdecisionApiController extends ApiController {
 	string $registrationNumberCdrmbd,
 	string $relation,
 	string $namelt,
+	string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($this->userId, $idfile, 
  	$title,
@@ -75,6 +77,8 @@ class MbdecisionApiController extends ApiController {
 	$registrationNumberCdrmbd,
 	$relation,
 	$namelt,
+	$company,
+
 		));
 	}
 
@@ -95,6 +99,8 @@ class MbdecisionApiController extends ApiController {
 	string $registrationNumberCdrmbd,
 	string $relation,
 	string $namelt,
+	string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $idfile, 
 		$title,
@@ -108,6 +114,8 @@ class MbdecisionApiController extends ApiController {
 		$registrationNumberCdrmbd,
 		$relation,
 		$namelt,
+		$company,
+
 		) {
 			return $this->service->update($id, $this->userId, $idfile,
 			$title,
@@ -121,6 +129,8 @@ class MbdecisionApiController extends ApiController {
 			$registrationNumberCdrmbd,
 			$relation,
 			$namelt,
+			$company,
+
 		);
 		});
 	}
