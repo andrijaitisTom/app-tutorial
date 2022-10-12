@@ -60,6 +60,8 @@ class AgreementService {
 	$lastRiskAssessmentDate,
 	$relation,
 	$date,
+	$company,
+
 	) {
 		$agreement = new Agreement();
 		$agreement->setTitle($title);
@@ -69,19 +71,20 @@ class AgreementService {
 		$agreement->setPhysical($physical);
 		$agreement->setNamelt($namelt);
 		$agreement->setDescription($description);
-	$agreement-> setComments(	$comments);
-	$agreement-> setOutsourcing(	$outsourcing);
-	$agreement-> setIt(	$it);
-	$agreement-> setValidSince(	$validSince);
-	$agreement-> setValidUntil(	$validUntil);
-	$agreement-> setForm(	$form);
-	$agreement-> setFirstParty(	$firstParty);
-	$agreement-> setSecondParty(	$secondParty);
-	$agreement-> setPhysicalLocation(	$physicalLocation);
-	$agreement-> setMateriality(	$materiality);
-	$agreement-> setLastRiskAssessmentDate(	$lastRiskAssessmentDate);
-	$agreement-> setRelation(	$relation);
-	$agreement-> setDate(	$date);
+	$agreement-> setComments($comments);
+	$agreement-> setOutsourcing($outsourcing);
+	$agreement-> setIt($it);
+	$agreement-> setValidSince($validSince);
+	$agreement-> setValidUntil($validUntil);
+	$agreement-> setForm($form);
+	$agreement-> setFirstParty($firstParty);
+	$agreement-> setSecondParty($secondParty);
+	$agreement-> setPhysicalLocation($physicalLocation);
+	$agreement-> setMateriality($materiality);
+	$agreement-> setLastRiskAssessmentDate($lastRiskAssessmentDate);
+	$agreement-> setRelation($relation);
+	$agreement-> setDate($date);
+	$agreement-> setCompany($company);
 
 
 		return $this->mapper->insert($agreement);
@@ -101,6 +104,7 @@ class AgreementService {
 	$lastRiskAssessmentDate,
 	$relation,
 	$date,
+	$company,
 	) {
 		try {
 			$agreement = $this->mapper->find($id, $userId);
@@ -124,6 +128,8 @@ class AgreementService {
 	$agreement-> setMateriality(	$materiality);
 	$agreement-> setLastRiskAssessmentDate(	$lastRiskAssessmentDate);
 	$agreement-> setRelation(	$relation);
+	$agreement-> setCompany($company);
+
 			return $this->mapper->update($agreement);
 		} catch (Exception $e) {
 			$this->handleException($e);

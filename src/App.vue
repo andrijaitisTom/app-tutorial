@@ -60,7 +60,7 @@
 			</div>
 		</AppNavigation>
 		<AppContent>
-			<select v-model="selectedCompany" class="selectFilter">
+			<select v-model="selectedCompany" class="selectCompanyFilter" @change="loadOnCompanyChange">
 				<option value="Pervesk">
 					Pervesk
 				</option>
@@ -825,6 +825,9 @@ export default {
 	},
 
 	methods: {
+		loadOnCompanyChange() {
+			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
+		},
 		reloadPage() {
 			window.location.reload()
 		},
@@ -1132,6 +1135,7 @@ export default {
 							registrationNumberTd: 'N/A',
 							documentOrganizer: 'N/A',
 							direction: 'N/A',
+							company: this.selectedCompany,
 						},
 						endpointName
 					)
@@ -1141,7 +1145,7 @@ export default {
 					...t1,
 					...this.notes.find((t2) => Number(t2.idfile) === t1.id),
 				}))
-
+console.log(this.nodesAndNotes )
 				// this
 				this.removeMatchingFilters(folderName)
 
@@ -1593,5 +1597,8 @@ padding: 20px;
 align-items: center;
 white-space: normal;
 color: rgb(0, 0, 0);
+	}
+	.selectCompanyFilter{
+		margin-left: 40px;
 	}
 </style>

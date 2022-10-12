@@ -64,6 +64,7 @@ class AgreementApiController extends ApiController {
 	string $materiality,
 	string $lastRiskAssessmentDate,
 	string $relation,
+	string $company,
 	): DataResponse {
 		return new DataResponse($this->service->create($title, $content,
 			$this->userId, $physical, $namelt, $idfile	, $description,	
@@ -81,6 +82,7 @@ class AgreementApiController extends ApiController {
 			$materiality,
 			$lastRiskAssessmentDate,
 			$relation,
+			$company,
 		));
 	}
 
@@ -105,6 +107,8 @@ class AgreementApiController extends ApiController {
 						   string $materiality,
 						   string $lastRiskAssessmentDate,
 						   string $relation,
+						   string $company,
+
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $title, $content, $physical, $namelt, $idfile, $description,
 		$comments,
@@ -119,7 +123,9 @@ class AgreementApiController extends ApiController {
 			$materiality,
 			$lastRiskAssessmentDate,
 			$relation,
-			$date,
+			$date,	
+			$company,
+
 		) {
 			return $this->service->update($id, $title, $content, $this->userId, $physical, $namelt, $idfile, $description,
 			$comments,
@@ -135,6 +141,8 @@ class AgreementApiController extends ApiController {
 			$lastRiskAssessmentDate,
 			$relation,
 			$date,
+			$company,
+
 		);
 		});
 	}

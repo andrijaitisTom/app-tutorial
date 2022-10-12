@@ -28,6 +28,8 @@ class Agreement extends Entity implements JsonSerializable {
 	protected $lastRiskAssessmentDate;
 	protected $relation;
 	protected $date;
+	protected $company;
+
 
 	public function jsonSerialize(): array {
 		return [
@@ -53,6 +55,8 @@ class Agreement extends Entity implements JsonSerializable {
 			'relation' => $this->	relation,
 			'date' => $this->	date,
 			'userId' => $this->	userId,
+			'company' => $this-> company,
+
 
 		];
 	}

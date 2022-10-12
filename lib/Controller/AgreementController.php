@@ -57,7 +57,9 @@ class AgreementController extends Controller {
 	string $materiality,
 	string $lastRiskAssessmentDate,
 	string $relation,
-	string $date
+	string $date,
+	string $company,
+
 	): DataResponse {
 		return new DataResponse($this->service->create($title, $content,
 			$this->userId, $physical, $namelt, $idfile, $description,
@@ -73,7 +75,9 @@ class AgreementController extends Controller {
 			$materiality,
 			$lastRiskAssessmentDate,
 			$relation,
-			$date
+			$date,
+			$company,
+
 		));
 	}
 
@@ -94,7 +98,8 @@ class AgreementController extends Controller {
 						   string $materiality,
 						   string $lastRiskAssessmentDate,
 						   string $relation,
-						   string $date
+						   string $date,
+						   string $company,
 						   ): DataResponse {
 		return $this->handleNotFound(function () use ($id, $title, $content, $physical, $namelt, $idfile,$description,		$comments,
 		$outsourcing,
@@ -107,7 +112,9 @@ class AgreementController extends Controller {
 		$physicalLocation,
 		$materiality,
 		$lastRiskAssessmentDate,
-		$relation,$date,
+		$relation,
+		$date,
+		$company,
 		) {
 			return $this->service->update($id, $title, $content, $this->userId, $physical, $namelt, $idfile,$description,
 			$comments,
@@ -122,7 +129,9 @@ class AgreementController extends Controller {
 			$materiality,
 			$lastRiskAssessmentDate,
 			$relation,
-			$date
+			$date,
+			$company,
+
 		);
 		});
 	}
