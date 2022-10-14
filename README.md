@@ -77,5 +77,36 @@ From frontend you can now call the endpoint using axios like this:
 	--------------
 	Table sorting, filters and pagination is based on Vuejs Smart table, it's documentation can be found here: https://tochoromero.github.io/vuejs-smart-table/
 	
+	--------------
+## Folder structure must be as follows
+		.System_DMS_Shares                    
+				├── Bankera  
+				|   ├──Agreements
+				| 	├──Ceoresolutions
+				| 	├──Contracts
+				| 	├──Mbdecisions
+				| 	├──OutsourcingAgreements
+				| 	├──PoliciesAndInstructions
+				| 	├──Sbdecisions
+				| 	└──SentOrReceivedDocuments
+				|		 
+				├── SpectroCoin  
+				|     ├──Agreements
+				| 	├──Ceoresolutions
+				| 	├──Contracts
+				| 	├──Mbdecisions
+				| 	├──OutsourcingAgreements
+				| 	├──PoliciesAndInstructions
+				| 	├──Sbdecisions
+				| 	└──SentOrReceivedDocuments       
+				└── Pervesk   
+						├──Agreements
+						├──Ceoresolutions
+						├──Contracts
+						├──Mbdecisions
+						├──OutsourcingAgreements
+						├──PoliciesAndInstructions
+						├──Sbdecisions
+						└──SentOrReceivedDocuments
 
 			

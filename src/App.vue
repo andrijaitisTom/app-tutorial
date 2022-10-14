@@ -1,8 +1,14 @@
 <template>
 	<div id="content" class="app-dmsapp" @click="handleNavigationToggle()">
 		<AppNavigation>
-			<div v-if="isLogoHovered" class="selectCompanyPopup">
-				<div id="closeSelectCompanyPopup" @click="isLogoHovered=false">×</div>
+			<div v-if="isLogoHovered"
+				class="selectCompanyPopup"
+				:class="{
+					marginLeft300: !isNavigationOpen,
+				}">
+				<div id="closeSelectCompanyPopup" @click="isLogoHovered=false">
+					×
+				</div>
 				<div class="selectCompanyWrapper" @click="setSelectedCompany('Bankera')">
 					<img class="selectCompanyLogo" src="../src/assets/images/bankera.svg">
 					<p class="selectCompanyCompanyTitle">
@@ -115,7 +121,6 @@
 					<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 					<div v-if="!loading"
-						v-activeLocationFileDropZone
 						class="uploadFilesComponent"
 						style="margin-left: 4%; margin-right: 4%; margin-top: 7px; width:auto">
 						<div v-if="activeLocation === undefined" id="noLocationSelected">
@@ -454,7 +459,6 @@ import tableInfo from './table/tableInfo.json'
 import dropdownSelections from './table/dropdownSelections.json'
 import filterNames from './table/filterNames.json'
 import folderNames from './table/folderNames.json'
-import StartScreen from './StartScreen.vue'
 
 export default {
 	name: 'App',
@@ -467,78 +471,8 @@ export default {
 		datetime: Datetime,
 		Content,
 		AppNavigationCounter,
-		StartScreen,
 	},
-	directives: {
-		customLocationFileDropZone: {
-			inserted(elm, binding, vnode) {
-				const self = vnode.context
-				const flow = binding.arg.flow
 
-				elm.addEventListener('drop', function(event) {
-					const dataTransfer = event.dataTransfer
-
-					if (dataTransfer.items && dataTransfer.items[0]
-						&& dataTransfer.items[0].webkitGetAsEntry) {
-						flow.webkitReadDataTransfer(event)
-					} else {
-						flow.addFiles(dataTransfer.files, event)
-					}
-				})
-				self.addListenerMulti(elm, 'drag dragstart dragend dragover dragenter dragleave drop', function(e) {
-					e.preventDefault()
-					e.stopPropagation()
-				})
-				self.addListenerMulti(elm, 'dragover dragenter', function() {
-					elm.classList.add('fileDrag')
-				})
-				self.addListenerMulti(elm, 'dragleave dragend drop', function() {
-					elm.classList.remove('fileDrag')
-				})
-			},
-		},
-		activeLocationFileDropZone: {
-			inserted(elm, binding, vnode) {
-				const self = vnode.context
-
-				elm.addEventListener('drop', function(event) {
-					const dataTransfer = event.dataTransfer
-
-					if (dataTransfer.items && dataTransfer.items[0]
-						&& dataTransfer.items[0].webkitGetAsEntry) {
-						self.activeLocation.flow.webkitReadDataTransfer(event)
-					} else {
-						self.activeLocation.flow.addFiles(dataTransfer.files, event)
-					}
-				})
-				self.addListenerMulti(elm, 'drag dragstart dragend dragover dragenter dragleave drop', function(e) {
-					e.preventDefault()
-					e.stopPropagation()
-				})
-				self.addListenerMulti(elm, 'dragover dragenter', function() {
-					elm.classList.add('fileDrag')
-				})
-				self.addListenerMulti(elm, 'dragleave dragend drop', function() {
-					elm.classList.remove('fileDrag')
-				})
-			},
-		},
-		uploadSelectButton: {
-			inserted(elm, binding, vnode) {
-				const uploadType = elm.getAttribute('uploadType')
-
-				if (uploadType === 'file') {
-					elm.addEventListener('click', function() {
-						document.getElementById('FileSelectInput').click()
-					})
-				} else if (uploadType === 'folder') {
-					elm.addEventListener('click', function() {
-						document.getElementById('FolderSelectInput').click()
-					})
-				}
-			},
-		},
-	},
 	data: () => ({
 		currentPage: 1,
 		totalPages: 0,
@@ -885,8 +819,8 @@ export default {
 	computed: {
 		activeLocation() {
 			if (this.activeLocationPath) {
-				console.log('activeLocationPath')
-				console.log(this.activeLocationPath)
+				// console.log('activeLocationPath')
+				// console.log(this.activeLocationPath)
 				return this.getLocationByPath(this.activeLocationPath)
 			} else {
 				return undefined
@@ -978,17 +912,17 @@ export default {
 
 		},
 		afterFileUpload() {
-			console.log(this.filteredFiles[0].name)
+			// console.log(this.filteredFiles[0].name)
 			this.recentlyUploadedFileName = this.filteredFiles[0].name
 			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 			setTimeout(() => {
-				console.log('Delayed for 1 second.')
+				// console.log('Delayed for 1 second.')
 				this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
-				console.log(this.$refs)
+				// console.log(this.$refs)
 			}, '1000')
 
 			setTimeout(() => {
-				console.log('Delayed for 3 second.')
+				// console.log('Delayed for 3 second.')
 				this.$refs[this.recentlyUploadedFileName][0].click()
 				this.fileIsBeingUploaded = false
 				this.hideUploadModal()
@@ -1003,35 +937,17 @@ export default {
 	 */
 	async mounted() {
 		const element = document.querySelector('[aria-label="DMS app"]')
-		console.log(`something is ${element}`)
 		element.classList.add('dmsapplogo')
 
 		element.addEventListener('mouseenter', (event) => {
 			this.isLogoHovered = true
-			console.log('hover on')
-			console.log(this.isLogoHovered)
-
 		}, false)
-		// element.addEventListener('mouseleave', (event) => {
-		// 	this.isLogoHovered = false
-		// 	console.log('hover off')
-		// 	console.log(this.isLogoHovered)
-
-		// }, false)
 
 		this.loading = false
 	},
 
 	methods: {
-		// countActiveFilters(filterName) {
-		// 	const filtersArray = []
-		// 	filtersArray.push(this.activeFiltersAboveTable)
-		// 	filtersArray.push(filterName)
-		// 	this.activeFiltersAboveTable = filtersArray
-		// 	console.log(this.activeFiltersAboveTable)
-		// 	console.log(this.activeFiltersAboveTable.length)
 
-		// },
 		setSelectedCompany(companyName) {
 			this.selectedCompany = companyName
 			if (this.currentFolderName !== '') {
@@ -1040,7 +956,7 @@ export default {
 		},
 		toggleFilter(filterName) {
 			this.filters[filterName].show = !this.filters[filterName].show
-			console.log(this.filters[filterName].show)
+			// console.log(this.filters[filterName].show)
 		},
 		loadOnCompanyChange() {
 			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
@@ -1078,45 +994,11 @@ export default {
 			this.showUploadModal()
 			this.activeLocation.flow.resume()
 		},
-		setupDynamicTitleInterval() {
-			const self = this
-			setInterval(function() {
-				self.updateTitle()
-			}, 500)
-		},
-		setupSearch() {
-		    const self = this
-		    this.OCASearch = new OCA.Search(function(value) {
-				self.search = value
-		    }, function() {
-		        self.search = ''
-		    })
-		},
-		updateTitle() {
-			if (this.activeLocation !== undefined && this.activeLocation.flow.files.length !== 0) {
-				const progress = parseFloat(Math.round(this.activeLocation.flow.progress() * 100 * 100) / 100).toFixed(2) // round to two digits after comma
-				document.title = 'dmsapp ' + progress + '%'
-			} else {
-				document.title = 'dmsapp'
-			}
-		},
-		switchActiveLocationById(id) {
-			const location = this.getLocationById(id)
-			this.activeLocationPath = location.path
-		},
+
 		switchActiveLocationByPath(path) {
 			this.activeLocationPath = path
 		},
 
-		// pickNewLocation() {
-		// 	const self = this
-		// 	OC.dialogs.filepicker('Select a new Upload Folder', function(path) {
-		// 		self.addLocation(path + '/')
-		// 		setTimeout(function() {
-		// 			self.switchActiveLocationByPath(path + '/')
-		// 		}, 500)
-		// 	}, false, 'httpd/unix-directory', true, OC.dialogs.FILEPICKER_TYPE_CHOOSE)
-		// },
 		getLocationByPath(path) {
 			for (let i = 0; i < this.locations.length; i++) {
 				if (this.locations[i].path === path) {
@@ -1126,15 +1008,6 @@ export default {
 			}
 			return false
 		},
-		getLocationById(id) {
-			for (let i = 0; i < this.locations.length; i++) {
-				if (this.locations[i].id === id) {
-					return this.locations[i]
-				}
-			}
-			return false
-		},
-
 		addLocation(path) {
 		    if (!this.getLocationByPath(path)) {
 				const newFlow = new Flow({
@@ -1156,54 +1029,8 @@ export default {
 				})
 			}
 		},
-		starLocation(path) {
-			const location = this.getLocationByPath(path)
-			axios.post(this.baseUrl + '/directories', {
-				path,
-			})
-				.then(function(response) {
-					location.id = response.id
-				})
-		},
-		unstarLocationById(id) {
-			const location = this.getLocationById(id)
-
-			axios.delete(this.baseUrl + '/directories/' + id)
-				.then(function(response) {
-					location.id = false
-				})
-		},
-		unstarLocationByPath(path) {
-			const location = this.getLocationByPath(path)
-			this.unstarLocationById(location.id)
-		},
-
-		removeLocation(path) {
-
-			if (this.activeLocation.path === path) {
-				this.activeLocationPath = false
-			}
-
-			this.locations = this.locations.filter(function(value, index, arr) {
-				return value.path !== path
-			})
-		},
 		trimDecimals(number, decimals = 2) {
 			return number.toFixed(decimals)
-		},
-		bytes(bytes, precision) {
-			if (isNaN(parseFloat(bytes)) || bytes === 0 || !isFinite(bytes)) return '-'
-			if (typeof precision === 'undefined') precision = 1
-			const units = ['bytes', 'kB', 'MB', 'GB']
-			const number = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number]
-		},
-		byterate(bytes, precision) {
-			if (isNaN(parseFloat(bytes)) || bytes === 0 || !isFinite(bytes)) return '0 KB/s'
-			if (typeof precision === 'undefined') precision = 1
-			const units = ['B/s', 'KB/s', 'MB/s', 'GB/s']
-			const number = Math.min(Math.floor(Math.log(bytes) / Math.log(1000)), units.length - 1)
-			return (bytes / Math.pow(1000, Math.floor(number))).toFixed(precision) + ' ' + units[number]
 		},
 		seconds(seconds, precision) {
 			if (isNaN(parseFloat(seconds)) || seconds === 0 || !isFinite(seconds)) return '-'
@@ -1211,33 +1038,6 @@ export default {
 			const units = ['s', 'm', 'h']
 			const number = Math.min(Math.floor(Math.log(seconds) / Math.log(60)), units.length - 1)
 			return (seconds / Math.pow(60, Math.floor(number))).toFixed(precision) + ' ' + units[number]
-		},
-		addListenerMulti(element, eventNames, listener) {
-			const events = eventNames.split(' ')
-			for (let i = 0, iLen = events.length; i < iLen; i++) {
-				element.addEventListener(events[i], listener, false)
-			}
-		},
-		completedChunks(file) {
-			let completeChunks = 0
-
-			file.chunks.forEach(function(c) {
-				if (c.progress() === 1) {
-					completeChunks++
-				}
-			})
-			return completeChunks
-		},
-		openLocationInFiles(path) {
-			window.open('/index.php/apps/files/?dir=' + path, '_blank')
-		},
-		selectSortingMethod(sortMethod) {
-			if (this.sort === sortMethod) {
-				this.sortReverse = !this.sortReverse
-			} else {
-				this.sort = sortMethod
-				this.sortReverse = false
-			}
 		},
 		showModal() {
 			this.$refs['info-modal'].show()
@@ -1253,14 +1053,15 @@ export default {
 		},
 		async loadNewFolder(folderName, endpointName) {
 			try {
-				console.log(this.folderNames)
+				// console.log(this.folderNames)
 				const response = await axios.get(
 					generateUrl(`/apps/dmsapp/${endpointName}`)
 				)
 				this.notes = response.data
 				const nodesResponse = await axios.get(
-					generateUrl(`/apps/dmsapp/nodelist/${this.selectedCompany}/${folderName}`)
+					generateUrl(`/apps/dmsapp/nodelist/.System_DMS_Shares/${this.selectedCompany}/${folderName}`)
 				)
+				// console.log(`/apps/dmsapp/nodelist/${this.selectedCompany}/${folderName}`)
 				this.nodes = nodesResponse.data
 				this.currentEndpoint = endpointName
 				this.currentTableInfo = tableInfo[folderName]
@@ -1268,8 +1069,8 @@ export default {
 
 				const notesIds = []
 				const nodesIds = []
-				this.addLocation(`/${this.selectedCompany}/${this.currentFolderName}/`)
-				this.switchActiveLocationByPath(`/${this.selectedCompany}/${this.currentFolderName}/`)
+				this.addLocation(`/.System_DMS_Shares/${this.selectedCompany}/${this.currentFolderName}/`)
+				this.switchActiveLocationByPath(`/.System_DMS_Shares/${this.selectedCompany}/${this.currentFolderName}/`)
 
 				for (let index = 0; index < this.nodes.length; index++) {
 					const element = this.nodes[index]
@@ -1373,7 +1174,7 @@ export default {
 					...t1,
 					...this.notes.find((t2) => Number(t2.idfile) === t1.id),
 				}))
-				console.log(this.nodesAndNotes)
+				// console.log(this.nodesAndNotes)
 				// this
 				this.removeMatchingFilters(folderName)
 
@@ -1382,15 +1183,6 @@ export default {
 				showError(t('dmsapp', `Could not fetch! Make sure that folder named '${folderName}' exists`))
 			}
 			this.loading = false
-		},
-
-		/**
-		 * toggle file upload menu
-		 *
-		 *
-		 */
-		toggleFileUploadMenu() {
-			this.showFileUploadMenu = !this.showFileUploadMenu
 		},
 
 		/**
@@ -1430,20 +1222,6 @@ export default {
 			this.showModal()
 		},
 		/**
-		 * Create a new note and focus the note content field automatically
-		 *
-		 * @param {object} note Note object
-		 */
-		openNote(note) {
-			if (this.updating) {
-				return
-			}
-			this.currentNoteId = note.id
-			this.$nextTick(() => {
-				this.$refs.title.focus()
-			})
-		},
-		/**
 		 * Action tiggered when clicking the save button
 		 * create a new note or save
 		 */
@@ -1454,28 +1232,6 @@ export default {
 				this.createNote(this.currentNote)
 			} else {
 				this.updateNote(this.currentNote, this.currentEndpoint)
-			}
-		},
-		/**
-		 * Create a new note and focus the note content field automatically
-		 * The note is not yet saved, therefore an id of -1 is used until it
-		 * has been persisted in the backend
-		 */
-		newNote() {
-			if (this.currentNoteId !== -1) {
-				this.currentNoteId = -1
-				this.notes.push({
-					id: -1,
-					title: '',
-					content: '',
-					physical: '',
-					namelt: '',
-					idfile: '',
-					description: '',
-				})
-				this.$nextTick(() => {
-					this.$refs.title.focus()
-				})
 			}
 		},
 		/**
@@ -1558,12 +1314,6 @@ export default {
 }
 </script>
 <style>
-/* .dmsapplogo{
-	background-color: yellowgreen!important;
-}
-.dmsapplogo:hover{
-	background-color: red!important;
-} */
 .vdatetime-overlay{
 	z-index: 1500!important;
 }
@@ -1852,7 +1602,6 @@ padding: 20px;
 	z-index: 50;
 	/* background-color: rgb(211, 211, 211); */
 }
-.tableHead{}
 .tableHeadTextContainer{
 	width: min-content;
 	display: inline-flex;
@@ -2061,5 +1810,8 @@ align-items: center;
 	background-color: rgb(255, 71, 71);
 	color: white;
 	cursor: pointer;
+}
+.marginLeft300{
+	margin-left: 300px;
 }
 </style>

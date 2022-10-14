@@ -1,0 +1,437 @@
+.uploadButton{
+	background-color: #1940B8;
+    color: white;
+    padding: 6px 21px;
+    font-weight: 500;
+    border-radius: 19px;
+}
+	.uploadButton:hover{
+	background-color: #6aa5ff;
+	cursor: pointer;
+}
+.uploadButton:active{
+	background-color: #2a7fff;
+	color: #ffffff;
+	cursor: pointer;
+}
+.selectedFolder:active{
+	border-left: solid 5px #0d6efd;
+	color: #0d6efd;
+}
+	.progressbar{
+		width: 100%;
+		height: 50px;
+	}
+	.reloadButton{
+	border-radius: 2px;
+    margin-left: 20px;
+    color: white;
+    background: #00b6ff85;
+    padding: 10px 50px;
+    border: none;
+}
+#body-user #header, #body-settings #header, #body-public #header {
+		z-index: 0;
+	}
+body {
+	padding: 1rem;
+	color: #000;
+}
+
+thead {
+	cursor: pointer;
+}
+
+td {
+	white-space: nowrap;
+}
+.tableBorder{
+	border: solid #9d9d9d6e 1px;
+}
+.vt-sort:before{
+    font-family: FontAwesome;
+    padding-right: 0.5em;
+    width: 1.28571429em;
+    text-align: center;
+	display: inline-flex;
+	align-items: center;
+}
+
+.vt-sortable::before {
+	content: "\25B2";
+	color: transparent;
+}
+
+.vt-asc::before {
+	content: "\25BC";
+}
+
+.vt-desc::before {
+	content: "\25B2";
+}
+
+#app-content>div {
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+input[type="text"] {
+	width: 100%;
+}
+
+textarea {
+	flex-grow: 1;
+	width: 100%;
+}
+
+.filtersContainer {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.editPanel {
+	padding-top: 10px;
+}
+
+.filterInput {
+	width: auto;
+}
+
+.container {
+	margin: auto 50px;
+}
+.navigationOpen{
+	margin-left: -300px;
+}
+.navigationClosed{
+	margin-left: 0;
+}
+
+.navigationOpen td:first-child {
+	background-color: #eee;;
+	position: -webkit-sticky;
+	padding-left: 310px;
+	left: 0;
+	position: sticky;
+}
+
+.navigationOpen th:first-child {
+	background-color: #eee;;
+	position: -webkit-sticky;
+	padding-left: 310px;
+	left: 0;
+	position: sticky;
+}
+
+.navigationClosed td:first-child {
+	background-color: #eee;;
+	position: -webkit-sticky;
+	left: 0;
+	position: sticky;
+}
+
+.navigationClosed th:first-child {
+	background-color: #eee;;
+	position: -webkit-sticky;
+	left: 0;
+	position: sticky;
+}
+
+.radioContainer {
+	display: flex;
+	align-items: center;
+}
+
+.radioContainer input {
+	cursor: pointer;
+}
+
+.radioLabel {
+	margin: 0 5px;
+}
+
+.vdatetime-input {
+	width: 100%;
+}
+#title{
+	text-align: center;
+}
+.selectionInput{
+	display: none;
+}
+.selectionLabel{
+	background-color: rgb(219, 232, 253);
+	cursor: pointer;
+	width: 100%;
+	height: 100px;
+}
+.selectionLabel:hover{
+	background-color: rgb(197, 219, 255);
+	cursor: pointer;
+
+}
+.fileIcon{
+transform: scale(3);
+margin-top: 15px;
+padding: 20px;
+}
+.buttonGroup{
+	text-align: center;
+}
+#modal-1{
+	margin-top: 100px;
+}
+
+#app-navigation-vue{
+	z-index: 1050;
+	height: max-content;
+	height: 100vh;
+}
+.filtersContainer{
+	flex-direction: column;
+    width: max-content;
+	padding-left: 10%;
+}
+.dateFilterContainer{
+	display: flex;
+    align-items: center;
+}
+.folderName{
+	display: inline-flex;
+	padding-top: 50px;
+	margin-left: 34px;
+    margin-bottom: 24px;
+}
+.selectFilter{
+	width: 200px;
+}
+.navigationFolderSelection:hover{
+    border-left: solid 5px #70a9ff;
+}
+.navigationFolderSelection{
+	padding: 0;
+}
+.paginationContainer{
+	display: flex;
+	flex-direction: row;
+}
+.paginationSelect{
+	margin-left: 30px;
+}
+.tableHeadOptions{
+	z-index: 50;
+	/* background-color: rgb(211, 211, 211); */
+}
+.tableHeadTextContainer{
+	width: min-content;
+	display: inline-flex;
+	justify-content: center;
+    align-items: center;
+white-space: normal;
+color: rgb(0, 0, 0);
+	}
+	.selectCompanyFilter{
+		margin-left: 40px;
+	}
+	.navigationIcon{
+		margin-left: 20px;
+		cursor: pointer;
+	}
+	.filesNavHeader{
+		margin: 20px 0 29px
+	}
+	.filtersNavHeader{
+		cursor: pointer;
+		margin: 23px 0 25px;
+	}
+	.toggleFiltersRow{
+	display: flex;
+    justify-content: space-between;
+	font-weight: 400;
+    font-size: 14px;
+	width: 250px;
+	cursor: pointer;
+	}
+	.toggleFiltersRow:hover{
+		color: rgb(59, 59, 59) ;
+	}
+	.actionOptions{
+		color: grey;
+		font-size: 14px;
+    font-weight: 300;
+	}
+.filtersArrow{
+    margin-left: 157px;
+}
+
+.has-inlineFiltersDetails {
+  position: relative;
+}
+
+.inlineFiltersDetails {
+  position: absolute;
+  top: -70px;
+  left: 10px;
+  transform: translateY(70%) scale(0);
+  transition: transform 0.1s ease-in;
+  transform-origin: left;
+  display: inline;
+  background: white;
+  z-index: 20;
+  min-width: 250px;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 10px 10px 20px grey;
+}
+
+.has-inlineFiltersDetails:hover span {
+  transform: translateY(70%) scale(1);
+}
+.activeFiltersAboveTable{
+margin-left: 50px;
+display: flex;
+align-items: center;
+}
+.selectedFilterAboveTable{
+	color: white;
+	background-color: #1941b88a;
+	border-radius: 5px;
+	padding: 0 15px;
+	margin: 0;
+}
+.selectedFilterAboveTableContainer{
+	margin: 0 7px 0 7px;
+}
+.selectedFilterAboveTableValue{
+	font-weight: bold;
+	margin: 0 5px 15px;
+}
+.removeOneFilter{
+	font-weight: bold;
+    font-size: 22px;
+	cursor: pointer;
+	transform: translate(-50%, -50%);
+
+}
+.removeOneFilter:hover{
+	color: rgba(201, 201, 201, 0.164);
+}
+
+.startScreenContainer{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.startScreenLogosContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.startScreenBackground{
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+    z-index: 1300;
+    width: 100%;
+    height: 100%;
+    background:#1940B8
+}
+.startScreenLogoCover{
+	cursor: pointer;
+    background-color: white;
+    padding: 50px;
+    border-radius: 16px;
+    margin: 0 32px ;
+}
+.startScreenBankeraLogo{
+	padding: 0 16px;
+}
+.startScreenPerveskLogo{
+	padding: 0 16px;
+}
+.startScreenLogoCover>img{
+	cursor: pointer;
+
+}
+.startScreenLogoCover:hover{
+	box-shadow: 15px 15px 30px rgb(21, 46, 158);
+
+}
+.startScreenTitle{
+    color: white;
+    font-size: 32px;
+}
+.startScreenCompanyTitle{
+	cursor: pointer;
+    margin-top: 10px;
+    font-size: 20px;
+    color: black;
+}
+.selectedCompanyLogoContainer{
+	margin: 20px 0 0 32px;
+
+}
+.clearAllFilters{
+	font-weight: 600;
+    font-size: 14px;
+    color: #707070;
+}
+.clearAllFilters:hover{
+    color: #ff2a2aa1;
+	cursor: pointer;
+}
+.activeFilters{
+	font-size: 14px;
+	font-weight: 300;
+}
+.uploadFilesComponent{
+	display: inline-flex;
+}
+
+.selectCompanyPopup{
+    position: absolute;
+    left: 300px;
+    background-color: white;
+    border-radius: 5px;
+	box-shadow: 10px 10px 10px grey;
+
+}
+.selectCompanyWrapper{
+	display: flex;
+	padding: 0 20px;
+}
+.selectCompanyWrapper:hover{
+	background-color: rgb(157, 163, 255);
+	border-radius: 5px;
+	cursor: pointer;
+}
+.selectCompanyCompanyTitle{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+}
+.selectCompanyLogo{
+	transform: scale(0.4);
+}
+#closeSelectCompanyPopup{
+	position: absolute;
+    right: -36px;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: white;
+    padding: 0 10px;
+}
+#closeSelectCompanyPopup:hover{
+	background-color: rgb(255, 71, 71);
+	color: white;
+	cursor: pointer;
+}
