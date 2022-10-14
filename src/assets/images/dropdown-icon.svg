@@ -1,0 +1,10 @@
+<svg id="dropdown_icon" data-name="dropdown icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_20" data-name="Path 20" d="M0,0H12V12H0Z" transform="translate(229 39)" fill="#222" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_10" data-name="Mask Group 10" transform="translate(-229 -39)" clip-path="url(#clip-path)">
+    <path id="Path_19" data-name="Path 19" d="M296.238,246.4h-7.12a.811.811,0,0,0-.557,1.392l3.62,3.58a.816.816,0,0,0,1.153,0l3.5-3.58a.832.832,0,0,0-.6-1.392Z" transform="translate(-57.655 -204.005)" fill="#707070"/>
+  </g>
+</svg>

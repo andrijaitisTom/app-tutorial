@@ -1,10 +1,10 @@
 [
-    {"title":"Agreements","folderName":"Agreements", "endpoint":"agreements" },
-    {"title":"Ceo Resolutions","folderName":"Ceoresolutions", "endpoint":"ceoresolutions" },
-    {"title":"Mb decisions","folderName":"Mbdecisions", "endpoint":"mbdecisions" },
-    {"title":"Contracts","folderName":"Contracts", "endpoint":"contracts" },
-    {"title":"Sb decisions","folderName":"Sbdecisions", "endpoint":"sbdecisions" },
-    {"title":"Outsourcing Agreements","folderName":"OutsourcingAgreements", "endpoint":"outsourcingagreements" },
-    {"title":"Policies And Instructions","folderName":"PoliciesAndInstructions", "endpoint":"plciesninstrctns" },
-    {"title":"Sent Or Received Documents","folderName":"SentOrReceivedDocuments", "endpoint":"sntorrcvddocs" }
+    {"title":"AGREEMENTS","folderName":"Agreements", "endpoint":"agreements" },
+    {"title":"CEO RESOLUTIONS","folderName":"Ceoresolutions", "endpoint":"ceoresolutions" },
+    {"title":"MB DECISIONS","folderName":"Mbdecisions", "endpoint":"mbdecisions" },
+    {"title":"CONTRACTS","folderName":"Contracts", "endpoint":"contracts" },
+    {"title":"SB DECISIONS","folderName":"Sbdecisions", "endpoint":"sbdecisions" },
+    {"title":"OUTSOURCING AGREEMENTS","folderName":"OutsourcingAgreements", "endpoint":"outsourcingagreements" },
+    {"title":"POLICIES AND INSTRUCTIONS","folderName":"PoliciesAndInstructions", "endpoint":"plciesninstrctns" },
+    {"title":"SENT OR RECEIVED DOCUMENTS","folderName":"SentOrReceivedDocuments", "endpoint":"sntorrcvddocs" }
 ]

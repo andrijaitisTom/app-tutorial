@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="148" height="148" viewBox="0 0 148 148">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_326" data-name="Rectangle 326" width="148" height="148" transform="translate(14333 -436)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="PERVESK_files" data-name="PERVESK files" transform="translate(-14333 436)" clip-path="url(#clip-path)">
+    <g id="Group_11387" data-name="Group 11387" transform="translate(-796.391 235)">
+      <g id="Group_11381" data-name="Group 11381" transform="translate(15138 -666.68)">
+        <path id="Rectangle_322" data-name="Rectangle 322" d="M-39.743-180.9H56.687c2.421,0,3.72,2.479,2.9,5.538L42.526-111.688c-.82,3.058-3.445,5.538-5.866,5.538H-59.774c-2.419,0-3.718-2.479-2.9-5.538l17.063-63.676C-44.792-178.422-42.165-180.9-39.743-180.9Z" transform="translate(71.647 243.656)" fill="#002457"/>
+        <g id="Group_11377" data-name="Group 11377" transform="translate(10.83 0)">
+          <rect id="Rectangle_323" data-name="Rectangle 323" width="72.384" height="89.658" rx="3.455" transform="translate(42.133 0) rotate(28.03)" fill="#dfe2e6" opacity="0.5"/>
+          <rect id="Rectangle_324" data-name="Rectangle 324" width="55.019" height="5.178" rx="2.589" transform="translate(41.644 19.394) rotate(28.03)" fill="#707070"/>
+          <rect id="Rectangle_325" data-name="Rectangle 325" width="55.019" height="5.178" rx="2.589" transform="translate(35.257 31.393) rotate(28.03)" fill="#707070"/>
+        </g>
+        <path id="Path_21668" data-name="Path 21668" d="M46.022-173.4v68.772c0,3.307-2.111,5.979-4.727,5.979H-62.863c-2.616,0-4.727-2.672-4.727-5.979V-173.4c0-3.288,2.111-5.979,4.727-5.979h7.94l4.353-6.745a7.453,7.453,0,0,1,6.278-3.438h26.044a7.5,7.5,0,0,1,5.418,2.317l7.492,7.866H41.295C43.91-179.374,46.022-176.683,46.022-173.4Z" transform="translate(67.59 237.256)" fill="#013784"/>
+      </g>
+      <g id="Pervesk_Icon_White" data-name="Pervesk Icon White" transform="translate(15174.784 -592.353)">
+        <path id="Path_21638" data-name="Path 21638" d="M1061.12,342.394h-9.135l-13.29,35.721,4.406,12.453Z" transform="translate(-1021.751 -342.394)" fill="#fff"/>
+        <path id="Path_21639" data-name="Path 21639" d="M997,382.243h9.334l11.411,32.227h-9.041L996.4,382.243" transform="translate(-996.396 -366.296)" fill="#b4dbbe"/>
+      </g>
+    </g>
+  </g>
+</svg>

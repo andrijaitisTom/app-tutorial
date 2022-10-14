@@ -1,239 +1,129 @@
 <template>
 	<div id="content" class="app-dmsapp" @click="handleNavigationToggle()">
 		<AppNavigation>
+			<div v-if="isLogoHovered" class="selectCompanyPopup">
+				<div id="closeSelectCompanyPopup" @click="isLogoHovered=false">×</div>
+				<div class="selectCompanyWrapper" @click="setSelectedCompany('Bankera')">
+					<img class="selectCompanyLogo" src="../src/assets/images/bankera.svg">
+					<p class="selectCompanyCompanyTitle">
+						Bankera
+					</p>
+				</div>
+				<div class="selectCompanyWrapper" @click="setSelectedCompany('SpectroCoin')">
+					<img class="selectCompanyLogo" src="../src/assets/images/spectrocoin.svg">
+					<p class="selectCompanyCompanyTitle">
+						SpectroCoin
+					</p>
+				</div>
+				<div class="selectCompanyWrapper" @click="setSelectedCompany('Pervesk')">
+					<img class="selectCompanyLogo" src="../src/assets/images/pervesk.svg">
+					<p class="selectCompanyCompanyTitle">
+						Pervesk
+					</p>
+				</div>
+			</div>
+
+			<div class="selectedCompanyLogoContainer">
+				<img v-if="selectedCompany === 'Bankera'" src="../src/assets/images/full-bankera.svg">
+				<img v-if="selectedCompany === 'SpectroCoin'" src="../src/assets/images/full-spectrocoin.svg">
+				<img v-if="selectedCompany === 'Pervesk'" src="../src/assets/images/full-pervesk.svg">
+			</div>
+			<div v-if="currentFolderName !== ''" class="filtersNavHeader " @click="showFiltersMenu = !showFiltersMenu">
+				<span class="icon-filter fileIcon navigationIcon" />
+				Filters <span class="filtersArrow">
+					<img v-if="!showFiltersMenu" src="../src/assets/images/dropdown-icon.svg">
+					<img v-if="showFiltersMenu" src="../src/assets/images/dropup-icon.svg">
+				</span>
+			</div>
+			<div v-if="currentFolderName !== '' && showFiltersMenu" class="filtersContainer">
+				<div v-for="filterName in filterNames[currentFolderName]" :key="filterName" class="form-group">
+					<div class="col-auto toggleFiltersRow" @click="toggleFilter(filterName)">
+						<label class="form-label text-large mr-2 pr-2">{{ filters[filterName].label.toUpperCase() }}</label>
+						<img v-if="!filters[filterName].show" src="../src/assets/images/dropdown-icon.svg">
+						<img v-if="filters[filterName].show" src="../src/assets/images/dropup-icon.svg">
+					</div>
+					<div v-if="filters[filterName].show">
+						<div v-if="filterName !== 'form' && filterName !== 'inForceUntil' && filterName !== 'approvalDate' && filterName !== 'dateReceiptDate' && filterName !== 'lastRiskAssessmentDate' && filterName !== 'dateOfTheDocument' && filterName !== 'date' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'validSince' && filterName !== 'validUntil' && filterName !== 'form' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'documentStatus' && filterName !== 'validity' && filterName !== 'orderType' && filterName !== 'decisionType' && filterName !== 'deliveryMethod' && filterName !== 'direction' && filterName !== 'documentForm' && filterName !== 'documentType' && filterName !== 'validity' && filterName !== 'typePi' && filterName !== 'it'">
+							<div class="col">
+								<input v-model="filters[filterName].value" class="filterInput">
+							</div>
+						</div>
+					</div>
+					<div v-if="filters[filterName].show">
+						<div v-if="filterName === 'form' || filterName === 'it' || filterName === 'materiality' || filterName === 'outsourcing' || filterName === 'documentStatus' || filterName === 'validity' || filterName === 'orderType' || filterName === 'decisionType' || filterName === 'deliveryMethod' || filterName === 'direction' || filterName === 'documentForm' || filterName === 'documentType' || filterName === 'validity' || filterName === 'typePi' || filterName === 'it'">
+							<select v-model="filters[filterName].value"
+								class="selectFilter">
+								<option value="" selected>
+									---Select---
+								</option>
+								<option v-for="option in dropdownSelections[filterName]"
+									:key="option"
+									:value="option">
+									{{ option }}
+								</option>
+							</select>
+						</div>
+					</div>
+
+					<div v-if="filters[filterName].show">
+						<div v-if="filterName === 'date' || filterName === 'dateReceiptDate' || filterName === 'lastRiskAssessmentDate' || filterName === 'approvalDate' || filterName === 'inForceUntil'|| filterName === 'dateOfTheDocument' || filterName === 'validSince' || filterName === 'validUntil'" class="dateFilterContainer">
+							<datetime v-model="filters[filterName].value.min"
+								type="datetime"
+								placeholder="Click to enter date"
+								class="datetime" />
+							<select v-model="filters[filterName].value.select" class="actionOptions">
+								<option value="" selected>
+									Action
+								</option>
+								<option value="on">
+									On
+								</option>
+								<option value="before">
+									Before
+								</option>
+								<option value="after">
+									After
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="filesNavHeader">
+				<span class="icon-files-dark fileIcon navigationIcon" />Files
+			</div>
 			<div v-for="navigationInfo in folderNames" :key="navigationInfo.endpoint" class="navigationContainer">
 				<AppNavigationNew v-if="!loading"
 					:text="t('dmsapp', `${navigationInfo.title}`)"
 					:disabled="false"
 					button-id="new-dmsapp-button"
-					button-class="icon-folder"
 					class="navigationFolderSelection"
 					:class="{selectedFolder: currentFolderName === `${navigationInfo.folderName}`}"
 					@click="
 						loadNewFolder(`${navigationInfo.folderName}`, `${navigationInfo.endpoint}`)
 					" />
 			</div>
-			<div v-if="currentFolderName !== ''" class="filtersContainer">
-				<div v-for="filterName in filterNames[currentFolderName]" :key="filterName" class="form-group">
-					<div class="col-auto">
-						<label class="form-label text-large mr-2 pr-2">{{ filters[filterName].label }}</label>
-					</div>
-					<div v-if="filterName !== 'form' && filterName !== 'approvalDate' && filterName !== 'dateReceiptDate' && filterName !== 'lastRiskAssessmentDate' && filterName !== 'dateOfTheDocument' && filterName !== 'date' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'validSince' && filterName !== 'validUntil' && filterName !== 'form' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'documentStatus' && filterName !== 'validity' && filterName !== 'orderType' && filterName !== 'decisionType' && filterName !== 'deliveryMethod' && filterName !== 'direction' && filterName !== 'documentForm' && filterName !== 'documentType' && filterName !== 'validity' && filterName !== 'typePi' && filterName !== 'it'">
-						<div class="col">
-							<input v-model="filters[filterName].value" class="filterInput">
-						</div>
-					</div>
-					<div v-if="filterName === 'form' || filterName === 'it' || filterName === 'materiality' || filterName === 'outsourcing' || filterName === 'documentStatus' || filterName === 'validity' || filterName === 'orderType' || filterName === 'decisionType' || filterName === 'deliveryMethod' || filterName === 'direction' || filterName === 'documentForm' || filterName === 'documentType' || filterName === 'validity' || filterName === 'typePi' || filterName === 'it'">
-						<select v-model="filters[filterName].value"
-							class="selectFilter">
-							<option value="" selected>
-								---Select---
-							</option>
-							<option v-for="option in dropdownSelections[filterName]"
-								:key="option"
-								:value="option">
-								{{ option }}
-							</option>
-						</select>
-					</div>
-
-					<div v-if="filterName === 'date' || filterName === 'dateReceiptDate' || filterName === 'lastRiskAssessmentDate' || filterName === 'approvalDate' || filterName === 'dateOfTheDocument' || filterName === 'validSince' || filterName === 'validUntil'" class="dateFilterContainer">
-						<datetime v-model="filters[filterName].value.min"
-							type="datetime"
-							placeholder="Click to enter date" />
-						<select v-model="filters[filterName].value.select">
-							<option value="" selected style="color: grey;">
-								Action
-							</option>
-							<option value="on">
-								On
-							</option>
-							<option value="before">
-								Before
-							</option>
-							<option value="after">
-								After
-							</option>
-						</select>
-					</div>
-				</div>
-			</div>
 		</AppNavigation>
 		<AppContent>
-			<select v-model="selectedCompany" class="selectCompanyFilter" @change="loadOnCompanyChange">
-				<option value="Pervesk">
-					Pervesk
-				</option>
-				<option value="Bankera" selected>
-					Bankera
-				</option>
-				<option value="SpectroCoin">
-					SpectroCoin
-				</option>
-			</select>
 			<div>
 				<h1 v-if="currentFolderName !== ''" class="folderName">
 					{{ currentFolderName }}
 				</h1>
-				<b-modal id="modal-1"
-					ref="info-modal"
-					hide-footer
-					:no-close-on-esc="recentlyUploadedFileName !== ''"
-					:no-close-on-backdrop="recentlyUploadedFileName !== ''"
-					:hide-header-close="recentlyUploadedFileName !== ''"
-					title="Edit file information">
-					<div v-if="currentNote" class="editPanel">
-						<form>
-							<div v-for="tableInfo in currentTableInfo" :key="tableInfo.key" :sort-key="tableInfo.key">
-								<label>{{ `${tableInfo.header} :` }}</label>
-								<input v-if="
-										tableInfo.fieldType !== 'date' &&
-											tableInfo.fieldType !== 'boolean' &&
-											tableInfo.fieldType !== 'choice' &&
-											tableInfo.fieldType !== 'number' &&
-											tableInfo.key !== 'name'"
-									ref="title"
-									v-model="currentNote[tableInfo.key]"
-									:required="tableInfo.required === 'required'"
-									type="text"
-									:disabled="updating"
-									:placeholder="currentNote[tableInfo.key]">
-								<div v-if="tableInfo.fieldType === 'date'">
-									<datetime v-model="currentNote[tableInfo.key]"
-										type="datetime"
-										placeholder="Click to enter date"
-										:required="tableInfo.required === 'required'" />
-								</div>
-								<div v-if="tableInfo.key === 'name'">
-									<p>{{ currentNote.name }}</p>
-								</div>
-								<div v-if="tableInfo.fieldType === 'boolean'" class="radioContainer">
-									<input id="yes"
-										v-model="currentNote[tableInfo.key]"
-										type="radio"
-										value="Yes">
-									<label for="yes" class="radioLabel">Yes</label>
-									<input id="no"
-										v-model="currentNote[tableInfo.key]"
-										type="radio"
-										value="No">
-									<label for="no" class="radioLabel">No</label>
-								</div>
-								<div v-if="tableInfo.fieldType === 'number'">
-									<input v-model="currentNote[tableInfo.key]" type="number">
-								</div>
-								<div v-if="tableInfo.fieldType === 'choice'">
-									<select v-model="currentNote[tableInfo.key]">
-										<option v-for="option in dropdownSelections[tableInfo.key]" :key="option" :value="option">
-											{{ option }}
-										</option>
-									</select>
-								</div>
-							</div>
-							<input type="submit"
-								class="primary"
-								:value="t('dmsapp', 'Save')"
-								:disabled="updating || savePossible"
-								@click="saveNote">
-
-							<input type="button"
-								class="primary"
-								:disabled="recentlyUploadedFileName !== ''"
-								:value="t('dmsapp', 'Cancel')"
-								@click="cancelNewNote(currentNote)">
-						</form>
-					</div>
-				</b-modal>
-			</div>
-
-			<template>
-				<div class="container">
-					<v-table :data="nodesAndNotes"
-						:filters="filters"
-						:hide-sort-icons="true"
-						:current-page.sync="currentPage"
-						:page-size="paginationSize"
-						class="my-2 table table-striped"
-						selection-mode="single"
-						selected-class="table-info"
-						:class="{
-							navigationOpen: isNavigationOpen,
-							navigationClosed: !isNavigationOpen,
-						}"
-						@totalPagesChanged="totalPages = $event"
-						@selectionChanged="selectedRows = $event">
-						<thead slot="head" class="tableHead">
-							<v-th v-for="tableInfo in currentTableInfo"
-								:key="tableInfo.key"
-								:sort-key="tableInfo.key"
-								class="tableHeadOptions">
-								<div class="tableHeadTextContainer">
-									<b>{{ tableInfo.header }}</b>
-								</div>
-							</v-th>
-						</thead>
-						<tbody slot="body" slot-scope="{ displayData }">
-							<v-tr v-for="row in displayData" :key="row.id" :row="row">
-								<td v-for="rowInfo in currentTableInfo" :key="rowInfo.key">
-									<span v-if="rowInfo.fieldType !== 'date'">{{
-										row[rowInfo.key]
-									}}</span>
-									<span v-if="rowInfo.fieldType === 'date'">{{
-										new Date(row[rowInfo.key]).toLocaleString("lt-LT")
-									}}</span>
-								</td>
-
-								<td>
-									<input :ref="`${row.nodeName}`"
-										type="button"
-										class="primary"
-										:value="t('dmsapp', 'Edit')"
-										@click="openEdit(row)">
-								</td>
-
-								<td>
-									<input type="button"
-										class="primary"
-										:value="t('dmsapp', 'Open')"
-										@click="openFile(row.idfile, row.path)">
-								</td>
-							</v-tr>
-						</tbody>
-					</v-table>
-					<div v-if="currentFolderName !== '' " class="paginationContainer">
-						<smart-pagination :hide-single-page="false"
-							:current-page.sync="currentPage"
-							:total-pages="totalPages" />
-						<select v-model="paginationSize" class="paginationSelect">
-							<option :value="25" selected>
-								25
-							</option>
-							<option :value="50">
-								50
-							</option>
-							<option :value="100">
-								100
-							</option>
-						</select>
-					</div>
-				</div>
-				<div v-if="currentFolderName === ''" id="emptycontent">
-					<div class="icon-clippy" />
-					<h2>
-						{{ t("dmsapp", "Select folder on left side to start") }}
-					</h2>
-				</div>
-
+				<!-- FILE UPLOADING COMPONENT -->
 				<template v-if="currentFolderName !== ''">
 					<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-					<div v-if="!loading" v-activeLocationFileDropZone style="margin-left: 4%; margin-right: 4%; margin-top: 7px; width:auto">
+					<div v-if="!loading"
+						v-activeLocationFileDropZone
+						class="uploadFilesComponent"
+						style="margin-left: 4%; margin-right: 4%; margin-top: 7px; width:auto">
 						<div v-if="activeLocation === undefined" id="noLocationSelected">
 							{{ t('dmsapp', 'Please select a location') }}
 						</div>
 						<div v-if="activeLocation != undefined" id="locationSelected">
 							<label for="FileSelectInput">
-								<div class="uploadButton"><span class="icon-file fileIcon" />Upload file</div>
+								<div class="uploadButton">Upload file</div>
 							</label>
 
 							<input id="FileSelectInput"
@@ -281,8 +171,267 @@
 						</b-modal>
 					</div>
 				</template>
-			</template>
+				<!-- THE ACTIVE FILTERS THAT APPEAR ABOVE THE TABLE -->
+				<div v-if="currentFolderName !== ''" class="activeFiltersAboveTable">
+					<span class="activeFilters">Active filters:</span>
+					<div v-for="filterName in filterNames[currentFolderName]" :key="filterName">
+						<div v-if="filters[filterName].value !== '' && filters[filterName].value.min !== '' && filters[filterName].value.select !== ''" class="selectedFilterAboveTableContainer">
+							<p v-if="!filters[filterName].value.min && !filters[filterName].value.select " class="selectedFilterAboveTable">
+								{{ filters[filterName].label }}: <span class="selectedFilterAboveTableValue">{{ filters[filterName].value }}</span>
+
+								<span class="removeOneFilter" @click="removeOneFilter(filterName)">×</span>
+							</p>
+							<p v-if="filters[filterName].value.select && filters[filterName].value.min" class="selectedFilterAboveTable">
+								{{ filters[filterName].label }}: <span class="selectedFilterAboveTableValue">{{ `${filters[filterName].value.select} ${new Date(filters[filterName].value.min).toLocaleString("lt-LT")}` }}</span>
+								<span class="removeOneFilter" @click="removeOneFilter(filterName)">×</span>
+							</p>
+						</div>
+					</div>
+					<span class="clearAllFilters" @click="removeMatchingFilters(currentFolderName)">Clear all</span>
+
+					<b-modal id="modal-1"
+						ref="info-modal"
+						hide-footer
+						:no-close-on-esc="recentlyUploadedFileName !== ''"
+						:no-close-on-backdrop="recentlyUploadedFileName !== ''"
+						:hide-header-close="recentlyUploadedFileName !== ''"
+						title="Edit file information">
+						<div v-if="currentNote" class="editPanel">
+							<form>
+								<div v-for="tableInfo in currentTableInfo" :key="tableInfo.key" :sort-key="tableInfo.key">
+									<label>{{ `${tableInfo.header} :` }}</label>
+									<input v-if="
+											tableInfo.fieldType !== 'date' &&
+												tableInfo.fieldType !== 'boolean' &&
+												tableInfo.fieldType !== 'choice' &&
+												tableInfo.fieldType !== 'number' &&
+												tableInfo.key !== 'name'"
+										ref="title"
+										v-model="currentNote[tableInfo.key]"
+										:required="tableInfo.required === 'required'"
+										type="text"
+										:disabled="updating"
+										:placeholder="currentNote[tableInfo.key]">
+									<div v-if="tableInfo.fieldType === 'date'">
+										<datetime v-model="currentNote[tableInfo.key]"
+											type="datetime"
+											placeholder="Click to enter date"
+											:required="tableInfo.required === 'required'" />
+									</div>
+									<div v-if="tableInfo.key === 'name'">
+										<p>{{ currentNote.name }}</p>
+									</div>
+									<div v-if="tableInfo.fieldType === 'boolean'" class="radioContainer">
+										<input id="yes"
+											v-model="currentNote[tableInfo.key]"
+											type="radio"
+											value="Yes">
+										<label for="yes" class="radioLabel">Yes</label>
+										<input id="no"
+											v-model="currentNote[tableInfo.key]"
+											type="radio"
+											value="No">
+										<label for="no" class="radioLabel">No</label>
+									</div>
+									<div v-if="tableInfo.fieldType === 'number'">
+										<input v-model="currentNote[tableInfo.key]" type="number">
+									</div>
+									<div v-if="tableInfo.fieldType === 'choice'">
+										<select v-model="currentNote[tableInfo.key]">
+											<option v-for="option in dropdownSelections[tableInfo.key]" :key="option" :value="option">
+												{{ option }}
+											</option>
+										</select>
+									</div>
+								</div>
+								<input type="submit"
+									class="primary"
+									:value="t('dmsapp', 'Save')"
+									:disabled="updating || savePossible"
+									@click="saveNote">
+
+								<input type="button"
+									class="primary"
+									:disabled="recentlyUploadedFileName !== ''"
+									:value="t('dmsapp', 'Cancel')"
+									@click="cancelNewNote(currentNote)">
+							</form>
+						</div>
+					</b-modal>
+				</div>
+
+				<template>
+					<div class="container">
+						<v-table :data="nodesAndNotes"
+							:filters="filters"
+							:hide-sort-icons="true"
+							:current-page.sync="currentPage"
+							:page-size="paginationSize"
+							class="my-2 table table-striped"
+							selection-mode="single"
+							selected-class="table-info"
+							:class="{
+								navigationOpen: isNavigationOpen,
+								navigationClosed: !isNavigationOpen,
+							}"
+							@totalPagesChanged="totalPages = $event"
+							@selectionChanged="selectedRows = $event">
+							<thead slot="head" class="tableHead">
+								<v-th v-for="tableInfo in currentTableInfo"
+									:key="tableInfo.key"
+									:hide-sort-icons="true"
+									:sort-key="tableInfo.key"
+									class="tableHeadOptions tableBorder">
+									<div class="tableHeadTextContainer">
+										<b>{{ tableInfo.header }}</b>
+										<!-- POPUP FILTERS IN TABLE HEADER -->
+										<div v-for="filterName in filterNames[currentFolderName]" :key="filterName">
+											<div class="has-inlineFiltersDetails">
+												<span v-if="tableInfo.key === filterName" class="icon-filter fileIcon navigationIcon " />
+												<span class="inlineFiltersDetails">
+
+													<div v-if="filterName !== 'form' && filterName !== 'approvalDate' && filterName !== 'dateReceiptDate' && filterName !== 'lastRiskAssessmentDate' && filterName !== 'inForceUntil' && filterName !== 'dateOfTheDocument' && filterName !== 'date' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'validSince' && filterName !== 'validUntil' && filterName !== 'form' && filterName !== 'it' && filterName !== 'materiality' && filterName !== 'outsourcing' && filterName !== 'documentStatus' && filterName !== 'validity' && filterName !== 'orderType' && filterName !== 'decisionType' && filterName !== 'deliveryMethod' && filterName !== 'direction' && filterName !== 'documentForm' && filterName !== 'documentType' && filterName !== 'validity' && filterName !== 'typePi' && filterName !== 'it'">
+														<div class="col">
+															<input v-model="filters[filterName].value" class="filterInput">
+														</div>
+													</div>
+													<div v-if="filterName === 'form' || filterName === 'it' || filterName === 'materiality' || filterName === 'outsourcing' || filterName === 'documentStatus' || filterName === 'validity' || filterName === 'orderType' || filterName === 'decisionType' || filterName === 'deliveryMethod' || filterName === 'direction' || filterName === 'documentForm' || filterName === 'documentType' || filterName === 'validity' || filterName === 'typePi' || filterName === 'it'">
+														<select v-model="filters[filterName].value"
+															class="selectFilter">
+															<option value="" selected>
+																---Select---
+															</option>
+															<option v-for="option in dropdownSelections[filterName]"
+																:key="option"
+																:value="option">
+																{{ option }}
+															</option>
+														</select>
+													</div>
+													<div v-if="filterName === 'date' || filterName === 'dateReceiptDate' || filterName === 'lastRiskAssessmentDate' || filterName === 'approvalDate' || filterName === 'dateOfTheDocument' || filterName === 'validSince' || filterName === 'validUntil' || filterName === 'inForceUntil'" class="dateFilterContainer">
+														<datetime v-model="filters[filterName].value.min"
+															type="datetime"
+															placeholder="Click to enter date"
+															class="datetime" />
+														<select v-model="filters[filterName].value.select" class="actionOptions">
+															<option value="" selected>
+																Action
+															</option>
+															<option value="on">
+																On
+															</option>
+															<option value="before">
+																Before
+															</option>
+															<option value="after">
+																After
+															</option>
+														</select>
+													</div>
+
+												</span>
+											</div>
+										</div>
+									</div>
+								</v-th>
+							</thead>
+							<tbody slot="body" slot-scope="{ displayData }">
+								<v-tr v-for="row in displayData" :key="row.id" :row="row">
+									<td v-for="rowInfo in currentTableInfo" :key="rowInfo.key" class="tableBorder">
+										<span v-if="rowInfo.fieldType !== 'date'">{{
+											row[rowInfo.key]
+										}}</span>
+										<span v-if="rowInfo.fieldType === 'date'">{{
+											new Date(row[rowInfo.key]).toLocaleString("lt-LT")
+										}}</span>
+									</td>
+
+									<td>
+										<input :ref="`${row.nodeName}`"
+											type="button"
+											class="primary"
+											:value="t('dmsapp', 'Edit')"
+											@click="openEdit(row)">
+									</td>
+
+									<td>
+										<input type="button"
+											class="primary"
+											:value="t('dmsapp', 'Open')"
+											@click="openFile(row.idfile, row.path)">
+									</td>
+								</v-tr>
+							</tbody>
+						</v-table>
+						<div v-if="currentFolderName !== '' " class="paginationContainer">
+							<smart-pagination :hide-single-page="false"
+								:current-page.sync="currentPage"
+								:total-pages="totalPages" />
+							<select v-model="paginationSize" class="paginationSelect">
+								<option :value="10">
+									10
+								</option>
+								<option :value="25">
+									25
+								</option>
+								<option :value="50">
+									50
+								</option>
+							</select>
+						</div>
+					</div>
+					<div v-if="currentFolderName === ''" id="emptycontent">
+						<div v-if="selectedCompany === 'Bankera'">
+							<img src="../src/assets/images/bankera-folder.svg">
+							<h3>Welcome to Bankera documents</h3>
+							<p>Select folder on left side to start</p>
+						</div>
+						<div v-if="selectedCompany === 'SpectroCoin'">
+							<img src="../src/assets/images/spectrocoin-folder.svg">
+							<h3>Welcome to SpectroCoin documents</h3>
+							<p>Select folder on left side to start</p>
+						</div>
+						<div v-if="selectedCompany === 'Pervesk'">
+							<img src="../src/assets/images/pervesk-folder.svg">
+							<h3>Welcome to Pervesk documents</h3>
+							<p>Select folder on left side to start</p>
+						</div>
+					</div>
+				</template>
+			</div>
 		</Appcontent>
+		<div v-if="currentFolderName === '' && selectedCompany === ''" id="emptycontent">
+			<!-- START SCREEN -->
+			<template>
+				<div class="startScreenBackground">
+					<div class="startScreenContainer">
+						<p class="startScreenTitle">
+							Select company to view documents:
+						</p>
+						<div class="startScreenLogosContainer" @click="setSelectedCompany('Bankera')">
+							<div class="startScreenLogoCover">
+								<img class="startScreenBankeraLogo" src="../src/assets/images/bankera.svg">
+								<p class="startScreenCompanyTitle">
+									Bankera
+								</p>
+							</div>
+							<div class="startScreenLogoCover" @click="setSelectedCompany('SpectroCoin')">
+								<img src="../src/assets/images/spectrocoin.svg">
+								<p class="startScreenCompanyTitle">
+									SpectroCoin
+								</p>
+							</div>
+							<div class="startScreenLogoCover" @click="setSelectedCompany('Pervesk')">
+								<img class="startScreenPerveskLogo" src="../src/assets/images/pervesk.svg">
+								<p class="startScreenCompanyTitle">
+									Pervesk
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+		</div>
 	</div>
 </template>
 
@@ -305,6 +454,7 @@ import tableInfo from './table/tableInfo.json'
 import dropdownSelections from './table/dropdownSelections.json'
 import filterNames from './table/filterNames.json'
 import folderNames from './table/folderNames.json'
+import StartScreen from './StartScreen.vue'
 
 export default {
 	name: 'App',
@@ -317,6 +467,7 @@ export default {
 		datetime: Datetime,
 		Content,
 		AppNavigationCounter,
+		StartScreen,
 	},
 	directives: {
 		customLocationFileDropZone: {
@@ -393,7 +544,7 @@ export default {
 		totalPages: 0,
 		paginationSize: 25,
 		fileIsBeingUploaded: false,
-		selectedCompany: 'Bankera',
+		selectedCompany: '',
 		name: 'Selection',
 		selectedRows: [],
 		notes: [],
@@ -420,10 +571,14 @@ export default {
 		dropdownSelections,
 		filterNames,
 		folderNames,
+		showFiltersMenu: false,
+		isLogoHovered: false,
+		activeFiltersAboveTable: 0,
 
 		filters: {
 
 			date: {
+				show: false,
 				label: 'Date',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
@@ -445,6 +600,7 @@ export default {
 				},
 			},
 			lastRiskAssessmentDate: {
+				show: false,
 				label: 'Last Risk Assessment Date',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
@@ -468,106 +624,126 @@ export default {
 			materiality: {
 				value: '',
 				keys: ['materiality'],
+				show: false,
 				label: 'Materiality',
 
 			},
 			decisionType: {
 				value: '',
 				keys: ['decisionType'],
+				show: false,
 				label: 'Decision type',
 			},
 			deliveryMethod: {
 				value: '',
 				keys: ['deliveryMethod'],
+				show: false,
 				label: 'Delivery method',
 			},
 			direction: {
 				value: '',
 				keys: ['direction'],
+				show: false,
 				label: 'Direction',
 			},
 			documentForm: {
 				value: '',
 				keys: ['documentForm'],
+				show: false,
 				label: 'Document form',
 			},
 			documentOrganizer: {
 				value: '',
 				keys: ['documentOrganizer'],
+				show: false,
 				label: 'Document organizer',
 			},
 			documentType: {
 				value: '',
 				keys: ['documentType'],
+				show: false,
 				label: 'Document type',
 			},
 			form: {
 				value: '',
 				keys: ['form'],
+				show: false,
 				label: 'Form',
 			},
 			it: {
 				value: '',
 				keys: ['it'],
+				show: false,
 				label: 'IT',
 			},
 			participants: {
 				value: '',
 				keys: ['participants'],
+				show: false,
 				label: 'Participants',
 			},
 			personalOwner: {
 				value: '',
 				keys: ['personalOwner'],
+				show: false,
 				label: 'Personal owner',
 			},
 			recipientEmployee: {
 				value: '',
 				keys: ['recipientEmployee'],
+				show: false,
 				label: 'Recipient employee',
 			},
 			typePi: {
 				value: '',
 				keys: ['typePi'],
+				show: false,
 				label: 'Type Pi',
 			},
 			createdBy: {
 				value: '',
 				keys: ['userId'],
+				show: false,
 				label: 'Created by',
 			},
 			outsourcing: {
 				value: '',
 				keys: ['outsourcing'],
+				show: false,
 				label: 'Outsourcing',
 
 			},
 			validity: {
 				value: '',
 				keys: ['validity'],
+				show: false,
 				label: 'Validity',
 
 			},
 			description: {
 				value: '',
 				keys: ['description'],
+				show: false,
 				label: 'Description',
 
 			},
 			documentStatus: {
 				value: '',
 				keys: ['documentStatus'],
+				show: false,
 				label: 'Document Status',
 
 			},
 			orderType: {
 				value: '',
 				keys: ['orderType'],
+				show: false,
 				label: 'Order Type',
 
 			},
 			validSince: {
 
+				show: false,
 				label: 'Valid Since',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
@@ -590,6 +766,7 @@ export default {
 
 			},
 			validUntil: {
+				show: false,
 				label: 'Valid Until',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
@@ -612,11 +789,12 @@ export default {
 
 			},
 			dateOfTheDocument: {
+				show: false,
 				label: 'Date (date of the document)',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
 					if (filterValue.min !== '') {
-						const currentDate = Date.parse(row.validUntil)
+						const currentDate = Date.parse(row.dateOfTheDocument)
 						const userDate = Date.parse(filterValue.min)
 						if (filterValue.select === 'before') {
 							return currentDate < userDate
@@ -633,11 +811,12 @@ export default {
 				},
 			},
 			dateReceiptDate: {
+				show: false,
 				label: 'Date (receipt date)',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
 					if (filterValue.min !== '') {
-						const currentDate = Date.parse(row.validUntil)
+						const currentDate = Date.parse(row.dateReceiptDate)
 						const userDate = Date.parse(filterValue.min)
 						if (filterValue.select === 'before') {
 							return currentDate < userDate
@@ -654,11 +833,12 @@ export default {
 				},
 			},
 			approvalDate: {
+				show: false,
 				label: 'Approval date',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
 					if (filterValue.min !== '') {
-						const currentDate = Date.parse(row.validUntil)
+						const currentDate = Date.parse(row.approvalDate)
 						const userDate = Date.parse(filterValue.min)
 						if (filterValue.select === 'before') {
 							return currentDate < userDate
@@ -675,11 +855,12 @@ export default {
 				},
 			},
 			inForceUntil: {
+				show: false,
 				label: 'In force until (date)',
 				value: { min: '', select: '' },
 				custom: function date(filterValue, row) {
 					if (filterValue.min !== '') {
-						const currentDate = Date.parse(row.validUntil)
+						const currentDate = Date.parse(row.inForceUntil)
 						const userDate = Date.parse(filterValue.min)
 						if (filterValue.select === 'before') {
 							return currentDate < userDate
@@ -821,10 +1002,46 @@ export default {
 	 * change loading state after loaded
 	 */
 	async mounted() {
+		const element = document.querySelector('[aria-label="DMS app"]')
+		console.log(`something is ${element}`)
+		element.classList.add('dmsapplogo')
+
+		element.addEventListener('mouseenter', (event) => {
+			this.isLogoHovered = true
+			console.log('hover on')
+			console.log(this.isLogoHovered)
+
+		}, false)
+		// element.addEventListener('mouseleave', (event) => {
+		// 	this.isLogoHovered = false
+		// 	console.log('hover off')
+		// 	console.log(this.isLogoHovered)
+
+		// }, false)
+
 		this.loading = false
 	},
 
 	methods: {
+		// countActiveFilters(filterName) {
+		// 	const filtersArray = []
+		// 	filtersArray.push(this.activeFiltersAboveTable)
+		// 	filtersArray.push(filterName)
+		// 	this.activeFiltersAboveTable = filtersArray
+		// 	console.log(this.activeFiltersAboveTable)
+		// 	console.log(this.activeFiltersAboveTable.length)
+
+		// },
+		setSelectedCompany(companyName) {
+			this.selectedCompany = companyName
+			if (this.currentFolderName !== '') {
+				this.loadOnCompanyChange()
+			}
+		},
+		toggleFilter(filterName) {
+			this.filters[filterName].show = !this.filters[filterName].show
+			console.log(this.filters[filterName].show)
+		},
 		loadOnCompanyChange() {
 			this.loadNewFolder(this.currentFolderName, this.currentEndpoint)
 		},
@@ -842,6 +1059,16 @@ export default {
 				if (typeof filterInfo.value === 'string') {
 					filterInfo.value = ''
 				}
+			}
+		},
+		removeOneFilter(filterToRemove) {
+			const filterInfo = this.filters[filterToRemove]
+			if (typeof filterInfo.value === 'object') {
+				filterInfo.value.min = ''
+				filterInfo.value.select = ''
+			}
+			if (typeof filterInfo.value === 'string') {
+				filterInfo.value = ''
 			}
 		},
 		filesSelected(event) {
@@ -907,6 +1134,7 @@ export default {
 			}
 			return false
 		},
+
 		addLocation(path) {
 		    if (!this.getLocationByPath(path)) {
 				const newFlow = new Flow({
@@ -1145,7 +1373,7 @@ export default {
 					...t1,
 					...this.notes.find((t2) => Number(t2.idfile) === t1.id),
 				}))
-console.log(this.nodesAndNotes )
+				console.log(this.nodesAndNotes)
 				// this
 				this.removeMatchingFilters(folderName)
 
@@ -1330,6 +1558,18 @@ console.log(this.nodesAndNotes )
 }
 </script>
 <style>
+/* .dmsapplogo{
+	background-color: yellowgreen!important;
+}
+.dmsapplogo:hover{
+	background-color: red!important;
+} */
+.vdatetime-overlay{
+	z-index: 1500!important;
+}
+.vdatetime-popup{
+	z-index: 1501!important;
+}
 	.navigationContainer{
 		padding: 0;
 		z-index: 1049!important;
@@ -1339,6 +1579,9 @@ console.log(this.nodesAndNotes )
 	border: none;
     background-color: white;
     border-radius: 0;
+	font-weight: 400;
+	font-size: 14px;
+
 }
 .navigationContainer>.navigationFolderSelection>button:active{
 	color: #00aeff!important;
@@ -1374,12 +1617,27 @@ border-bottom: none!important
 #new-dmsapp-button{
 	padding: 0 0 0 30px;
 }
-
+.datetime>input{
+		color: grey;
+		font-size: 14px;
+    font-weight: 300;
+	}
 </style>
 <style scoped>
+.uploadButton{
+	background-color: #1940B8;
+    color: white;
+    padding: 6px 21px;
+    font-weight: 500;
+    border-radius: 19px;
+}
 	.uploadButton:hover{
-	border-left: solid 5px #6aa5ff;
-	color: #6aa5ff;
+	background-color: #6aa5ff;
+	cursor: pointer;
+}
+.uploadButton:active{
+	background-color: #2a7fff;
+	color: #ffffff;
 	cursor: pointer;
 }
 .selectedFolder:active{
@@ -1413,13 +1671,16 @@ thead {
 td {
 	white-space: nowrap;
 }
-
+.tableBorder{
+	border: solid #9d9d9d6e 1px;
+}
 .vt-sort:before{
     font-family: FontAwesome;
     padding-right: 0.5em;
     width: 1.28571429em;
-    display: inline-block;
     text-align: center;
+	display: inline-flex;
+	align-items: center;
 }
 
 .vt-sortable::before {
@@ -1456,7 +1717,6 @@ textarea {
 .filtersContainer {
 	display: flex;
 	justify-content: space-evenly;
-	padding: 50px 0;
 }
 
 .editPanel {
@@ -1478,7 +1738,7 @@ textarea {
 }
 
 .navigationOpen td:first-child {
-	background-color: #d0e3ff;
+	background-color: #eee;;
 	position: -webkit-sticky;
 	padding-left: 310px;
 	left: 0;
@@ -1486,7 +1746,7 @@ textarea {
 }
 
 .navigationOpen th:first-child {
-	background-color: #e8f1ff;
+	background-color: #eee;;
 	position: -webkit-sticky;
 	padding-left: 310px;
 	left: 0;
@@ -1494,14 +1754,14 @@ textarea {
 }
 
 .navigationClosed td:first-child {
-	background-color: #d0e3ff;
+	background-color: #eee;;
 	position: -webkit-sticky;
 	left: 0;
 	position: sticky;
 }
 
 .navigationClosed th:first-child {
-	background-color: #e8f1ff;
+	background-color: #eee;;
 	position: -webkit-sticky;
 	left: 0;
 	position: sticky;
@@ -1541,8 +1801,6 @@ textarea {
 
 }
 .fileIcon{
-	cursor: pointer;
-
 transform: scale(3);
 margin-top: 15px;
 padding: 20px;
@@ -1557,6 +1815,7 @@ padding: 20px;
 #app-navigation-vue{
 	z-index: 1050;
 	height: max-content;
+	height: 100vh;
 }
 .filtersContainer{
 	flex-direction: column;
@@ -1568,6 +1827,7 @@ padding: 20px;
     align-items: center;
 }
 .folderName{
+	display: inline-flex;
 	padding-top: 50px;
 	margin-left: 34px;
     margin-bottom: 24px;
@@ -1589,17 +1849,217 @@ padding: 20px;
 	margin-left: 30px;
 }
 .tableHeadOptions{
-	background-color: rgb(211, 211, 211);
+	z-index: 50;
+	/* background-color: rgb(211, 211, 211); */
 }
 .tableHead{}
 .tableHeadTextContainer{
 	width: min-content;
-	display: inline-block;
-
+	display: inline-flex;
+	justify-content: center;
+    align-items: center;
 white-space: normal;
 color: rgb(0, 0, 0);
 	}
 	.selectCompanyFilter{
 		margin-left: 40px;
 	}
+	.navigationIcon{
+		margin-left: 20px;
+		cursor: pointer;
+	}
+	.filesNavHeader{
+		margin: 20px 0 29px
+	}
+	.filtersNavHeader{
+		cursor: pointer;
+		margin: 23px 0 25px;
+	}
+	.toggleFiltersRow{
+	display: flex;
+    justify-content: space-between;
+	font-weight: 400;
+    font-size: 14px;
+	width: 250px;
+	cursor: pointer;
+	}
+	.toggleFiltersRow:hover{
+		color: rgb(59, 59, 59) ;
+	}
+	.actionOptions{
+		color: grey;
+		font-size: 14px;
+    font-weight: 300;
+	}
+.filtersArrow{
+    margin-left: 157px;
+}
+
+.has-inlineFiltersDetails {
+  position: relative;
+}
+
+.inlineFiltersDetails {
+  position: absolute;
+  top: -70px;
+  left: 10px;
+  transform: translateY(70%) scale(0);
+  transition: transform 0.1s ease-in;
+  transform-origin: left;
+  display: inline;
+  background: white;
+  z-index: 20;
+  min-width: 250px;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 10px 10px 20px grey;
+}
+
+.has-inlineFiltersDetails:hover span {
+  transform: translateY(70%) scale(1);
+}
+.activeFiltersAboveTable{
+margin-left: 50px;
+display: flex;
+align-items: center;
+}
+.selectedFilterAboveTable{
+	color: white;
+	background-color: #1941b88a;
+	border-radius: 5px;
+	padding: 0 15px;
+	margin: 0;
+}
+.selectedFilterAboveTableContainer{
+	margin: 0 7px 0 7px;
+}
+.selectedFilterAboveTableValue{
+	font-weight: bold;
+	margin: 0 5px 15px;
+}
+.removeOneFilter{
+	font-weight: bold;
+    font-size: 22px;
+	cursor: pointer;
+	transform: translate(-50%, -50%);
+
+}
+.removeOneFilter:hover{
+	color: rgba(201, 201, 201, 0.164);
+}
+
+.startScreenContainer{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.startScreenLogosContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.startScreenBackground{
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+    z-index: 1300;
+    width: 100%;
+    height: 100%;
+    background:#1940B8
+}
+.startScreenLogoCover{
+	cursor: pointer;
+    background-color: white;
+    padding: 50px;
+    border-radius: 16px;
+    margin: 0 32px ;
+}
+.startScreenBankeraLogo{
+	padding: 0 16px;
+}
+.startScreenPerveskLogo{
+	padding: 0 16px;
+}
+.startScreenLogoCover>img{
+	cursor: pointer;
+
+}
+.startScreenLogoCover:hover{
+	box-shadow: 15px 15px 30px rgb(21, 46, 158);
+
+}
+.startScreenTitle{
+    color: white;
+    font-size: 32px;
+}
+.startScreenCompanyTitle{
+	cursor: pointer;
+    margin-top: 10px;
+    font-size: 20px;
+    color: black;
+}
+.selectedCompanyLogoContainer{
+	margin: 20px 0 0 32px;
+
+}
+.clearAllFilters{
+	font-weight: 600;
+    font-size: 14px;
+    color: #707070;
+}
+.clearAllFilters:hover{
+    color: #ff2a2aa1;
+	cursor: pointer;
+}
+.activeFilters{
+	font-size: 14px;
+	font-weight: 300;
+}
+.uploadFilesComponent{
+	display: inline-flex;
+}
+
+.selectCompanyPopup{
+    position: absolute;
+    left: 300px;
+    background-color: white;
+    border-radius: 5px;
+	box-shadow: 10px 10px 10px grey;
+
+}
+.selectCompanyWrapper{
+	display: flex;
+	padding: 0 20px;
+}
+.selectCompanyWrapper:hover{
+	background-color: rgb(157, 163, 255);
+	border-radius: 5px;
+	cursor: pointer;
+}
+.selectCompanyCompanyTitle{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+}
+.selectCompanyLogo{
+	transform: scale(0.4);
+}
+#closeSelectCompanyPopup{
+	position: absolute;
+    right: -36px;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: white;
+    padding: 0 10px;
+}
+#closeSelectCompanyPopup:hover{
+	background-color: rgb(255, 71, 71);
+	color: white;
+	cursor: pointer;
+}
 </style>

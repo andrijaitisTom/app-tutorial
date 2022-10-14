@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_6" data-name="Rectangle 6" width="24" height="24" transform="translate(35 126)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="folder_icon" data-name="folder icon" transform="translate(-35 -126)" clip-path="url(#clip-path)">
+    <g id="noun-folder-1594034" transform="translate(37.36 129.74)">
+      <path id="Path_1" data-name="Path 1" d="M149.32,106.4h3.922a.923.923,0,0,1,.738.369l.83,1.107a.923.923,0,0,0,.738.369h8.537a.923.923,0,0,1,.923.923v10.614a.923.923,0,0,1-.923.923H149.32a.923.923,0,0,1-.923-.923V107.323a.923.923,0,0,1,.923-.923Z" transform="translate(-147.256 -105.418)" fill="#222"/>
+    </g>
+  </g>
+</svg>
