@@ -250,13 +250,13 @@
 									</div>
 								</div>
 								<input type="submit"
-									class="primary"
+									class="saveButton"
 									:value="t('dmsapp', 'Save')"
 									:disabled="updating || savePossible"
 									@click="saveNote">
 
 								<input type="button"
-									class="primary"
+									class="closeButton"
 									:disabled="recentlyUploadedFileName !== ''"
 									:value="t('dmsapp', 'Cancel')"
 									@click="cancelNewNote(currentNote)">
@@ -354,14 +354,14 @@
 									<td>
 										<input :ref="`${row.nodeName}`"
 											type="button"
-											class="primary"
+											class="fullButton"
 											:value="t('dmsapp', 'Edit')"
 											@click="openEdit(row)">
 									</td>
 
 									<td>
 										<input type="button"
-											class="primary"
+											class="emptyButton"
 											:value="t('dmsapp', 'Open')"
 											@click="openFile(row.idfile, row.path)">
 									</td>
@@ -1805,13 +1805,36 @@ align-items: center;
     font-weight: bold;
     background-color: white;
     padding: 0 10px;
+	box-shadow: 7px 7px 10px grey;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+
 }
 #closeSelectCompanyPopup:hover{
 	background-color: rgb(255, 71, 71);
 	color: white;
 	cursor: pointer;
 }
+#closeSelectCompanyPopup:active{
+	box-shadow: none;
+	color: rgb(238, 238, 238);
+}
 .marginLeft300{
 	margin-left: 300px;
+}
+.fullButton{
+background-color: #1940B8;
+border: 2px solid #1940B8;
+color: white;
+}
+.fullButton:hover{
+	background-color: #1941b859;
+	color: #1940B8;
+
+}
+.emptyButton{
+color: #1940B8;
+background-color: white;
+border: 2px solid;
 }
 </style>

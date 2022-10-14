@@ -91,7 +91,7 @@ From frontend you can now call the endpoint using axios like this:
 				| 	└──SentOrReceivedDocuments
 				|		 
 				├── SpectroCoin  
-				|     ├──Agreements
+				|   ├──Agreements
 				| 	├──Ceoresolutions
 				| 	├──Contracts
 				| 	├──Mbdecisions
@@ -100,13 +100,13 @@ From frontend you can now call the endpoint using axios like this:
 				| 	├──Sbdecisions
 				| 	└──SentOrReceivedDocuments       
 				└── Pervesk   
-						├──Agreements
-						├──Ceoresolutions
-						├──Contracts
-						├──Mbdecisions
-						├──OutsourcingAgreements
-						├──PoliciesAndInstructions
-						├──Sbdecisions
-						└──SentOrReceivedDocuments
+					├──Agreements
+					├──Ceoresolutions
+					├──Contracts
+					├──Mbdecisions
+					├──OutsourcingAgreements
+					├──PoliciesAndInstructions
+					├──Sbdecisions
+					└──SentOrReceivedDocuments
 
 			
