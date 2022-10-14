@@ -250,13 +250,13 @@
 									</div>
 								</div>
 								<input type="submit"
-									class="saveButton"
+									class="fullButton"
 									:value="t('dmsapp', 'Save')"
 									:disabled="updating || savePossible"
 									@click="saveNote">
 
 								<input type="button"
-									class="closeButton"
+									class="emptyButton"
 									:disabled="recentlyUploadedFileName !== ''"
 									:value="t('dmsapp', 'Cancel')"
 									@click="cancelNewNote(currentNote)">
